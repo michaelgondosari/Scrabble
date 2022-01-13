@@ -67,4 +67,9 @@ public class TileBag {
         br.close();
     }
 
+    public static void main(String[] args) {
+        TileBag tb = new TileBag("C:\\Users\\HP\\Desktop\\MASTER\\UniversityofTwente\\PreMaster\\PreMasterQ2\\Programming\\Project\\Scrabble\\letters.txt");
+        System.out.println(tb.getLetterValue('Z'));
+    }
+
 } // end of class
