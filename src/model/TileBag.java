@@ -16,24 +16,19 @@ public class TileBag {
     // --- Constructor -----------------------------
 
     public TileBag (String fileName) {
+
+        // First, read the file with letters, value & letters, amount
+        // then put them in maps
         try {
             readTxt(fileName);
         } catch (IOException e) {
             System.out.println("File \"letters.txt\" is missing.");
             System.exit(1);
         }
+
     }
 
     // --- Queries ---------------------------------
-
-    /**
-     * Returns the amount left of a character
-     * @param c - the character (A-Z)
-     * @return the amount left of the character
-     */
-    public int getLetterAmountLeft(char c) {
-        return letterToAmountLeft.get(Character.toUpperCase(c));
-    }
 
     /**
      * Returns the value of a character
@@ -51,7 +46,7 @@ public class TileBag {
      * @param fileName - file to read the amount left and value of each letter
      * @throws IOException
      */
-    private void readTxt(String fileName) throws IOException {
+    public void readTxt(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         String line;
         while ((line = br.readLine()) != null) {
@@ -67,9 +62,26 @@ public class TileBag {
         br.close();
     }
 
+    /**
+     * Returns how many tiles are still in the bag
+     * @return the amount left of the tiles in the bag
+     */
+    public int getTilesLeft() {
+        int amountLeft = 0;
+        for (int i : letterToAmountLeft.values()) {
+            amountLeft += i;
+        }
+        return amountLeft;
+    }
+
+    public void drawTiles(int amount) {
+
+    }
+
     public static void main(String[] args) {
         TileBag tb = new TileBag("C:\\Users\\HP\\Desktop\\MASTER\\UniversityofTwente\\PreMaster\\PreMasterQ2\\Programming\\Project\\Scrabble\\letters.txt");
         System.out.println(tb.getLetterValue('z'));
+        System.out.println(tb.getTilesLeft());
     }
 
 } // end of class
