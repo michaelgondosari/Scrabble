@@ -32,7 +32,7 @@ public class TileBag {
      * @return the amount left of the character
      */
     public int getLetterAmountLeft(char c) {
-        return letterToAmountLeft.get(c);
+        return letterToAmountLeft.get(Character.toUpperCase(c));
     }
 
     /**
@@ -41,7 +41,7 @@ public class TileBag {
      * @return the value of the character
      */
     public int getLetterValue(char c) {
-        return letterToValue.get(c);
+        return letterToValue.get(Character.toUpperCase(c));
     }
 
     // --- Commands --------------------------------
@@ -69,7 +69,7 @@ public class TileBag {
 
     public static void main(String[] args) {
         TileBag tb = new TileBag("C:\\Users\\HP\\Desktop\\MASTER\\UniversityofTwente\\PreMaster\\PreMasterQ2\\Programming\\Project\\Scrabble\\letters.txt");
-        System.out.println(tb.getLetterValue('Z'));
+        System.out.println(tb.getLetterValue('z'));
     }
 
 } // end of class
