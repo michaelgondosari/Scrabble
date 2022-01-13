@@ -20,6 +20,7 @@ public class TileBag {
             readTxt(fileName);
         } catch (IOException e) {
             System.out.println("File \"letters.txt\" is missing.");
+            System.exit(1);
         }
     }
 
