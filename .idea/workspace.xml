@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="added drawTiles() method">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="added swapTiles() method">
+      <change afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TileBag.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642340795871</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added swapTiles() method">
+      <created>1642361621712</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1642361621712</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,6 +162,7 @@
     <MESSAGE value="upeercase" />
     <MESSAGE value="added blank tile to txt&#10;100 letters in the bag when the game begins" />
     <MESSAGE value="added drawTiles() method" />
-    <option name="LAST_COMMIT_MESSAGE" value="added drawTiles() method" />
+    <MESSAGE value="added swapTiles() method" />
+    <option name="LAST_COMMIT_MESSAGE" value="added swapTiles() method" />
   </component>
 </project>
