@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class TileBag {
 
@@ -74,14 +75,36 @@ public class TileBag {
         return amountLeft;
     }
 
-    public void drawTiles(int amount) {
+    private char drawTiles() {
+        Random random = new Random();
+        int tilesLeft = this.getTilesLeft();
 
+        // If there are no tiles left, this method should throw an exception
+        if (tilesLeft < 1) {
+            throw new RuntimeException("There are no tiles left!");
+        }
+
+        int randomNumber = random.nextInt(tilesLeft); // randomize pick to a number between 0 and tilesLeft
+        char tileDrawn = (char)(-1);
+        for (char c : letterToAmountLeft.keySet()) {
+            int amountLeft = letterToAmountLeft.get(c);
+            randomNumber -= amountLeft;
+            if (randomNumber <= 0) { // meaning that the letter is available to be drawn
+                tileDrawn = c;
+                System.out.println(letterToAmountLeft.get(c));
+                letterToAmountLeft.put(c, amountLeft-1);
+                System.out.println(letterToAmountLeft.get(c));
+                break; // break the for loop
+            }
+        }
+        return tileDrawn;
     }
 
     public static void main(String[] args) {
         TileBag tb = new TileBag("C:\\Users\\HP\\Desktop\\MASTER\\UniversityofTwente\\PreMaster\\PreMasterQ2\\Programming\\Project\\Scrabble\\letters.txt");
         System.out.println(tb.getLetterValue('z'));
         System.out.println(tb.getTilesLeft());
+        System.out.println(tb.drawTiles());
     }
 
 } // end of class

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="upeercase">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="added blank tile to txt&#10;100 letters in the bag when the game begins">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/letters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/letters.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TileBag.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642083660169</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added blank tile to txt&#10;100 letters in the bag when the game begins">
+      <created>1642087976447</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1642087976447</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,12 +139,14 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="added exit" />
     <MESSAGE value="test main" />
     <MESSAGE value="upeercase" />
-    <option name="LAST_COMMIT_MESSAGE" value="upeercase" />
+    <MESSAGE value="added blank tile to txt&#10;100 letters in the bag when the game begins" />
+    <option name="LAST_COMMIT_MESSAGE" value="added blank tile to txt&#10;100 letters in the bag when the game begins" />
   </component>
 </project>
