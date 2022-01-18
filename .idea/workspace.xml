@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="created Player class">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="push">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Square.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +48,20 @@
       <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TileBag">
+  <component name="RunManager" selected="Application.Square">
+    <configuration name="Square" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.Square" />
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestChecker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.wordchecker.TestChecker" />
       <module name="Scrabble" />
@@ -76,6 +90,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Square" />
         <item itemvalue="Application.TileBag" />
         <item itemvalue="Application.TestChecker" />
       </list>
@@ -146,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642371952101</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="push">
+      <created>1642512296057</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1642512296057</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,6 +192,7 @@
     <MESSAGE value="added drawTiles() method" />
     <MESSAGE value="added swapTiles() method" />
     <MESSAGE value="created Player class" />
-    <option name="LAST_COMMIT_MESSAGE" value="created Player class" />
+    <MESSAGE value="push" />
+    <option name="LAST_COMMIT_MESSAGE" value="push" />
   </component>
 </project>
