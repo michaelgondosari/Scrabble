@@ -4,12 +4,12 @@ public class Square {
 
     // --- Variables -------------------------------
 
-    private int row;
+    private char row;
     private int column;
 
     // --- Constructor -----------------------------
 
-    public Square(int row, int column) {
+    public Square(char row, int column) {
         this.row = row;
         this.column = column;
     }
