@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="push">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Square class (in case we need it)">
+      <change afterPath="$PROJECT_DIR$/src/view/View.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TileBag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/letters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/letters.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +36,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ScrabbleTechRanch" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -48,7 +52,7 @@
       <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Square">
+  <component name="RunManager" selected="Application.TileBag">
     <configuration name="Square" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.Square" />
       <module name="Scrabble" />
@@ -90,8 +94,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Square" />
         <item itemvalue="Application.TileBag" />
+        <item itemvalue="Application.Square" />
         <item itemvalue="Application.TestChecker" />
       </list>
     </recent_temporary>
@@ -168,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642512296057</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Square class (in case we need it)">
+      <created>1642517650532</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1642517650532</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -193,6 +204,7 @@
     <MESSAGE value="added swapTiles() method" />
     <MESSAGE value="created Player class" />
     <MESSAGE value="push" />
-    <option name="LAST_COMMIT_MESSAGE" value="push" />
+    <MESSAGE value="Square class (in case we need it)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Square class (in case we need it)" />
   </component>
 </project>
