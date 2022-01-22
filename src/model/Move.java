@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Move {
+
     public static final int Sideways = 1;
     public static final int downward = 9;
 
@@ -14,20 +15,18 @@ public class Move {
     ArrayList<String> secondWord;
 
     public Move(String word, int direction, int placeCol, int placeRow){
-    this.word = word;
-    this.direction=direction;
-    this.placeRow=placeRow;
-    this.placeCol = placeCol;
-    this.wordDoesExist= false;
+        this.word = word;
+        this.direction=direction;
+        this.placeRow=placeRow;
+        this.placeCol = placeCol;
+        this.wordDoesExist= false;
     }
-    public int scoreCalculator(){
-     int score = 0;
-        if(wordDoesExist){
 
-     }
+    public int scoreCalculator(){
+        int score = 0;
+        if(wordDoesExist){
+        }
+        return score;
     }
 
 }
-
-
-

@@ -1,12 +1,7 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TileBag {
 
@@ -23,14 +18,11 @@ public class TileBag {
     public TileBag (String fileName) {
         try {
             readTxt(fileName);
-
         } catch (FileNotFoundException e) {
             System.out.println("File \"letters.txt\" is missing.");
             System.exit(1);
-
         } catch (IOException e) {
             System.out.println("There is a problem with the file \"letters.txt\".");
-            System.out.println("File \"letters.txt\" is missing.");
             System.exit(1);
         }
     }
@@ -136,24 +128,24 @@ public class TileBag {
 
     /**
      * Swap tiles
-     * @param oldTiles - list of tiles that the player wants to swap (put back into the tile bag)
+     * @param numberOfTilesSwap - list of tiles that the player wants to swap (put back into the tile bag)
      * @return a list of random new tiles drawn from the bag, as many as the tiles put back into the bag
      */
-    public List<Character> swapTiles(List<Character> oldTiles) {
-        for (char c : oldTiles) {
-            int oldTileAmountLeft = letterToAmountLeft.get(c);
-            letterToAmountLeft.put(c, oldTileAmountLeft+1); // putting the tile back inside the tile bag
+    public List<Character> swapTiles(List<Character> numberOfTilesSwap) {
+        for (char c : numberOfTilesSwap) {
+            int numberOfTilesSwapAmount = letterToAmountLeft.get(c);
+            letterToAmountLeft.put(c, numberOfTilesSwapAmount + 1); // putting the tile back inside the tile bag
         }
-        return this.drawTiles(oldTiles.size());
+        return this.drawTiles(numberOfTilesSwap.size());
     }
 
-    public static void main(String[] args) {
-        TileBag tb = new TileBag("C:\\Users\\HP\\Desktop\\MASTER\\UniversityofTwente\\PreMaster\\PreMasterQ2\\Programming\\Project\\Scrabble\\src\\model\\letters.txt");
-        System.out.println(tb.getLetterValue('z'));
-        System.out.println(tb.getTilesLeft());
-        System.out.println(tb.drawTiles(7));
+//    public static void main(String[] args) {
+//        TileBag tb = new TileBag("C:\\Users\\HP\\Desktop\\MASTER\\UniversityofTwente\\PreMaster\\PreMasterQ2\\Programming\\Project\\Scrabble\\src\\model\\letters.txt");
+//        System.out.println(tb.getLetterValue('z'));
+//        System.out.println(tb.getTilesLeft());
+//        System.out.println(tb.drawTiles(7));
         // check size also, create a new list then draw, then check?
         // check swap tiles
-    }
+//    }
 
 } // end of class
