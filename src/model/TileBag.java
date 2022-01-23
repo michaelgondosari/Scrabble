@@ -6,6 +6,7 @@ import java.util.*;
 public class TileBag {
 
     // --- Variables -------------------------------
+
     private Map<Character, Integer> letterToAmountLeft = new HashMap<>();
     private Map<Character, Integer> letterToValue = new HashMap<>();
 
@@ -50,8 +51,7 @@ public class TileBag {
     /**
      * Read file to put amount left and value of each letter, then putting both in maps of letter
      * @param fileName - file to read the amount left and value of each letter
-     * @throws IOException - if file is not found
-     * @throws IOException
+     * @throws IOException - if file is not found or broken
      */
     private void readTxt(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -128,15 +128,15 @@ public class TileBag {
 
     /**
      * Swap tiles
-     * @param numberOfTilesSwap - list of tiles that the player wants to swap (put back into the tile bag)
+     * @param tilesSwap - list of tiles that the player wants to swap (put back into the tile bag)
      * @return a list of random new tiles drawn from the bag, as many as the tiles put back into the bag
      */
-    public List<Character> swapTiles(List<Character> numberOfTilesSwap) {
-        for (char c : numberOfTilesSwap) {
-            int numberOfTilesSwapAmount = letterToAmountLeft.get(c);
-            letterToAmountLeft.put(c, numberOfTilesSwapAmount + 1); // putting the tile back inside the tile bag
+    public List<Character> swapTiles(List<Character> tilesSwap) {
+        for (char c : tilesSwap) {
+            int tilesSwapAmount = letterToAmountLeft.get(c);
+            letterToAmountLeft.put(c, tilesSwapAmount + 1); // putting the tile back inside the tile bag
         }
-        return this.drawTiles(numberOfTilesSwap.size());
+        return this.drawTiles(tilesSwap.size());
     }
 
 //    public static void main(String[] args) {

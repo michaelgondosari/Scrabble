@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="reupdated TileBag">
-      <change afterPath="$PROJECT_DIR$/src/view/View.java" afterDir="false" />
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="updated TileBag&#10;updated initBoardScores">
+      <change afterPath="$PROJECT_DIR$/src/model/ProtocolMessages.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/ScrabbleBoard.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrabbleBoard.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TileBag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/letters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/letters.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +37,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ScrabbleTechRanch" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -51,11 +53,24 @@
       <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
       <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src" />
+      <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TileBag">
+  <component name="RunManager" selected="Application.Board">
+    <configuration name="Board" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.Board" />
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Square" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.Square" />
       <module name="Scrabble" />
@@ -97,6 +112,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Board" />
         <item itemvalue="Application.TileBag" />
         <item itemvalue="Application.Square" />
         <item itemvalue="Application.TestChecker" />
@@ -189,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1642588979265</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="updated TileBag&#10;updated initBoardScores">
+      <created>1642863351655</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1642863351655</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,6 +239,8 @@
     <MESSAGE value="push" />
     <MESSAGE value="Square class (in case we need it)" />
     <MESSAGE value="reupdated TileBag" />
-    <option name="LAST_COMMIT_MESSAGE" value="reupdated TileBag" />
+    <MESSAGE value="updated Board" />
+    <MESSAGE value="updated TileBag&#10;updated initBoardScores" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated TileBag&#10;updated initBoardScores" />
   </component>
 </project>
