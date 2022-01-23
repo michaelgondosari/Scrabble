@@ -95,13 +95,11 @@ public class TileBag {
         int randomNumber = random.nextInt(tilesLeft); // randomize pick to a number between 0 and tilesLeft
         char tileDrawn = (char)(-1);
         for (char c : letterToAmountLeft.keySet()) {
-            int amountLeft = letterToAmountLeft.get(c);
+            int amountLeft = getLetterAmountLeft(c);
             randomNumber -= amountLeft;
             if (randomNumber <= 0) { // meaning that the letter is available to be drawn
                 tileDrawn = c;
-                System.out.println(c + " before: " + letterToAmountLeft.get(c));
                 letterToAmountLeft.put(c, amountLeft-1);
-                System.out.println(c + " after: " + letterToAmountLeft.get(c));
                 break; // break the for loop
             }
         }
@@ -133,14 +131,13 @@ public class TileBag {
      */
     public List<Character> swapTiles(List<Character> tilesSwap) {
         for (char c : tilesSwap) {
-            int tilesSwapAmount = letterToAmountLeft.get(c);
-            letterToAmountLeft.put(c, tilesSwapAmount + 1); // putting the tile back inside the tile bag
+            letterToAmountLeft.put(c, getLetterAmountLeft(c) + 1); // putting the tile back inside the tile bag
         }
         return this.drawTiles(tilesSwap.size());
     }
 
 //    public static void main(String[] args) {
-//        TileBag tb = new TileBag("C:\\Users\\HP\\Desktop\\MASTER\\UniversityofTwente\\PreMaster\\PreMasterQ2\\Programming\\Project\\Scrabble\\src\\model\\letters.txt");
+//        TileBag tb = new TileBag(System.getProperty("user.dir") + "/letters.txt");
 //        System.out.println(tb.getLetterValue('z'));
 //        System.out.println(tb.getTilesLeft());
 //        System.out.println(tb.drawTiles(7));

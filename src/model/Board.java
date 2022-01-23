@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,12 +28,32 @@ public class Board {
         this.initBoardScores();
 
         // Initialize TileBag
-        tileBag = new TileBag(System.getProperty("user.dir") + "/letters.txt");
+        tileBag = new TileBag(System.getProperty("user.dir") + "/src/model/letters.txt");
     }
 
     // --- Queries ---------------------------------
 
+    /**
+     * Get the char of a square on the board
+     * @param row - the row of the board
+     * @param column - the column of the board
+     * @return the char of the square
+     * @requires row >= 0 && row <= 14 && column >= 0 && column <= 14
+     */
+    public char getTileOnBoard(int row, int column) {
+        return scrabbleBoard[row][column];
+    }
 
+    /**
+     * Get the char of a square on the board
+     * @param row - the row of the board
+     * @param column - the column of the board
+     * @return the char of the square
+     * @requires row >= 1 && row <= 15 && column >= 'A' && column <= 'O'
+     */
+    public char getTileOnBoard(char column, int row) {
+        return scrabbleBoard[convertRow(row)][convertCol(column)];
+    }
 
     // --- Commands --------------------------------
 
@@ -54,7 +75,7 @@ public class Board {
     public void initBoardScores() {
         boardScores = new HashMap<>();
         try{
-            readTxt(System.getProperty("user.dir") + "/ScrabbleBoard.txt");
+            readTxt(System.getProperty("user.dir") + "/src/model/ScrabbleBoard.txt");
         } catch (FileNotFoundException e) {
             System.out.println("File \"ScrabbleBoard.txt\" is missing.");
             System.exit(1);
@@ -96,7 +117,27 @@ public class Board {
         return Character.toString(resultColumn) + Integer.toString(resultRow);
     }
 
-    //
+    /**
+     * Convert column name from Scrabble board to Java
+     * @param col - column name in Scrabble board
+     * @return column name in Java
+     * @requires col >= 'A' && col <= 'O'
+     * @ensures result >= 0 && result <= 14
+     */
+    public int convertCol(char col) {
+        return col - 65;
+    }
+
+    /**
+     * Convert row name from Scrabble board to Java
+     * @param row - row name in Scrabble board
+     * @return row name in Java
+     * @requires row >= 1 && row <= 15
+     * @ensures result >= 0 && result <= 14
+     */
+    public int convertRow(int row) {
+        return row - 1;
+    }
 
     /**
      * Checks the board once a word is put down
@@ -107,21 +148,30 @@ public class Board {
         return boardScores.getOrDefault(check, null);
     }
 
-    //public char placeTile(int col, int row){
-    //return this.scrabbleBoard[col][row];
+    /**
+     * Creates a deep copy of the scrabble board
+     * @return
+     */
+    public Board deepCopy() {
+        Board boardCopy = new Board();
+        boardCopy.scrabbleBoard = Arrays.copyOf(this.scrabbleBoard, this.scrabbleBoard.length);
+        return boardCopy;
+    }
 
+    /**
+     * Place the word on the board
+     * @param move - the move made by a player
+     */
     public void placeWord (Move move) {
-        if (move.getWordDoesExist()){
+        if (move.getWordDoesExist()) {
             String word = move.getWord();
             int row = move.getPlaceRow();
             char col = move.getPlaceCol();
-            for (int i=0; i<word.length(); i++) {
-                if (move.getDirection() == Move.RIGHT) {
-                    //increase row val to add word to the right
-                    System.out.println("adding word horizontaly");
+
+            for (int i = 0; i < word.length(); i++) {
+                if (move.getDirection() == Move.HORIZONTAL) {
                     this.scrabbleBoard[row][col+i] = word.toUpperCase().charAt(i);
-                } else if (move.getDirection() == Move.DOWN) {
-                    //increase col val to add word down
+                } else if (move.getDirection() == Move.VERTICAL) {
                     this.scrabbleBoard[row+i][col] = word.toUpperCase().charAt(i);
                 }
             }

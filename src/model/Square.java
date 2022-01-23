@@ -46,4 +46,4 @@ public class Square {
 
     // --- Commands --------------------------------
 
-}
+} // end of class

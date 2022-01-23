@@ -104,6 +104,7 @@ public class Player {
     }
 
     /**
+     * Helper class for useTiles
      * Use a tile from the player's rack and remove it from the rack
      * @param tile - tile to be used
      */
