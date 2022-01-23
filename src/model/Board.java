@@ -28,7 +28,7 @@ public class Board {
         this.initBoardScores();
 
         // Initialize TileBag
-        tileBag = new TileBag(System.getProperty("user.dir") + "/src/model/letters.txt");
+        tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
     }
 
     // --- Queries ---------------------------------
@@ -75,7 +75,7 @@ public class Board {
     public void initBoardScores() {
         boardScores = new HashMap<>();
         try{
-            readTxt(System.getProperty("user.dir") + "/src/model/ScrabbleBoard.txt");
+            readTxt(System.getProperty("user.dir") + "/src/ScrabbleBoard.txt");
         } catch (FileNotFoundException e) {
             System.out.println("File \"ScrabbleBoard.txt\" is missing.");
             System.exit(1);

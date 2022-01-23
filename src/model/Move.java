@@ -134,7 +134,7 @@ public class Move {
     public int scoreCalculator(String word) {
         int score = 0;
         if (checkWordValidity(word) == true) {
-            TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/model/letters.txt");
+            TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/letters.txt");
             char[] charWord = stringToCharArray(word);
             for (char c : charWord) {
                 score += tileBag.getLetterValue(c);
