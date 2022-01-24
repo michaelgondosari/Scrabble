@@ -142,10 +142,10 @@ public class Board {
     /**
      * Checks the board once a word is put down
      * @param check - the word to be checked
-     * @return boardScores.get(check), or null if check is not found in map
+     * @return boardScores.get(check), or "1" if check is not found in map
      */
-    public static String checkForBoardScore(String check) {
-        return boardScores.getOrDefault(check, null);
+    public String checkForBoardScore(String check) {
+        return boardScores.getOrDefault(check, "1");
     }
 
     /**
@@ -177,5 +177,12 @@ public class Board {
             }
         }
     }
+
+//    public static void main(String[] args) {
+//        Board b = new Board();
+//        Board bcopy = b.deepCopy();
+//        System.out.println(Arrays.deepToString(b.scrabbleBoard));
+//        System.out.println(Arrays.deepToString(bcopy.scrabbleBoard));
+//    }
 
 } // end of class
