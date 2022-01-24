@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="added BoardPrinter">
-      <change afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/InvalidMoveException.java" afterDir="false" />
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="updated Monday">
+      <change afterPath="$PROJECT_DIR$/src/model/TileOutsideBoardException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/TileOverwriteException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/InvalidMoveException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/InvalidWordException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/BoardPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LocalTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TileBag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LocalTUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643020983197</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="updated Monday">
+      <created>1643037072446</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1643037072446</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -301,8 +309,8 @@
     <MESSAGE value="updated Saturday" />
     <MESSAGE value="updated Sunday" />
     <MESSAGE value="fixed 0 to O" />
-    <MESSAGE value="updated Monday" />
     <MESSAGE value="added BoardPrinter" />
-    <option name="LAST_COMMIT_MESSAGE" value="added BoardPrinter" />
+    <MESSAGE value="updated Monday" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated Monday" />
   </component>
 </project>

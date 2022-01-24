@@ -35,10 +35,10 @@ public class LocalTUI {
                 String coordinate = board.getCoordinate(row, col);
                 switch (board.getBoardMultiplier(coordinate)) {
                     case "3W":
-                        boardView.append(TerminalColors.PURPLE_BACKGROUND);
+                        boardView.append(TerminalColors.RED_BACKGROUND);
                         break;
                     case "2W":
-                        boardView.append(TerminalColors.RED_BACKGROUND);
+                        boardView.append(TerminalColors.PURPLE_BACKGROUND);
                         break;
                     case "3L":
                         boardView.append(TerminalColors.GREEN_BACKGROUND_BRIGHT);
@@ -78,9 +78,9 @@ public class LocalTUI {
         return boardView.toString();
     }
 
-    public static void main(String[] args) {
-        Board bp = new Board();
-        System.out.println(printBoard(bp));
-    }
+//    public static void main(String[] args) {
+//        Board bp = new Board();
+//        System.out.println(printBoard(bp));
+//    }
 
 }

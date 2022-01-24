@@ -1,7 +1,5 @@
 package model;
 
-import model.wordchecker.InMemoryScrabbleWordChecker;
-
 import java.util.ArrayList;
 
 public class Move {
@@ -111,17 +109,6 @@ public class Move {
         }
         return result;
     }
-
-    /**
-     * Check if the word played is valid
-     * @param word - word played by a player
-     * @return true if word is in the dictionary, false otherwise
-     */
-    public boolean checkWordValidity(String word) {
-        InMemoryScrabbleWordChecker checker = new InMemoryScrabbleWordChecker();
-        return (checker.isValidWord(word) != null) ? true : false;
-
-    } // MOVE TO GAME???
 
     /**
      * Calculate the score of a word

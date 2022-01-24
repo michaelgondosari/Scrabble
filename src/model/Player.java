@@ -134,7 +134,7 @@ public class Player {
      * Place the word on the board
      * @param move - the move made by a player
      */
-    public void placeWord (Move move, Board board) throws InvalidMoveException {
+    public void placeWord (Move move, Board board) {
         String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
         int startCol = board.convertCol(move.getPlaceCol());
@@ -146,14 +146,6 @@ public class Player {
                 board.setTileOnBoard(startRow + i, startCol, word.toUpperCase().charAt(i));
             }
         }
-    }
-
-    public void makeMove(Move move, Board board) throws InvalidMoveException {
-//        if (move.checkWordValidity(move.getWord()) == false) {
-//            throw new InvalidMoveException("That is not a valid word!");
-//        }
-
-
     }
 
 } // end of class

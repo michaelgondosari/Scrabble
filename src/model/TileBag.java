@@ -47,7 +47,9 @@ public class TileBag {
     public int getLetterValue(char c) {
         return letterToValue.get(Character.toUpperCase(c));
     }
+
     // --- Commands --------------------------------
+
     /**
      * Read file to put amount left and value of each letter, then putting both in maps of letter
      * @param fileName - file to read the amount left and value of each letter
