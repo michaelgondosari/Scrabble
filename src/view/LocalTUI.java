@@ -2,8 +2,13 @@ package view;
 
 import model.Board;
 
-public class BoardPrinter {
+public class LocalTUI {
 
+    /**
+     * Print the current Scrabble board
+     * @param board - current Scrabble board
+     * @return TUI of current Scrabble board
+     */
     public static String printBoard(Board board) {
 
         StringBuffer boardView = new StringBuffer();
@@ -28,7 +33,7 @@ public class BoardPrinter {
             boardView.append(((row < 9) ? " " : "") + (row + 1) + " │");
             for (int col = 0; col < Board.BOARD_SIZE; col++) {
                 String coordinate = board.getCoordinate(row, col);
-                switch (board.checkForBoardScore(coordinate)) {
+                switch (board.getBoardMultiplier(coordinate)) {
                     case "3W":
                         boardView.append(TerminalColors.PURPLE_BACKGROUND);
                         break;
@@ -73,9 +78,9 @@ public class BoardPrinter {
         return boardView.toString();
     }
 
-//    public static void main(String[] args) {
-//        Board bp = new Board();
-//        System.out.println(printBoard(bp));
-//    }
+    public static void main(String[] args) {
+        Board bp = new Board();
+        System.out.println(printBoard(bp));
+    }
 
 }

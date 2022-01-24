@@ -95,12 +95,8 @@ public class Move {
      * @param move - move made by a player
      */
     public void registerMove(Move move) {
-        if (move.wordDoesExist) {
-            numberOfMoves++;
-            setWordDoesExist(true);
-        } else {
-            System.out.println("Move is not valid, please try again!");
-        }
+        numberOfMoves++;
+        setWordDoesExist(true);
     }
 
     /**
@@ -124,7 +120,8 @@ public class Move {
     public boolean checkWordValidity(String word) {
         InMemoryScrabbleWordChecker checker = new InMemoryScrabbleWordChecker();
         return (checker.isValidWord(word) != null) ? true : false;
-    }
+
+    } // MOVE TO GAME???
 
     /**
      * Calculate the score of a word
@@ -133,12 +130,10 @@ public class Move {
      */
     public int scoreCalculator(String word) {
         int score = 0;
-        if (checkWordValidity(word) == true) {
-            TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/letters.txt");
-            char[] charWord = stringToCharArray(word);
-            for (char c : charWord) {
-                score += tileBag.getLetterValue(c);
-            }
+        TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/letters.txt");
+        char[] charWord = stringToCharArray(word);
+        for (char c : charWord) {
+            score += tileBag.getLetterValue(c);
         }
         return score;
     }

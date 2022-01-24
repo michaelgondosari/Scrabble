@@ -15,7 +15,6 @@ public class Board {
     private static Map<String, String> boardScores;
     public static final int BOARD_SIZE = 15;
     private char[][] scrabbleBoard;
-    private TileBag tileBag;
 
     // --- Constructor -----------------------------
 
@@ -27,8 +26,6 @@ public class Board {
         // Initialize new map for board value
         this.initBoardScores();
 
-        // Initialize TileBag
-        tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
     }
 
     // --- Queries ---------------------------------
@@ -42,6 +39,16 @@ public class Board {
      */
     public char getTileOnBoard(int row, int column) {
         return scrabbleBoard[row][column];
+    }
+
+    /**
+     * Set the char of a square on the board
+     * @param row - the row of the board
+     * @param column - the column of the board
+     * @param c - the char to be set on the tile
+     */
+    public void setTileOnBoard(int row, int column, char c) {
+        scrabbleBoard[row][column] = c;
     }
 
     /**
@@ -140,12 +147,13 @@ public class Board {
     }
 
     /**
-     * Checks the board once a word is put down
-     * @param check - the word to be checked
-     * @return boardScores.get(check), or "1" if check is not found in map
+     * Get the multiplier from a square in the board
+     * @param coordinate - the coordinate of the board
+     * @return boardScores.get(coordinate), or "1" if coordinate is not found in map
+     * @requires coordinate between A0 and O15
      */
-    public String checkForBoardScore(String check) {
-        return boardScores.getOrDefault(check, "1");
+    public String getBoardMultiplier(String coordinate) {
+        return boardScores.getOrDefault(coordinate, "1");
     }
 
     /**
@@ -156,26 +164,6 @@ public class Board {
         Board boardCopy = new Board();
         boardCopy.scrabbleBoard = Arrays.copyOf(this.scrabbleBoard, this.scrabbleBoard.length);
         return boardCopy;
-    }
-
-    /**
-     * Place the word on the board
-     * @param move - the move made by a player
-     */
-    public void placeWord (Move move) {
-        if (move.getWordDoesExist()) {
-            String word = move.getWord();
-            int row = move.getPlaceRow();
-            char col = move.getPlaceCol();
-
-            for (int i = 0; i < word.length(); i++) {
-                if (move.getDirection() == Move.HORIZONTAL) {
-                    this.scrabbleBoard[row][col+i] = word.toUpperCase().charAt(i);
-                } else if (move.getDirection() == Move.VERTICAL) {
-                    this.scrabbleBoard[row+i][col] = word.toUpperCase().charAt(i);
-                }
-            }
-        }
     }
 
 //    public static void main(String[] args) {

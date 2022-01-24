@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="updated Sunday">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/BoardPrinter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/TerminalColors.java" afterDir="false" />
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="added BoardPrinter">
+      <change afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/InvalidMoveException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ScrabbleBoard.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrabbleBoard.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TileBag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/View.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/BoardPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LocalTUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +38,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SSHome/softwaredevelopment" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -58,7 +58,7 @@
       <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.BoardPrinter">
+  <component name="RunManager" selected="Application.LocalTUI">
     <configuration name="Board" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.Board" />
       <module name="Scrabble" />
@@ -72,8 +72,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BoardPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="view.BoardPrinter" />
+    <configuration name="LocalTUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.LocalTUI" />
       <module name="Scrabble" />
       <extension name="coverage">
         <pattern>
@@ -126,7 +126,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.BoardPrinter" />
+        <item itemvalue="Application.LocalTUI" />
         <item itemvalue="Application.TerminalColors" />
         <item itemvalue="Application.Board" />
         <item itemvalue="Application.TileBag" />
@@ -248,7 +248,28 @@
       <option name="project" value="LOCAL" />
       <updated>1642974968894</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="fixed 0 to O">
+      <created>1643020919014</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1643020919014</updated>
+    </task>
+    <task id="LOCAL-00017" summary="updated Monday">
+      <created>1643020956376</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1643020956376</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added BoardPrinter">
+      <created>1643020983197</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1643020983197</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -279,6 +300,9 @@
     <MESSAGE value="updated TileBag&#10;updated initBoardScores" />
     <MESSAGE value="updated Saturday" />
     <MESSAGE value="updated Sunday" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated Sunday" />
+    <MESSAGE value="fixed 0 to O" />
+    <MESSAGE value="updated Monday" />
+    <MESSAGE value="added BoardPrinter" />
+    <option name="LAST_COMMIT_MESSAGE" value="added BoardPrinter" />
   </component>
 </project>
