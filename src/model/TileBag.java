@@ -137,12 +137,13 @@ public class TileBag {
     }
 
 //    public static void main(String[] args) {
-//        TileBag tb = new TileBag(System.getProperty("user.dir") + "/letters.txt");
+//        TileBag tb = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
 //        System.out.println(tb.getLetterValue('z'));
 //        System.out.println(tb.getTilesLeft());
 //        System.out.println(tb.drawTiles(7));
-        // check size also, create a new list then draw, then check?
-        // check swap tiles
+//        System.out.println(tb.getTilesLeft());
+////         check size also, create a new list then draw, then check?
+////         check swap tiles
 //    }
 
 } // end of class
