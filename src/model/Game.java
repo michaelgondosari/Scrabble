@@ -4,6 +4,7 @@ import model.wordchecker.InMemoryScrabbleWordChecker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Game {
 
@@ -12,24 +13,75 @@ public class Game {
     private List<Player> players;
     private Board board;
     private TileBag tileBag;
+    private int currentPlayerIndex;
 
     // --- Constructor -----------------------------
 
     public Game(List<Player> players) {
-        this.players = players;
+        // Generate new board
         this.board = new Board();
+
+        // Generate new tilebag
         this.tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
+
+        // Generate new list of players
+        this.players = players;
+        for (Player player : players) {
+            player.addTilesToRack(tileBag.drawTiles(7));
+        }
+        Random r = new Random();
+        this.currentPlayerIndex = r.nextInt(players.size()); // randomly decides which player starts
+    }
+
+    // --- Queries ---------------------------------
+
+    /**
+     * Get the current board
+     * @return current board
+     */
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     * Get a list of players in the current game
+     * @return a list of players in the current game
+     */
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * Get who is the current player
+     * @return the current player
+     */
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayerIndex);
+    }
+
+    /**
+     * Get the current tile bag
+     * @return the current tile bag
+     */
+    public TileBag getTileBag() {
+        return tileBag;
     }
 
     // --- Commands --------------------------------
 
     /**
+     * Change turn to the next player
+     */
+    public void nextPlayer() {
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % players.size();
+    }
+
+    /**
      * Get all words formed from a player's move
      * @param move - the player's move
-     * @param board - the current board
      * @return a list of words formed by the player's move
      */
-    public List<String> getAllWords(Move move, Board board) {
+    public List<String> getAllWords(Move move) {
         List<String> result = new ArrayList<>();
         String word = move.getWord();
         int startRow = board.convertRow(move.getPlaceRow());
@@ -194,26 +246,24 @@ public class Game {
      * Check if all the words in a list are defined in the dictionary
      * @param words - a list of words to be checked
      * @return true if all words in the list are valid, false otherwise
+     * @throws InvalidWordException if word is not found in the dictionary
      */
-    public boolean checkWordsValid(List<String> words) {
-        boolean result = true;
+    public boolean checkWordsValid(List<String> words) throws InvalidWordException {
         InMemoryScrabbleWordChecker checker = new InMemoryScrabbleWordChecker();
         for (String word : words) {
-            result = (checker.isValidWord(word) != null) ? true : false;
-            if (!result) {
-                break;
+            if (checker.isValidWord(word) == null) {
+                throw new InvalidWordException();
             }
         }
-        return result;
+        return true;
     }
 
     /**
      * Check if a move is valid and does not overwrite an existing tile on board
      * @param move - the move made by a player
-     * @param board - current board
      * @return true if a move does not overwrite an existing tile, false otherwise
      */
-    public boolean checkMoveOverwrite(Move move, Board board) {
+    public boolean checkMoveOverwrite(Move move) {
         String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
         int startCol = board.convertCol(move.getPlaceCol());
@@ -241,10 +291,9 @@ public class Game {
     /**
      * Check if a move is valid and all the tiles placed are inside the board
      * @param move - the move made by a player
-     * @param board - current board
      * @return true if a move is inside the board, false otherwise
      */
-    public boolean checkMoveInsideBoard(Move move, Board board) {
+    public boolean checkMoveInsideBoard(Move move) {
         String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
         int startCol = board.convertCol(move.getPlaceCol());
@@ -260,10 +309,9 @@ public class Game {
     /**
      * Calculate the total score of a move by a player
      * @param move - the move made by a player
-     * @param board - current board
      * @return the total score of the player's move
      */
-    public int calculateScore(Move move, Board board) {
+    public int calculateScore(Move move) {
         TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/letters.txt");
         String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
@@ -403,7 +451,7 @@ public class Game {
         for (char c : charFirstWord) {
             firstWord += c;
         }
-        List<String> otherWords = getAllWords(move, board);
+        List<String> otherWords = getAllWords(move);
         otherWords.remove(firstWord);
 
         // then, iterate and add the letter values
@@ -416,6 +464,63 @@ public class Game {
 
         // Finally, return the addition of firstWordValue (with multiplier) and otherWordsValue (without multiplier)
         return firstWordScore + otherWordsScore;
+    }
+
+    /**
+     * Returns if the game is over
+     * @return true if game is finished, false otherwise
+     */
+    public boolean gameOver() {
+        boolean gameOver = false;
+        if (this.tileBag.getTilesLeft() == 0
+                && this.players.get(currentPlayerIndex).getRackSize() == 0) {
+            gameOver = true;
+        }
+        return gameOver;
+    }
+
+    /**
+     * Get the winner of the current game
+     * @return the player who wins the game
+     */
+    public Player getWinner() {
+        Player winner = null;
+        int highestScore = -1;
+        for (Player p : players) {
+            if (p.getScore() > highestScore) {
+                winner = p;
+                highestScore = p.getScore();
+            }
+        }
+        return winner;
+    }
+
+    /**
+     * Resets the board
+     */
+    public void reset() {
+        this.board.initBoard();
+        this.tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
+        Random r = new Random();
+        this.currentPlayerIndex = r.nextInt(players.size());
+    }
+
+    /**
+     * Place the tiles on the board
+     * @param move - the move made by a player
+     */
+    public void placeTileOnBoard(Move move) {
+        String word = move.getWord().toUpperCase();
+        int startRow = board.convertRow(move.getPlaceRow());
+        int startCol = board.convertCol(move.getPlaceCol());
+
+        for (int i = 0; i < word.length(); i++) {
+            if (move.getDirection() == Move.HORIZONTAL) {
+                board.setTileOnBoard(startRow, startCol + i, word.toUpperCase().charAt(i));
+            } else if (move.getDirection() == Move.VERTICAL) {
+                board.setTileOnBoard(startRow + i, startCol, word.toUpperCase().charAt(i));
+            }
+        }
     }
 
 } // end of class

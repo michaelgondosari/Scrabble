@@ -1,6 +1,8 @@
 package view;
 
 import model.Board;
+import model.Game;
+import model.Player;
 
 public class LocalTUI {
 
@@ -9,11 +11,12 @@ public class LocalTUI {
      * @param board - current Scrabble board
      * @return TUI of current Scrabble board
      */
-    public static String printBoard(Board board) {
+    public void printBoard(Board board) {
 
         StringBuffer boardView = new StringBuffer();
 
         // 1st line (A-O)
+        System.out.println("");
         boardView.append("   ");
         for (int col = 0; col < Board.BOARD_SIZE; col++) {
             boardView.append("  " + (char)(65 + col) + " ");
@@ -75,12 +78,61 @@ public class LocalTUI {
         }
         boardView.append("───┘");
 
-        return boardView.toString();
+        System.out.println(boardView);
+    }
+
+    public void askCommand(Player player) {
+        System.out.println(String.format("\nPlayer %s, your turn, choose one from below options:", player.getName()));
+        System.out.println("==========================================================");
+        System.out.println("MOVE  : enter a word onto the Scrabble board");
+        System.out.println("SWAP  : swap some or all of your current tiles");
+        System.out.println("SKIP  : skip your turn");
+        System.out.println("SCORE : view current score");
+        System.out.println("QUIT  : quit the game");
+        System.out.println("Your current rack: " + player.getCurrentTiles());
+        System.out.println("> ");
+    }
+
+    public void askMove(Player player) {
+        System.out.println(String.format("\nPlayer %s, please enter your move in below format:", player.getName()));
+        System.out.println("word direction startingColumn startingRow");
+        System.out.println("==================================================================");
+        System.out.println("word          : Enter a valid English word");
+        System.out.println("direction     : H for horizontal or V for vertical");
+        System.out.println("staringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O");
+        System.out.println("startingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15");
+        System.out.println("> ");
+    }
+
+    public void askSkip(Player player) {
+        System.out.println(String.format("\nPlayer %s skips a turn.", player.getName()));
+    }
+
+    public void askSwap(Player player) {
+        System.out.println(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by space):", player.getName()));
+        System.out.println("> ");
+    }
+
+    public void askScore(Game game) {
+        System.out.println("");
+        for (Player p : game.getPlayers()) {
+            System.out.println(String.format("Player : %s, Score : %d", p.getName(), p.getScore()));
+        }
+    }
+
+    public void gameOver(Game game) {
+        System.out.println("\nGame over!");
+        System.out.println(String.format("Player %s wins with a score of %d.", game.getWinner().getName(), game.getWinner().getScore()));
     }
 
 //    public static void main(String[] args) {
-//        Board bp = new Board();
-//        System.out.println(printBoard(bp));
+//        LocalTUI tui = new LocalTUI();
+//        Board b = new Board();
+//        Player p = new Player("Michael");
+//        tui.printBoard(b);
+//        tui.askMove(p);
+//        tui.askCommand(p);
+//        tui.askSwap(p);
 //    }
 
 }

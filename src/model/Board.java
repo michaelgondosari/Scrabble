@@ -18,7 +18,7 @@ public class Board {
 
     // --- Constructor -----------------------------
 
-    public Board () {
+    public Board() {
 
         // Initialize board
         this.initBoard();

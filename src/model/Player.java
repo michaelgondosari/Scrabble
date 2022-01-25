@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Player {
 
@@ -10,21 +11,20 @@ public class Player {
     private String name;
     private int score;
     private List<Character> rack;
-    private boolean isMyTurn;
+    private Move move;
+//    private boolean isMyTurn;
 
     // --- Constructor -----------------------------
 
     /**
      * Constructor of Player
      * @param name - player's name
-     * @param rack - player's tile rack
-     * @param isMyTurn - true if it is the player's turn, false otherwise
      */
-    public Player (String name, List<Character> rack, boolean isMyTurn) {
+    public Player (String name) {
         this.name = name;
         this.score = 0;
-        this.rack = new ArrayList<>(rack);
-        this.isMyTurn = isMyTurn;
+        this.rack = new ArrayList<>();
+//        this.isMyTurn = false;
     }
 
     // --- Queries ---------------------------------
@@ -59,24 +59,32 @@ public class Player {
      * @return all current tiles in the rack
      */
     public List<Character> getCurrentTiles() {
-        return new ArrayList<>(rack);
+        return this.rack;
     }
 
     /**
-     * A boolean checking if it is the player turn
-     * @return true if it is the player's turn, false if not
+     * Get the move of the player
+     * @return the move of the player
      */
-    public boolean getMyTurn() {
-        return isMyTurn;
+    public Move getMove() {
+        return this.move;
     }
 
-    /**
-     * Set the turn of a player
-     * @param isMyTurn - true if it is the player's turn, false if not
-     */
-    public void setMyTurn(boolean isMyTurn) {
-        this.isMyTurn = isMyTurn;
-    }
+//    /**
+//     * A boolean checking if it is the player turn
+//     * @return true if it is the player's turn, false if not
+//     */
+//    public boolean getMyTurn() {
+//        return isMyTurn;
+//    }
+//
+//    /**
+//     * Set the turn of a player
+//     * @param isMyTurn - true if it is the player's turn, false if not
+//     */
+//    public void setMyTurn(boolean isMyTurn) {
+//        this.isMyTurn = isMyTurn;
+//    }
 
     // --- Commands --------------------------------
 
@@ -105,20 +113,20 @@ public class Player {
 
     /**
      * Helper class for useTiles
-     * Use a tile from the player's rack and remove it from the rack
-     * @param tile - tile to be used
+     * Remove a tile from the player's rack
+     * @param tile - tile to be removed
      */
-    private void useTile(char tile) {
-        rack.remove(tile);
+    private void removeTileFromRack(char tile) {
+        rack.remove(rack.indexOf(tile));
     }
 
     /**
-     * Use a list of tiles from the player's rack and remove those from the rack
-     * @param tilesToUse - list of tiles to be used
+     * Remove a list of tiles from the player's rack
+     * @param tilesToUse - list of tiles to be removed
      */
-    public void useTiles(List<Character> tilesToUse) {
+    public void removeTilesFromRack(List<Character> tilesToUse) {
         for (char tile : tilesToUse) {
-            this.useTile(tile);
+            this.removeTileFromRack(tile);
         }
     }
 
@@ -126,26 +134,58 @@ public class Player {
      * Add tiles to the player's rack
      * @param tilesToAdd - list of tiles to be added to the rack
      */
-    public void addTiles(List<Character> tilesToAdd) {
+    public void addTilesToRack(List<Character> tilesToAdd) {
         rack.addAll(tilesToAdd);
     }
 
     /**
-     * Place the word on the board
-     * @param move - the move made by a player
+     * Ask the player to make a move
+     * @throws InvalidMoveException if the input is invalid
      */
-    public void placeWord (Move move, Board board) {
-        String word = move.getWord().toUpperCase();
-        int startRow = board.convertRow(move.getPlaceRow());
-        int startCol = board.convertCol(move.getPlaceCol());
+    public void makeMove() throws InvalidMoveException {
+        Scanner scanMove = new Scanner(System.in);
 
-        for (int i = 0; i < word.length(); i++) {
-            if (move.getDirection() == Move.HORIZONTAL) {
-                board.setTileOnBoard(startRow, startCol + i, word.toUpperCase().charAt(i));
-            } else if (move.getDirection() == Move.VERTICAL) {
-                board.setTileOnBoard(startRow + i, startCol, word.toUpperCase().charAt(i));
+        String word = scanMove.next();
+        char direction = scanMove.next().toUpperCase().charAt(0);
+        char startCol = scanMove.next().toUpperCase().charAt(0);
+        int startRow = scanMove.nextInt();
+
+        if ( !(direction == 'H' || direction == 'V')
+                || !(startCol >= 65 && startCol < 65 + Board.BOARD_SIZE)
+                || !(startRow > 0 && startRow <= Board.BOARD_SIZE) ) {
+            throw new InvalidMoveException("That is an invalid move!");
+        }
+
+        this.move = new Move(word, direction, startCol, startRow);
+        scanMove.close();
+    }
+
+    /**
+     * Check if the player has all the tiles that the player wants to swap
+     * @param tilesToSwap - list of tiles that the player wants to swap
+     * @return true if the player has all the tiles that the player wants to swap
+     * @throws InvalidMoveException if there are tiles that the player does not have
+     */
+    public boolean checkSwapTilesInRack(List<Character> tilesToSwap) throws InvalidMoveException {
+        List<Character> playerRack = getCurrentTiles();
+        for (char c : tilesToSwap) {
+            if (playerRack.contains(c)) {
+                playerRack.remove(playerRack.indexOf(c));
+            } else {
+                throw new InvalidMoveException("There are some tiles not in your current rack!");
             }
         }
+        return true;
     }
+
+//    public static void main(String[] args) {
+//        Board b = new Board();
+//        Player p1 = new Player("Michael");
+//        try {
+//            p1.makeMove();
+//        } catch (InvalidMoveException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
 } // end of class

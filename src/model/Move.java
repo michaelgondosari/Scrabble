@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Move {
 
     // --- Variables -------------------------------
@@ -13,9 +11,6 @@ public class Move {
     private char direction;
     private int placeRow;
     private char placeCol;
-    private boolean wordDoesExist;
-    private ArrayList<String> secondWord;
-    private int numberOfMoves;
 
     // --- Constructor -----------------------------
 
@@ -32,8 +27,6 @@ public class Move {
         this.direction = direction;
         this.placeRow = placeRow;
         this.placeCol = placeCol;
-        this.wordDoesExist = false; // need to be validated
-        this.numberOfMoves = 0;
     }
 
     // --- Queries ---------------------------------
@@ -70,32 +63,7 @@ public class Move {
         return this.placeCol;
     }
 
-    /**
-     * Returns if the word is valid
-     * @return true if the word is valid, false otherwise
-     */
-    public boolean getWordDoesExist() {
-        return this.wordDoesExist;
-    }
-
-    /**
-     * Set the word validity
-     * @param isValid - true to set the word to valid, false otherwise
-     */
-    public void setWordDoesExist(boolean isValid) {
-        this.wordDoesExist = isValid;
-    }
-
     // --- Commands --------------------------------
-
-    /**
-     * Register the move
-     * @param move - move made by a player
-     */
-    public void registerMove(Move move) {
-        numberOfMoves++;
-        setWordDoesExist(true);
-    }
 
     /**
      * Convert a string to char array
