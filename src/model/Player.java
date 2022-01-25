@@ -190,22 +190,7 @@ public class Player {
         return true;
     }
 
-    public static void main(String[] args) {
-
-        List<Character> test = new ArrayList<>();
-        test.add('A');
-        test.add('C');
-        test.add('A');
-        test.add('B');
-        test.add('A');
-        test.add('B');
-
-        System.out.println(test);
-        test.remove(test.indexOf('A'));
-        test.remove(test.indexOf('B'));
-        System.out.println(test);
-
-    }
+//    public static void main(String[] args) {
 //        Board b = new Board();
 //        Player p1 = new Player("Michael");
 //        try {

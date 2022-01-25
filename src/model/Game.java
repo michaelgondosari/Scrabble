@@ -261,9 +261,10 @@ public class Game {
     /**
      * Check if a move is valid and does not overwrite an existing tile on board
      * @param move - the move made by a player
-     * @return true if a move does not overwrite an existing tile, false otherwise
+     * @return true if a move does not overwrite an existing tile
+     * @throws InvalidMoveException if a move overwrites an existing tile
      */
-    public boolean checkMoveOverwrite(Move move) {
+    public boolean checkMoveOverwrite(Move move) throws InvalidMoveException {
         String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
         int startCol = board.convertCol(move.getPlaceCol());
@@ -275,13 +276,13 @@ public class Game {
             if (move.getDirection() == Move.HORIZONTAL) {
                 if (board.getTileOnBoard(startRow, startCol + i) != ' '
                         && board.getTileOnBoard(startRow, startCol + i) != c) {
-                    return false;
+                    throw new InvalidMoveException("You cannot overwrite an existing tile on the board!");
                 }
 
             } else if (move.getDirection() == Move.VERTICAL) {
                 if (board.getTileOnBoard(startRow + i, startCol) != ' '
                         && board.getTileOnBoard(startRow + i, startCol) != c) {
-                    return false;
+                    throw new InvalidMoveException("You cannot overwrite an existing tile on the board!");
                 }
             }
         }
@@ -291,9 +292,10 @@ public class Game {
     /**
      * Check if a move is valid and all the tiles placed are inside the board
      * @param move - the move made by a player
-     * @return true if a move is inside the board, false otherwise
+     * @return true if a move is inside the board
+     * @throws InvalidMoveException if a move is outside the board
      */
-    public boolean checkMoveInsideBoard(Move move) {
+    public boolean checkMoveInsideBoard(Move move) throws InvalidMoveException {
         String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
         int startCol = board.convertCol(move.getPlaceCol());
@@ -301,7 +303,7 @@ public class Game {
         // invalid if move is outside board size
         if (startCol + word.length() - 1 > Board.BOARD_SIZE
                 || startRow + word.length() - 1 > Board.BOARD_SIZE) {
-            return false;
+            throw new InvalidMoveException("You cannot place a tile outside the board!");
         }
         return true;
     }
