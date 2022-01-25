@@ -117,16 +117,16 @@ public class Player {
      * @param tile - tile to be removed
      */
     private void removeTileFromRack(char tile) {
-        rack.remove(rack.indexOf(tile));
+        getCurrentTiles().remove((Character) tile);
     }
 
     /**
      * Remove a list of tiles from the player's rack
-     * @param tilesToUse - list of tiles to be removed
+     * @param tilesToRemove - list of tiles to be removed
      */
-    public void removeTilesFromRack(List<Character> tilesToUse) {
-        for (char tile : tilesToUse) {
-            this.removeTileFromRack(tile);
+    public void removeTilesFromRack(List<Character> tilesToRemove) {
+        for (char tile : tilesToRemove) {
+            removeTileFromRack(tile);
         }
     }
 
@@ -161,16 +161,28 @@ public class Player {
     }
 
     /**
+     * Creates a deep copy of the player's current rack
+     * @return a deep copy of the player's current rack
+     */
+    public List<Character> rackCopy() {
+        List<Character> rackCopy = new ArrayList<>();
+        for (char c : getCurrentTiles()) {
+            rackCopy.add(c);
+        }
+        return rackCopy;
+    }
+
+    /**
      * Check if the player has all the tiles that the player wants to swap
      * @param tilesToSwap - list of tiles that the player wants to swap
      * @return true if the player has all the tiles that the player wants to swap
      * @throws InvalidMoveException if there are tiles that the player does not have
      */
     public boolean checkSwapTilesInRack(List<Character> tilesToSwap) throws InvalidMoveException {
-        List<Character> playerRack = getCurrentTiles();
+        List<Character> playerRack = this.rackCopy();
         for (char c : tilesToSwap) {
             if (playerRack.contains(c)) {
-                playerRack.remove(playerRack.indexOf(c));
+                playerRack.remove((Character) c);
             } else {
                 throw new InvalidMoveException("There are some tiles not in your current rack!");
             }
@@ -178,7 +190,22 @@ public class Player {
         return true;
     }
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
+
+        List<Character> test = new ArrayList<>();
+        test.add('A');
+        test.add('C');
+        test.add('A');
+        test.add('B');
+        test.add('A');
+        test.add('B');
+
+        System.out.println(test);
+        test.remove(test.indexOf('A'));
+        test.remove(test.indexOf('B'));
+        System.out.println(test);
+
+    }
 //        Board b = new Board();
 //        Player p1 = new Player("Michael");
 //        try {

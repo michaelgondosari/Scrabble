@@ -158,7 +158,7 @@ public class Board {
 
     /**
      * Creates a deep copy of the scrabble board
-     * @return
+     * @return deep copy of the current board
      */
     public Board deepCopy() {
         Board boardCopy = new Board();

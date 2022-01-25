@@ -109,7 +109,7 @@ public class LocalTUI {
     }
 
     public void askSwap(Player player) {
-        System.out.println(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by space):", player.getName()));
+        System.out.println(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by comma):", player.getName()));
         System.out.println("> ");
     }
 
