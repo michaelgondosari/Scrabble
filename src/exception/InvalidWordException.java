@@ -1,4 +1,4 @@
-package model;
+package exception;
 
 public class InvalidWordException extends Exception {
 

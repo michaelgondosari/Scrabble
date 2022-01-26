@@ -1,7 +1,8 @@
 package controller;
 
 import model.Game;
-import model.InvalidMoveException;
+import exception.InvalidMoveException;
+import exception.InvalidWordException;
 import model.Player;
 import view.LocalTUI;
 
@@ -18,11 +19,12 @@ public class PlayGame {
         Game newGame;
         List<Player> players = new ArrayList<>();
         LocalTUI tui = new LocalTUI();
+        Scanner scanner;
 
         // Initiate game and players
         System.out.println("Welcome, let's play a game of Scrabble!\n");
         System.out.println("Please enter the name of Player 1: ");
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         Player player1 = new Player(scanner.nextLine());
         players.add(player1);
         System.out.println("Please enter the name of Player 2: ");
@@ -45,66 +47,103 @@ public class PlayGame {
                 boolean loopSwitchAgain = true;
                 while (loopSwitchAgain) {
                     tui.askCommand(currentPlayer);
-                    switch (scanner.next().toUpperCase()) {
-                        case "MOVE":
-                            tui.askMove(currentPlayer);
-                            try {
-                                currentPlayer.makeMove();
-                            } catch (InvalidMoveException e) {
-                                System.err.println(e.getMessage());
-                            }
-                            // Check if the move is valid
 
+                    if (scanner.hasNextLine()) {
+                        String command = scanner.nextLine().toUpperCase();
+                        switch (command) {
 
-                            // If valid, then do the move
-
-                            loopSwitchAgain = false;
-                            break;
-
-                        case "SWAP":
-                            tui.askSwap(currentPlayer);
-                            // Check if the move is valid
-                            List<Character> tilesToSwap = new ArrayList<>();
-                            String[] swapTile = scanner.next().split(",");
-                            for (String s : swapTile) {
-                                tilesToSwap.add(s.toUpperCase().charAt(0));
-                            }
-                            try {
-                                if (currentPlayer.checkSwapTilesInRack(tilesToSwap)) {
-                                    // If valid, then do the move
-                                    currentPlayer.removeTilesFromRack(tilesToSwap);
-                                    System.out.println(Arrays.toString(swapTile)); // DELETE
-                                    System.out.println(tilesToSwap); // DELETE
-                                    System.out.println(currentPlayer.getCurrentTiles()); // DELETE
-                                    List<Character> swappedTiles = newGame.getTileBag().swapTiles(tilesToSwap);
-                                    System.out.println(swappedTiles); // DELETE
-                                    currentPlayer.addTilesToRack(swappedTiles);
-                                    System.out.println(currentPlayer.getCurrentTiles()); // DELETE
-                                    System.out.println("Your new rack: " + currentPlayer.getCurrentTiles());
+                            case "MOVE":
+                                tui.askMove(currentPlayer);
+                                try {
+                                    currentPlayer.makeMove(scanner);
+                                } catch (InvalidMoveException e) {
+                                    System.err.println(e.getMessage());
                                 }
-                            } catch (InvalidMoveException e) {
-                                System.err.println(e.getMessage()); // if swap is invalid
-                            }
-                            loopSwitchAgain = false;
-                            break;
+                                // Check if the move is valid
+                                try {
+                                    if ( newGame.checkMoveOverwrite(currentPlayer.getMove())
+                                            && newGame.checkMoveInsideBoard(currentPlayer.getMove())
+                                            && newGame.checkUsingAvailableTiles(currentPlayer.getMove()) ) {
+                                        // If a blank tile is played, change it to another letter
+                                        if (currentPlayer.getMove().getWord().contains("?")) {
+                                            System.out.println("Please input the letter for '?' : ");
+                                            char blankTile = scanner.next().toUpperCase().charAt(0);
+                                            currentPlayer.getMove().getWord().replace('?', blankTile);
+                                        }
+                                        // Check if the word is valid
+                                        if (newGame.checkWordsValid(newGame.getAllWords(currentPlayer.getMove()))) {
+                                            // If valid, then do the move :
+                                            // 1. remove tiles from player's rack
+                                            currentPlayer.removeTilesFromRack(newGame.tilesToRemove(currentPlayer.getMove()));
+                                            // 2. place tiles on board
+                                            newGame.placeTileOnBoard(currentPlayer.getMove());
+                                            // 3. calculate points and update the player's points
+                                            currentPlayer.addScore(newGame.calculateScore(currentPlayer.getMove()));
+                                            // 4. players draw new tiles
+                                            int tileUsed = newGame.tilesToRemove(currentPlayer.getMove()).size();
+                                            currentPlayer.addTilesToRack(newGame.getTileBag().drawTiles(tileUsed));
+                                            // 5.print player's name, score, and current rack
+                                            System.out.println(String.format("Player %s, points : %d", currentPlayer.getName(), currentPlayer.getScore()));
+                                            System.out.println("New rack : " + currentPlayer.getCurrentTiles());
+                                        }
+                                    }
+                                } catch (InvalidMoveException | InvalidWordException e) {
+                                    System.err.println(e.getMessage());
+                                }
+                                loopSwitchAgain = false;
+                                break;
 
-                        case "SKIP":
-                            tui.askSkip(currentPlayer);
-                            loopSwitchAgain = false;
-                            break;
+                            case "SWAP":
+                                tui.askSwap(currentPlayer);
+                                // Check if the move is valid
+                                List<Character> tilesToSwap = new ArrayList<>();
+                                String[] swapTile = scanner.next().split(",");
+                                for (String s : swapTile) {
+                                    tilesToSwap.add(s.toUpperCase().charAt(0));
+                                }
+                                try {
+                                    if (currentPlayer.checkSwapTilesInRack(tilesToSwap)) {
+                                        // If valid, then do the move
+                                        currentPlayer.removeTilesFromRack(tilesToSwap);
+                                        System.out.println(Arrays.toString(swapTile)); // DELETE
+                                        System.out.println(tilesToSwap); // DELETE
+                                        System.out.println(currentPlayer.getCurrentTiles()); // DELETE
+                                        List<Character> swappedTiles = newGame.getTileBag().swapTiles(tilesToSwap);
+                                        System.out.println(swappedTiles); // DELETE
+                                        currentPlayer.addTilesToRack(swappedTiles);
+                                        System.out.println(currentPlayer.getCurrentTiles()); // DELETE
+                                        System.out.println("Your new rack: " + currentPlayer.getCurrentTiles());
+                                    }
+                                } catch (InvalidMoveException e) {
+                                    System.err.println(e.getMessage()); // if swap is invalid
+                                }
+                                loopSwitchAgain = false;
+                                break;
 
-                        case "SCORE":
-                            // Print score and loop the switch again
-                            tui.askScore(newGame);
-                            break;
+                            case "SKIP":
+                                tui.askSkip(currentPlayer);
+                                loopSwitchAgain = false;
+                                break;
 
-                        case "QUIT":
-                            tui.gameOver(newGame);
-                            System.out.println("Thank you for playing, see you next time!");
-                            scanner.close();
-                            System.exit(0);
+                            case "SCORE":
+                                // Print score and loop the switch again
+                                tui.askScore(newGame);
+                                break;
 
-                    } // end switch for command
+                            case "QUIT":
+                                tui.gameOver(newGame);
+                                System.out.println("Thank you for playing, see you next time!");
+                                scanner.close();
+                                System.exit(0);
+
+                            default:
+                                System.out.println("Unknown command!");
+                                break;
+
+                        } // end switch for command
+                    } // end of scanner has next line
+
+
                 } // end while loop for switch
 
                 // Next player's turn

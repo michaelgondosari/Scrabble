@@ -1,5 +1,7 @@
 package model;
 
+import exception.InvalidMoveException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -68,6 +70,14 @@ public class Player {
      */
     public Move getMove() {
         return this.move;
+    }
+
+    /**
+     * Set the move for the player
+     * @param move
+     */
+    public void setMove(Move move) {
+        this.move = move;
     }
 
 //    /**
@@ -142,22 +152,23 @@ public class Player {
      * Ask the player to make a move
      * @throws InvalidMoveException if the input is invalid
      */
-    public void makeMove() throws InvalidMoveException {
-        Scanner scanMove = new Scanner(System.in);
+    public void makeMove(Scanner scanner) throws InvalidMoveException {
 
-        String word = scanMove.next();
-        char direction = scanMove.next().toUpperCase().charAt(0);
-        char startCol = scanMove.next().toUpperCase().charAt(0);
-        int startRow = scanMove.nextInt();
+        if (scanner.hasNextLine()) {
+            String word = scanner.next();
+            char direction = scanner.next().toUpperCase().charAt(0);
+            char startCol = scanner.next().toUpperCase().charAt(0);
+            int startRow = scanner.nextInt();
 
-        if ( !(direction == 'H' || direction == 'V')
-                || !(startCol >= 65 && startCol < 65 + Board.BOARD_SIZE)
-                || !(startRow > 0 && startRow <= Board.BOARD_SIZE) ) {
-            throw new InvalidMoveException("That is an invalid move!");
+            if ( !(direction == 'H' || direction == 'V')
+                    || !(startCol >= 65 && startCol < 65 + Board.BOARD_SIZE)
+                    || !(startRow > 0 && startRow <= Board.BOARD_SIZE) ) {
+                throw new InvalidMoveException("That is an invalid move!");
+            }
+
+            this.move = new Move(word, direction, startCol, startRow);
         }
 
-        this.move = new Move(word, direction, startCol, startRow);
-        scanMove.close();
     }
 
     /**
@@ -189,6 +200,7 @@ public class Player {
         }
         return true;
     }
+
 
 //    public static void main(String[] args) {
 //        Board b = new Board();

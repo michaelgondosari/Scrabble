@@ -62,6 +62,14 @@ public class Board {
         return scrabbleBoard[convertRow(row)][convertCol(column)];
     }
 
+    /**
+     * Get the board multiplier map
+     * @return the board multiplier map
+     */
+    public Map<String, String> getBoardScores() {
+        return boardScores;
+    }
+
     // --- Commands --------------------------------
 
     /**

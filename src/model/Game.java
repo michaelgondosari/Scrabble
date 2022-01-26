@@ -1,10 +1,14 @@
 package model;
 
+import exception.InvalidMoveException;
+import exception.InvalidWordException;
 import model.wordchecker.InMemoryScrabbleWordChecker;
+import view.LocalTUI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 
@@ -83,7 +87,7 @@ public class Game {
      */
     public List<String> getAllWords(Move move) {
         List<String> result = new ArrayList<>();
-        String word = move.getWord();
+        String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
         int startCol = board.convertCol(move.getPlaceCol());
 
@@ -123,11 +127,12 @@ public class Game {
             }
             
             // add to list result
-            if (leftRight != "") {
+            if (leftRight.length() > 1) {
                 result.add(leftRight);
             }
 
             // check above and below each placed tile
+
             for (int i = 0; i < word.length(); i++) {
                 List<Character> charAdditionalWords = new ArrayList<>();
                 if (board.getTileOnBoard(startRow, startCol + i) == ' ') { // only check the tile placed by player, not existing tile on board
@@ -135,22 +140,26 @@ public class Game {
                     charAdditionalWords.add(c);
                     // check above
                     if (startRow > 0) {
-                        char nextChar = board.getTileOnBoard(startRow - 1, startCol);
                         int x = 1;
+                        char nextChar = '@';
                         while (nextChar != ' ') {
-                            charAdditionalWords.add(0, nextChar);
+                            nextChar = startRow - x >= 0 ? board.getTileOnBoard(startRow - x, startCol + i) : ' ';
+                            if (nextChar != ' ') {
+                                charAdditionalWords.add(0, nextChar);
+                            }
                             x++;
-                            nextChar = board.getTileOnBoard(startRow - x, startCol);
                         }
                     }
                     // check below
                     if (startRow + word.length() - 1 < Board.BOARD_SIZE - 1) {
-                        char nextChar = board.getTileOnBoard(startRow + word.length(), startCol);
-                        int x = 0;
+                        int x = 1;
+                        char nextChar = '@';
                         while (nextChar != ' ') {
-                            charAdditionalWords.add(charAdditionalWords.size(), nextChar);
+                            nextChar = startRow + x < Board.BOARD_SIZE ? board.getTileOnBoard(startRow + i - x, startCol) : ' ';
+                            if (nextChar != ' ') {
+                                charAdditionalWords.add(charAdditionalWords.size(), nextChar);
+                            }
                             x++;
-                            nextChar = board.getTileOnBoard(startRow + word.length() + x, startCol);
                         }
                     }
                     // combine above and below
@@ -159,7 +168,7 @@ public class Game {
                         upDown += upDownAdditional;
                     }
                     // add to list result
-                    if (upDown != "") {
+                    if (upDown.length() > 1) {
                         result.add(upDown);
                     }
                 }
@@ -197,7 +206,7 @@ public class Game {
             }
             
             //add to list result
-            if (upDown != "") {
+            if (upDown.length() > 1) {
                 result.add(upDown);
             }
 
@@ -209,15 +218,30 @@ public class Game {
                     charAdditionalWords.add(c);
                     // check left
                     if (startCol > 0) {
-                        char nextChar = board.getTileOnBoard(startRow, startCol - 1);
                         int x = 1;
+                        char nextChar = '@';
                         while (nextChar != ' ') {
-                            charAdditionalWords.add(0, nextChar);
+                            nextChar = startCol - x >= 0 ? board.getTileOnBoard(startRow + i, startCol - x) : ' ';
+                            if (nextChar != ' ') {
+                                charAdditionalWords.add(0, nextChar);
+                            }
                             x++;
-                            nextChar = board.getTileOnBoard(startRow, startCol - x);
                         }
                     }
                     // check right
+                    if (startCol + word.length() - 1 < Board.BOARD_SIZE - 1) {
+                        int x = 1;
+                        char nextChar = '@';
+                        while (nextChar != ' ') {
+                            nextChar = startCol + x < Board.BOARD_SIZE ? board.getTileOnBoard(startRow + i, startCol + x) : ' ';
+                            if (nextChar != ' ') {
+                                charAdditionalWords.add(charAdditionalWords.size(), nextChar);
+                            }
+                            x++;
+                        }
+                    }
+
+
                     if (startCol + word.length() - 1 < Board.BOARD_SIZE - 1) {
                         char nextChar = board.getTileOnBoard(startRow, startCol + word.length());
                         int x = 0;
@@ -233,7 +257,7 @@ public class Game {
                         leftRight += leftRightAdditional;
                     }
                     // add to list result
-                    if (leftRight != "") {
+                    if (leftRight.length() > 1) {
                         result.add(leftRight);
                     }
                 }
@@ -307,6 +331,69 @@ public class Game {
         }
         return true;
     }
+
+    /**
+     * Check if a move made is using available tiles
+     * @param move - the move made by a player
+     * @return true if a move made is using available tiles
+     * @throws InvalidMoveException if there are tile(s) used not from the current rack
+     */
+    public boolean checkUsingAvailableTiles(Move move) throws InvalidMoveException {
+        String word = move.getWord().toUpperCase();
+        int startRow = board.convertRow(move.getPlaceRow());
+        int startCol = board.convertCol(move.getPlaceCol());
+
+        List<Character> wordChar = tilesToRemove(move);
+
+        // compare the list with current rack
+        List<Character> playerRack = getCurrentPlayer().rackCopy();
+        for (char c : wordChar) {
+            if (playerRack.contains(c)) {
+                playerRack.remove((Character) c);
+            } else {
+                throw new InvalidMoveException("You must use the tiles from your rack!");
+            }
+        }
+
+        // if all tiles are available in the rack, check is true
+        return true;
+    }
+
+    /**
+     * Exclude the letter in player's move that already exists on the board accordingly
+     * @param move - the move made by a player
+     * @return a modified list of letters from the move's word
+     */
+    public List<Character> tilesToRemove(Move move) {
+        String word = move.getWord().toUpperCase();
+        int startRow = board.convertRow(move.getPlaceRow());
+        int startCol = board.convertCol(move.getPlaceCol());
+
+        List<Character> result = new ArrayList<>();
+        for (int i = 0; i < word.length(); i++) {
+            result.add(word.charAt(i));
+        }
+
+        // check board if there are tiles already placed
+        if (move.getDirection() == Move.HORIZONTAL) {
+            for (int i = 0; i < word.length(); i++) {
+                if (board.getTileOnBoard(startRow, startCol + i) != ' ') {
+                    // remove it from the char list
+                    result.remove((Character) board.getTileOnBoard(startRow, startCol + i));
+                }
+            }
+        } else if (move.getDirection() == Move.VERTICAL) {
+            for (int i = 0; i < word.length(); i++) {
+                if (board.getTileOnBoard(startRow + i, startCol) != ' ') {
+                    // remove it from the char list
+                    result.remove((Character) board.getTileOnBoard(startRow + i, startCol));
+                }
+            }
+        }
+
+        return result;
+    }
+
 
     /**
      * Calculate the total score of a move by a player
@@ -518,11 +605,56 @@ public class Game {
 
         for (int i = 0; i < word.length(); i++) {
             if (move.getDirection() == Move.HORIZONTAL) {
+                if (board.getTileOnBoard(startRow, startCol + i) != ' ') {
+                    continue; // not putting the tile if there is existing tile on board (most likely this letter is not on the rack either)
+                }
                 board.setTileOnBoard(startRow, startCol + i, word.toUpperCase().charAt(i));
             } else if (move.getDirection() == Move.VERTICAL) {
+                if (board.getTileOnBoard(startRow + i, startCol) != ' ') {
+                    continue; // not putting the tile if there is existing tile on board (most likely this letter is not on the rack either)
+                }
                 board.setTileOnBoard(startRow + i, startCol, word.toUpperCase().charAt(i));
             }
         }
     }
+
+
+
+    public static void main(String[] args) {
+
+        LocalTUI tui = new LocalTUI();
+        Scanner scanner;
+        Player p1 = new Player("Michael");
+        Player p2 = new Player("Chiko");
+        List<Player> players = new ArrayList<>();
+        players.add(p1);
+        players.add(p2);
+        Game newGame = new Game(players);
+
+        String input1 = "paste H B 1";
+        String input2 = "bit H A 2";
+        scanner = new Scanner(input1);
+        try {
+            p1.makeMove(scanner);
+            newGame.placeTileOnBoard(p1.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+        scanner = new Scanner(input2);
+        try {
+            p2.makeMove(scanner);
+            System.out.println(newGame.getAllWords(p2.getMove()));
+            newGame.placeTileOnBoard(p2.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(newGame.getBoard().getTileOnBoard('B',1));
+
+        tui.printBoard(newGame.getBoard());
+
+        System.out.println(System.getProperty("user.dir"));
+    }
+
 
 } // end of class
