@@ -4,7 +4,6 @@ import exception.InvalidMoveException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Player {
 
@@ -14,7 +13,6 @@ public class Player {
     private int score;
     private List<Character> rack;
     private Move move;
-//    private boolean isMyTurn;
 
     // --- Constructor -----------------------------
 
@@ -26,7 +24,6 @@ public class Player {
         this.name = name;
         this.score = 0;
         this.rack = new ArrayList<>();
-//        this.isMyTurn = false;
     }
 
     // --- Queries ---------------------------------
@@ -48,15 +45,6 @@ public class Player {
     }
 
     /**
-     * Get the tile of a specific index from the player's rack
-     * @param index - index of the tile in the rack
-     * @return a tile of the index from the rack
-     */
-    public char getTile(int index) {
-        return rack.get(index);
-    }
-
-    /**
      * Get a list of current tiles in the player's rack
      * @return all current tiles in the rack
      */
@@ -71,30 +59,6 @@ public class Player {
     public Move getMove() {
         return this.move;
     }
-
-    /**
-     * Set the move for the player
-     * @param move
-     */
-    public void setMove(Move move) {
-        this.move = move;
-    }
-
-//    /**
-//     * A boolean checking if it is the player turn
-//     * @return true if it is the player's turn, false if not
-//     */
-//    public boolean getMyTurn() {
-//        return isMyTurn;
-//    }
-//
-//    /**
-//     * Set the turn of a player
-//     * @param isMyTurn - true if it is the player's turn, false if not
-//     */
-//    public void setMyTurn(boolean isMyTurn) {
-//        this.isMyTurn = isMyTurn;
-//    }
 
     // --- Commands --------------------------------
 
@@ -149,28 +113,10 @@ public class Player {
     }
 
     /**
-     * Ask the player to make a move
+     * Player makes a move
+     * @param moveCommand - the move made by the player
      * @throws InvalidMoveException if the input is invalid
      */
-    public void makeMove(Scanner scanner) throws InvalidMoveException {
-
-        if (scanner.hasNextLine()) {
-            String word = scanner.next();
-            char direction = scanner.next().toUpperCase().charAt(0);
-            char startCol = scanner.next().toUpperCase().charAt(0);
-            int startRow = scanner.nextInt();
-
-            if ( !(direction == 'H' || direction == 'V')
-                    || !(startCol >= 65 && startCol < 65 + Board.BOARD_SIZE)
-                    || !(startRow > 0 && startRow <= Board.BOARD_SIZE) ) {
-                throw new InvalidMoveException("That is an invalid move!");
-            }
-
-            this.move = new Move(word, direction, startCol, startRow);
-        }
-
-    }
-
     public void makeMove(String[] moveCommand) throws InvalidMoveException {
         if (moveCommand.length != 4) {
             throw new InvalidMoveException("Invalid move command!");
@@ -180,7 +126,6 @@ public class Player {
         char startCol = moveCommand[2].toUpperCase().charAt(0);
         int startRow = Integer.parseInt(moveCommand[3]);
         this.move = new Move(word, direction, startCol, startRow);
-
     }
 
     /**
@@ -212,16 +157,5 @@ public class Player {
         }
         return true;
     }
-
-
-//    public static void main(String[] args) {
-//        Board b = new Board();
-//        Player p1 = new Player("Michael");
-//        try {
-//            p1.makeMove();
-//        } catch (InvalidMoveException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
 
 } // end of class
