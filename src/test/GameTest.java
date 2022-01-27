@@ -125,9 +125,19 @@ public class GameTest {
             e.printStackTrace();
         }
 
-//        LocalTUI tui = new LocalTUI();
-//        tui.printBoard(newGame.getBoard());
-
+        String input5 = "BIT h a 7";
+        scanner = new Scanner(input5);
+        try {
+            p1.makeMove(scanner);
+            List<String> wordsFormed = new ArrayList<>();
+            wordsFormed.add("BIT");
+            wordsFormed.add("PI");
+            wordsFormed.add("AT");
+            assertEquals(newGame.getAllWords(p1.getMove()), wordsFormed);
+            newGame.placeTileOnBoard(p1.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -154,6 +164,78 @@ public class GameTest {
         });
     }
 
+    @Test
+    public void testCalculateScore() {
+        String input1 = "HORN H F 8";
+        scanner = new Scanner(input1);
+        try {
+            p1.makeMove(scanner);
+            assertEquals(newGame.calculateScore(p1.getMove()), 14);
+            newGame.placeTileOnBoard(p1.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String input2 = "FARM V H 6";
+        scanner = new Scanner(input2);
+        try {
+            p2.makeMove(scanner);
+            assertEquals(newGame.calculateScore(p2.getMove()), 9);
+            newGame.placeTileOnBoard(p2.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String input3 = "PASTE H F 10";
+        scanner = new Scanner(input3);
+        try {
+            p1.makeMove(scanner);
+            assertEquals(newGame.calculateScore(p1.getMove()), 25);
+            newGame.placeTileOnBoard(p1.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String input4 = "MOB H H 9";
+        scanner = new Scanner(input4);
+        try {
+            p2.makeMove(scanner);
+            assertEquals(newGame.calculateScore(p2.getMove()), 15);
+            newGame.placeTileOnBoard(p2.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String input5 = "BIT H E 11";
+        scanner = new Scanner(input5);
+        try {
+            p1.makeMove(scanner);
+            assertEquals(newGame.calculateScore(p1.getMove()), 16);
+            newGame.placeTileOnBoard(p1.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String input6 = "BOARD V E 11";
+        scanner = new Scanner(input6);
+        try {
+            p2.makeMove(scanner);
+            assertEquals(newGame.calculateScore(p2.getMove()), 8);
+            newGame.placeTileOnBoard(p2.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String input7 = "HEARD H A 15";
+        scanner = new Scanner(input7);
+        try {
+            p1.makeMove(scanner);
+            assertEquals(newGame.calculateScore(p1.getMove()), 30);
+            newGame.placeTileOnBoard(p1.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

@@ -3,7 +3,6 @@ package model;
 import exception.InvalidMoveException;
 import exception.InvalidWordException;
 import model.wordchecker.InMemoryScrabbleWordChecker;
-import view.LocalTUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +26,7 @@ public class Game {
 
         // Generate new tilebag
         this.tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
+
 
         // Generate new list of players
         this.players = players;
@@ -155,7 +155,7 @@ public class Game {
                         int x = 1;
                         char nextChar = '@';
                         while (nextChar != ' ') {
-                            nextChar = startRow + x < Board.BOARD_SIZE ? board.getTileOnBoard(startRow + i - x, startCol) : ' ';
+                            nextChar = startRow + x < Board.BOARD_SIZE ? board.getTileOnBoard(startRow + x, startCol + i) : ' ';
                             if (nextChar != ' ') {
                                 charAdditionalWords.add(charAdditionalWords.size(), nextChar);
                             }
@@ -173,7 +173,6 @@ public class Game {
                     }
                 }
             }
-
 
         } else if (move.getDirection() == Move.VERTICAL) {
 
@@ -240,17 +239,6 @@ public class Game {
                             x++;
                         }
                     }
-
-
-                    if (startCol + word.length() - 1 < Board.BOARD_SIZE - 1) {
-                        char nextChar = board.getTileOnBoard(startRow, startCol + word.length());
-                        int x = 0;
-                        while (nextChar != ' ') {
-                            charAdditionalWords.add(charAdditionalWords.size(), nextChar);
-                            x++;
-                            nextChar = board.getTileOnBoard(startRow, startCol + word.length() + x);
-                        }
-                    }
                     // combine left and right
                     String leftRight = "";
                     for (char leftRightAdditional : charAdditionalWords) {
@@ -264,6 +252,23 @@ public class Game {
             }
         }
         return result;
+    }
+
+    /**
+     * Check the player's move
+     * @param direction
+     * @param startCol
+     * @param startRow
+     * @return
+     * @throws InvalidMoveException
+     */
+    public boolean checkMove(char direction, char startCol, int startRow) throws InvalidMoveException {
+        if ( !(direction == 'H' || direction == 'V')
+                || !(startCol >= 65 && startCol < 65 + Board.BOARD_SIZE)
+                || !(startRow > 0 && startRow <= Board.BOARD_SIZE) ) {
+            throw new InvalidMoveException("That is an invalid move!");
+        }
+        return true;
     }
 
     /**
@@ -401,7 +406,7 @@ public class Game {
      * @return the total score of the player's move
      */
     public int calculateScore(Move move) {
-        TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/letters.txt");
+        TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
         String word = move.getWord().toUpperCase();
         int startRow = board.convertRow(move.getPlaceRow());
         int startCol = board.convertCol(move.getPlaceCol());
@@ -622,38 +627,16 @@ public class Game {
 
     public static void main(String[] args) {
 
-        LocalTUI tui = new LocalTUI();
-        Scanner scanner;
-        Player p1 = new Player("Michael");
-        Player p2 = new Player("Chiko");
-        List<Player> players = new ArrayList<>();
-        players.add(p1);
-        players.add(p2);
-        Game newGame = new Game(players);
-
-        String input1 = "paste H B 1";
-        String input2 = "bit H A 2";
-        scanner = new Scanner(input1);
-        try {
-            p1.makeMove(scanner);
-            newGame.placeTileOnBoard(p1.getMove());
-        } catch (InvalidMoveException e) {
-            e.printStackTrace();
+        List<String> testList = new ArrayList<>();
+        Scanner scan1 = new Scanner(System.in);
+        System.out.println("type something: ");
+        String input = scan1.nextLine();
+        Scanner scan2 = new Scanner(input);
+        do {
+            testList.add(scan2.next());
         }
-        scanner = new Scanner(input2);
-        try {
-            p2.makeMove(scanner);
-            System.out.println(newGame.getAllWords(p2.getMove()));
-            newGame.placeTileOnBoard(p2.getMove());
-        } catch (InvalidMoveException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(newGame.getBoard().getTileOnBoard('B',1));
-
-        tui.printBoard(newGame.getBoard());
-
-        System.out.println(System.getProperty("user.dir"));
+        while (scan2.hasNext());
+        System.out.println(testList);
     }
 
 

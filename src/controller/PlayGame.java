@@ -1,8 +1,8 @@
 package controller;
 
-import model.Game;
 import exception.InvalidMoveException;
 import exception.InvalidWordException;
+import model.Game;
 import model.Player;
 import view.LocalTUI;
 
@@ -15,20 +15,21 @@ public class PlayGame {
 
     public static void main(String[] args) {
 
+        System.out.println(System.getProperty("user.dir"));
+
         // Initiate variables
         Game newGame;
         List<Player> players = new ArrayList<>();
         LocalTUI tui = new LocalTUI();
-        Scanner scanner;
+        Scanner scanner1 = new Scanner(System.in);;
 
         // Initiate game and players
         System.out.println("Welcome, let's play a game of Scrabble!\n");
         System.out.println("Please enter the name of Player 1: ");
-        scanner = new Scanner(System.in);
-        Player player1 = new Player(scanner.nextLine());
+        Player player1 = new Player(scanner1.nextLine());
         players.add(player1);
         System.out.println("Please enter the name of Player 2: ");
-        Player player2 = new Player(scanner.nextLine());
+        Player player2 = new Player(scanner1.nextLine());
         players.add(player2);
 
         newGame = new Game(players);
@@ -48,17 +49,22 @@ public class PlayGame {
                 while (loopSwitchAgain) {
                     tui.askCommand(currentPlayer);
 
-                    if (scanner.hasNextLine()) {
-                        String command = scanner.nextLine().toUpperCase();
+                    if (scanner1.hasNextLine()) {
+                        String command = scanner1.nextLine().toUpperCase();
                         switch (command) {
 
                             case "MOVE":
                                 tui.askMove(currentPlayer);
+
+                                String[] inputMove = scanner1.nextLine().split(" ");
+                                System.out.println(Arrays.toString(inputMove));
+
                                 try {
-                                    currentPlayer.makeMove(scanner);
-                                } catch (InvalidMoveException e) {
+                                    currentPlayer.makeMove(inputMove);
+                                } catch (InvalidMoveException | NumberFormatException e) {
                                     System.err.println(e.getMessage());
                                 }
+
                                 // Check if the move is valid
                                 try {
                                     if ( newGame.checkMoveOverwrite(currentPlayer.getMove())
@@ -67,7 +73,7 @@ public class PlayGame {
                                         // If a blank tile is played, change it to another letter
                                         if (currentPlayer.getMove().getWord().contains("?")) {
                                             System.out.println("Please input the letter for '?' : ");
-                                            char blankTile = scanner.next().toUpperCase().charAt(0);
+                                            char blankTile = scanner1.nextLine().toUpperCase().charAt(0);
                                             currentPlayer.getMove().getWord().replace('?', blankTile);
                                         }
                                         // Check if the word is valid
@@ -97,7 +103,7 @@ public class PlayGame {
                                 tui.askSwap(currentPlayer);
                                 // Check if the move is valid
                                 List<Character> tilesToSwap = new ArrayList<>();
-                                String[] swapTile = scanner.next().split(",");
+                                String[] swapTile = scanner1.nextLine().split(",");
                                 for (String s : swapTile) {
                                     tilesToSwap.add(s.toUpperCase().charAt(0));
                                 }
@@ -105,13 +111,8 @@ public class PlayGame {
                                     if (currentPlayer.checkSwapTilesInRack(tilesToSwap)) {
                                         // If valid, then do the move
                                         currentPlayer.removeTilesFromRack(tilesToSwap);
-                                        System.out.println(Arrays.toString(swapTile)); // DELETE
-                                        System.out.println(tilesToSwap); // DELETE
-                                        System.out.println(currentPlayer.getCurrentTiles()); // DELETE
                                         List<Character> swappedTiles = newGame.getTileBag().swapTiles(tilesToSwap);
-                                        System.out.println(swappedTiles); // DELETE
                                         currentPlayer.addTilesToRack(swappedTiles);
-                                        System.out.println(currentPlayer.getCurrentTiles()); // DELETE
                                         System.out.println("Your new rack: " + currentPlayer.getCurrentTiles());
                                     }
                                 } catch (InvalidMoveException e) {
@@ -133,7 +134,7 @@ public class PlayGame {
                             case "QUIT":
                                 tui.gameOver(newGame);
                                 System.out.println("Thank you for playing, see you next time!");
-                                scanner.close();
+                                scanner1.close();
                                 System.exit(0);
 
                             default:
@@ -155,7 +156,7 @@ public class PlayGame {
             // Game Over
             tui.gameOver(newGame);
             System.out.println("Play again (y/n): ");
-            char charPlayAgain = scanner.next().charAt(0);
+            char charPlayAgain = scanner1.next().charAt(0);
             if (charPlayAgain == 'n') {
                 playAgain = false;
             }
@@ -167,7 +168,7 @@ public class PlayGame {
 
         // If players don't want to play again, close the game
         System.out.println("Thank you for playing, see you next time!");
-        scanner.close();
+        scanner1.close();
         System.exit(0);
 
     } // end of main

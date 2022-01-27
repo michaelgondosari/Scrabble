@@ -171,6 +171,18 @@ public class Player {
 
     }
 
+    public void makeMove(String[] moveCommand) throws InvalidMoveException {
+        if (moveCommand.length != 4) {
+            throw new InvalidMoveException("Invalid move command!");
+        }
+        String word = moveCommand[0].toUpperCase();
+        char direction = moveCommand[1].toUpperCase().charAt(0);
+        char startCol = moveCommand[2].toUpperCase().charAt(0);
+        int startRow = Integer.parseInt(moveCommand[3]);
+        this.move = new Move(word, direction, startCol, startRow);
+
+    }
+
     /**
      * Creates a deep copy of the player's current rack
      * @return a deep copy of the player's current rack
