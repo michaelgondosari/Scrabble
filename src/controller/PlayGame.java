@@ -7,7 +7,6 @@ import model.Player;
 import view.LocalTUI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -57,19 +56,19 @@ public class PlayGame {
                                 tui.askMove(currentPlayer);
 
                                 String[] inputMove = scanner1.nextLine().split(" ");
-                                System.out.println(Arrays.toString(inputMove));
 
                                 try {
                                     currentPlayer.makeMove(inputMove);
                                 } catch (InvalidMoveException | NumberFormatException e) {
                                     System.err.println(e.getMessage());
+                                    break;
                                 }
 
                                 // Check if the move is valid
                                 try {
-                                    if ( newGame.checkMoveOverwrite(currentPlayer.getMove())
-                                            && newGame.checkMoveInsideBoard(currentPlayer.getMove())
-                                            && newGame.checkUsingAvailableTiles(currentPlayer.getMove()) ) {
+                                    if ( newGame.checkMoveInsideBoard(currentPlayer.getMove())
+                                            && newGame.checkUsingAvailableTiles(currentPlayer.getMove())
+                                            && newGame.checkMoveOverwrite(currentPlayer.getMove()) ) {
                                         // If a blank tile is played, change it to another letter
                                         if (currentPlayer.getMove().getWord().contains("?")) {
                                             System.out.println("Please input the letter for '?' : ");
@@ -81,13 +80,13 @@ public class PlayGame {
                                             // If valid, then do the move :
                                             // 1. remove tiles from player's rack
                                             currentPlayer.removeTilesFromRack(newGame.tilesToRemove(currentPlayer.getMove()));
-                                            // 2. place tiles on board
-                                            newGame.placeTileOnBoard(currentPlayer.getMove());
-                                            // 3. calculate points and update the player's points
+                                            // 2. calculate points and update the player's points
                                             currentPlayer.addScore(newGame.calculateScore(currentPlayer.getMove()));
-                                            // 4. players draw new tiles
+                                            // 3. players draw new tiles
                                             int tileUsed = newGame.tilesToRemove(currentPlayer.getMove()).size();
                                             currentPlayer.addTilesToRack(newGame.getTileBag().drawTiles(tileUsed));
+                                            // 4. place tiles on board
+                                            newGame.placeTileOnBoard(currentPlayer.getMove());
                                             // 5.print player's name, score, and current rack
                                             System.out.println(String.format("Player %s, points : %d", currentPlayer.getName(), currentPlayer.getScore()));
                                             System.out.println("New rack : " + currentPlayer.getCurrentTiles());
@@ -95,6 +94,7 @@ public class PlayGame {
                                     }
                                 } catch (InvalidMoveException | InvalidWordException e) {
                                     System.err.println(e.getMessage());
+                                    break;
                                 }
                                 loopSwitchAgain = false;
                                 break;
@@ -117,6 +117,7 @@ public class PlayGame {
                                     }
                                 } catch (InvalidMoveException e) {
                                     System.err.println(e.getMessage()); // if swap is invalid
+                                    break;
                                 }
                                 loopSwitchAgain = false;
                                 break;

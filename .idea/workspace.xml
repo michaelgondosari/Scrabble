@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="updated Wednesday after lunch">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="updated Thursday morning">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScrabbleBoardLayout.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/ScrabbleBoardLayout.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LocalTUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +60,7 @@
       <recent name="exception" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameTest.testCalculateScore">
+  <component name="RunManager" selected="Application.PlayGame">
     <configuration name="PlayGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controller.PlayGame" />
       <module name="Scrabble" />
@@ -139,10 +136,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PlayGame" />
         <item itemvalue="JUnit.GameTest.testCalculateScore" />
         <item itemvalue="JUnit.GameTest" />
         <item itemvalue="JUnit.GameTest.testGetAllWords" />
-        <item itemvalue="Application.PlayGame" />
         <item itemvalue="Application.TestChecker" />
       </list>
     </recent_temporary>
@@ -324,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643201970181</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="updated Thursday morning">
+      <created>1643273897075</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1643273897075</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -362,6 +366,7 @@
     <MESSAGE value="updated Tuesday before lunch" />
     <MESSAGE value="updated Tuesday after lunch" />
     <MESSAGE value="updated Wednesday after lunch" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated Wednesday after lunch" />
+    <MESSAGE value="updated Thursday morning" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated Thursday morning" />
   </component>
 </project>
