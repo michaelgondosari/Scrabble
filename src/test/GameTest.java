@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +18,6 @@ public class GameTest {
     Player p2 = new Player("Ronny");
     List<Player> players;
     Game newGame;
-    Scanner scanner;
 
     @BeforeEach
     public void setUp() {
@@ -42,11 +40,10 @@ public class GameTest {
 
     @Test
     public void testMakeMove() {
-        String input1 = "paste H B 1";
-        scanner = new Scanner(input1);
+        String[] input1 = {"paste", "H", "B", "1"};
         try {
-            p1.makeMove(scanner);
-            assertEquals(p1.getMove().getWord(),"paste");
+            p1.makeMove(input1);
+            assertEquals(p1.getMove().getWord(),"PASTE");
             assertEquals(p1.getMove().getDirection(), 'H');
             assertEquals(p1.getMove().getPlaceCol(), 'B');
             assertEquals(p1.getMove().getPlaceRow(), 1);
@@ -57,10 +54,9 @@ public class GameTest {
 
     @Test
     public void testPlaceTileOnBoard() {
-        String input1 = "paste H B 1";
-        scanner = new Scanner(input1);
+        String[] input1 = {"paste", "H", "B", "1"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input1);
             newGame.placeTileOnBoard(p1.getMove());
             assertEquals(newGame.getBoard().getTileOnBoard('B',1),'P');
             assertEquals(newGame.getBoard().getTileOnBoard('C',1),'A');
@@ -74,10 +70,9 @@ public class GameTest {
 
     @Test
     public void testGetAllWords() {
-        String input1 = "horn H B 4";
-        scanner = new Scanner(input1);
+        String[] input1 = {"horn", "H", "B", "4"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input1);
             List<String> wordsFormed = new ArrayList<>();
             wordsFormed.add("HORN");
             assertEquals(newGame.getAllWords(p1.getMove()), wordsFormed);
@@ -86,10 +81,9 @@ public class GameTest {
             e.printStackTrace();
         }
 
-        String input2 = "farm V D 2";
-        scanner = new Scanner(input2);
+        String[] input2 = {"farm", "V", "D", "2"};
         try {
-            p2.makeMove(scanner);
+            p2.makeMove(input2);
             List<String> wordsFormed = new ArrayList<>();
             wordsFormed.add("FARM");
             assertEquals(newGame.getAllWords(p2.getMove()), wordsFormed);
@@ -98,10 +92,9 @@ public class GameTest {
             e.printStackTrace();
         }
 
-        String input3 = "paste h b 6";
-        scanner = new Scanner(input3);
+        String[] input3 = {"paste", "h", "b", "6"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input3);
             List<String> wordsFormed = new ArrayList<>();
             wordsFormed.add("PASTE");
             wordsFormed.add("FARMS");
@@ -111,10 +104,9 @@ public class GameTest {
             e.printStackTrace();
         }
 
-        String input4 = "mob h D 5";
-        scanner = new Scanner(input4);
+        String[] input4 = {"mob", "h", "D", "5"};
         try {
-            p2.makeMove(scanner);
+            p2.makeMove(input4);
             List<String> wordsFormed = new ArrayList<>();
             wordsFormed.add("MOB");
             wordsFormed.add("NOT");
@@ -125,10 +117,9 @@ public class GameTest {
             e.printStackTrace();
         }
 
-        String input5 = "BIT h a 7";
-        scanner = new Scanner(input5);
+        String[] input5 = {"BIT", "h", "a", "7"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input5);
             List<String> wordsFormed = new ArrayList<>();
             wordsFormed.add("BIT");
             wordsFormed.add("PI");
@@ -150,7 +141,7 @@ public class GameTest {
         try {
             assertTrue(newGame.checkWordsValid(validWords));
         } catch (InvalidWordException e) {
-            e.printStackTrace(); // it should not go here
+            e.printStackTrace();
         }
 
         List<String> invalidWords = new ArrayList<>();
@@ -166,72 +157,74 @@ public class GameTest {
 
     @Test
     public void testCalculateScore() {
-        String input1 = "HORN H F 8";
-        scanner = new Scanner(input1);
+        String[] input1 = {"HORN", "H", "F", "8"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input1);
             assertEquals(newGame.calculateScore(p1.getMove()), 14);
             newGame.placeTileOnBoard(p1.getMove());
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        String input2 = "FARM V H 6";
-        scanner = new Scanner(input2);
+        String[] input2 = {"FARM", "V", "H", "6"};
         try {
-            p2.makeMove(scanner);
+            p2.makeMove(input2);
             assertEquals(newGame.calculateScore(p2.getMove()), 9);
             newGame.placeTileOnBoard(p2.getMove());
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        String input3 = "PASTE H F 10";
-        scanner = new Scanner(input3);
+        String[] input3 = {"PASTE", "H", "F", "10"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input3);
             assertEquals(newGame.calculateScore(p1.getMove()), 25);
             newGame.placeTileOnBoard(p1.getMove());
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        String input4 = "MOB H H 9";
-        scanner = new Scanner(input4);
+        String[] input4 = {"MOB", "H", "H", "9"};
         try {
-            p2.makeMove(scanner);
+            p2.makeMove(input4);
             assertEquals(newGame.calculateScore(p2.getMove()), 15);
             newGame.placeTileOnBoard(p2.getMove());
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        String input5 = "BIT H E 11";
-        scanner = new Scanner(input5);
+        String[] input5 = {"BIT", "H", "E", "11"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input5);
             assertEquals(newGame.calculateScore(p1.getMove()), 16);
             newGame.placeTileOnBoard(p1.getMove());
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        String input6 = "BOARD V E 11";
-        scanner = new Scanner(input6);
+        String[] input6 = {"BOARD", "V", "E", "11"};
         try {
-            p2.makeMove(scanner);
+            p2.makeMove(input6);
             assertEquals(newGame.calculateScore(p2.getMove()), 8);
             newGame.placeTileOnBoard(p2.getMove());
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        String input7 = "HEARD H A 15";
-        scanner = new Scanner(input7);
+        String[] input7 = {"HEARD", "H", "A", "15"};
         try {
-            p1.makeMove(scanner);
+            p1.makeMove(input7);
             assertEquals(newGame.calculateScore(p1.getMove()), 30);
             newGame.placeTileOnBoard(p1.getMove());
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String[] input8 = {"PLAYABLE", "H", "C", "13"};
+        try {
+            p2.makeMove(input8);
+            assertEquals(newGame.calculateScore(p2.getMove()), 84);
+            newGame.placeTileOnBoard(p2.getMove());
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }

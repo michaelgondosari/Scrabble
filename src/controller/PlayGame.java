@@ -20,15 +20,15 @@ public class PlayGame {
         Game newGame;
         List<Player> players = new ArrayList<>();
         LocalTUI tui = new LocalTUI();
-        Scanner scanner1 = new Scanner(System.in);;
+        Scanner scanner = new Scanner(System.in);;
 
         // Initiate game and players
         System.out.println("Welcome, let's play a game of Scrabble!\n");
         System.out.println("Please enter the name of Player 1: ");
-        Player player1 = new Player(scanner1.nextLine());
+        Player player1 = new Player(scanner.nextLine());
         players.add(player1);
         System.out.println("Please enter the name of Player 2: ");
-        Player player2 = new Player(scanner1.nextLine());
+        Player player2 = new Player(scanner.nextLine());
         players.add(player2);
 
         newGame = new Game(players);
@@ -48,19 +48,22 @@ public class PlayGame {
                 while (loopSwitchAgain) {
                     tui.askCommand(currentPlayer);
 
-                    if (scanner1.hasNextLine()) {
-                        String command = scanner1.nextLine().toUpperCase();
+                    if (scanner.hasNextLine()) {
+                        String command = scanner.nextLine().toUpperCase();
                         switch (command) {
 
                             case "MOVE":
                                 tui.askMove(currentPlayer);
 
-                                String[] inputMove = scanner1.nextLine().split(" ");
+                                String[] inputMove = scanner.nextLine().split(" ");
 
                                 try {
                                     currentPlayer.makeMove(inputMove);
-                                } catch (InvalidMoveException | NumberFormatException e) {
+                                } catch (InvalidMoveException e) {
                                     System.err.println(e.getMessage());
+                                    break;
+                                } catch (NumberFormatException nfe) {
+                                    System.err.println("Please enter a valid number for the row!");
                                     break;
                                 }
 
@@ -68,13 +71,16 @@ public class PlayGame {
                                 try {
                                     if ( newGame.checkMoveInsideBoard(currentPlayer.getMove())
                                             && newGame.checkUsingAvailableTiles(currentPlayer.getMove())
-                                            && newGame.checkMoveOverwrite(currentPlayer.getMove()) ) {
+                                            && newGame.checkMoveOverwrite(currentPlayer.getMove())
+                                            && newGame.checkFirstMoveCenter(currentPlayer.getMove()) ) {
+                                        
                                         // If a blank tile is played, change it to another letter
                                         if (currentPlayer.getMove().getWord().contains("?")) {
                                             System.out.println("Please input the letter for '?' : ");
-                                            char blankTile = scanner1.nextLine().toUpperCase().charAt(0);
+                                            char blankTile = scanner.nextLine().toUpperCase().charAt(0);
                                             currentPlayer.getMove().getWord().replace('?', blankTile);
                                         }
+                                        
                                         // Check if the word is valid
                                         if (newGame.checkWordsValid(newGame.getAllWords(currentPlayer.getMove()))) {
                                             // If valid, then do the move :
@@ -103,7 +109,7 @@ public class PlayGame {
                                 tui.askSwap(currentPlayer);
                                 // Check if the move is valid
                                 List<Character> tilesToSwap = new ArrayList<>();
-                                String[] swapTile = scanner1.nextLine().split(",");
+                                String[] swapTile = scanner.nextLine().split(",");
                                 for (String s : swapTile) {
                                     tilesToSwap.add(s.toUpperCase().charAt(0));
                                 }
@@ -135,7 +141,7 @@ public class PlayGame {
                             case "QUIT":
                                 tui.gameOver(newGame);
                                 System.out.println("Thank you for playing, see you next time!");
-                                scanner1.close();
+                                scanner.close();
                                 System.exit(0);
 
                             default:
@@ -157,7 +163,7 @@ public class PlayGame {
             // Game Over
             tui.gameOver(newGame);
             System.out.println("Play again (y/n): ");
-            char charPlayAgain = scanner1.next().charAt(0);
+            char charPlayAgain = scanner.next().charAt(0);
             if (charPlayAgain == 'n') {
                 playAgain = false;
             }
@@ -169,7 +175,7 @@ public class PlayGame {
 
         // If players don't want to play again, close the game
         System.out.println("Thank you for playing, see you next time!");
-        scanner1.close();
+        scanner.close();
         System.exit(0);
 
     } // end of main

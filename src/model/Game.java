@@ -7,7 +7,6 @@ import model.wordchecker.InMemoryScrabbleWordChecker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
 
@@ -255,23 +254,6 @@ public class Game {
     }
 
     /**
-     * Check the player's move
-     * @param direction
-     * @param startCol
-     * @param startRow
-     * @return
-     * @throws InvalidMoveException
-     */
-    public boolean checkMove(char direction, char startCol, int startRow) throws InvalidMoveException {
-        if ( !(direction == 'H' || direction == 'V')
-                || !(startCol >= 65 && startCol < 65 + Board.BOARD_SIZE)
-                || !(startRow > 0 && startRow <= Board.BOARD_SIZE) ) {
-            throw new InvalidMoveException("That is an invalid move!");
-        }
-        return true;
-    }
-
-    /**
      * Check if all the words in a list are defined in the dictionary
      * @param words - a list of words to be checked
      * @return true if all words in the list are valid, false otherwise
@@ -344,10 +326,6 @@ public class Game {
      * @throws InvalidMoveException if there are tile(s) used not from the current rack
      */
     public boolean checkUsingAvailableTiles(Move move) throws InvalidMoveException {
-        String word = move.getWord().toUpperCase();
-        int startRow = board.convertRow(move.getPlaceRow());
-        int startCol = board.convertCol(move.getPlaceCol());
-
         List<Character> wordChar = tilesToRemove(move);
 
         // compare the list with current rack
@@ -359,9 +337,36 @@ public class Game {
                 throw new InvalidMoveException("You must use the tiles from your rack!");
             }
         }
-
-        // if all tiles are available in the rack, check is true
         return true;
+    }
+
+    /**
+     * Check if the first move is played in the center of the board
+     * @param move - the move made by a player
+     * @return true if the first move is played in the center of the board
+     * @throws InvalidMoveException if the first move is not played in the center of the board
+     */
+    public boolean checkFirstMoveCenter(Move move) throws InvalidMoveException {
+        String word = move.getWord().toUpperCase();
+        int startRow = board.convertRow(move.getPlaceRow());
+        int startCol = board.convertCol(move.getPlaceCol());
+
+        if (board.getTileOnBoard('H',8) == ' ') {
+            if (move.getDirection() == Move.HORIZONTAL) {
+                for (int i = 0; i < word.length(); i++) {
+                    if (startRow == 7 && startCol + i == 7) {
+                        return true;
+                    }
+                }
+            } else if (move.getDirection() == Move.VERTICAL) {
+                for (int i = 0; i < word.length(); i++) {
+                    if (startRow + i == 7 && startCol == 7) {
+                        return true;
+                    }
+                }
+            }
+        }
+        throw new InvalidMoveException("The first move must be made in the center of the board!");
     }
 
     /**
@@ -556,8 +561,16 @@ public class Game {
             }
         }
 
-        // Finally, return the addition of firstWordValue (with multiplier) and otherWordsValue (without multiplier)
-        return firstWordScore + otherWordsScore;
+        // if all 7 tiles are played, player will get 50 bonus points
+        int allTilesScore = 0;
+        if (tilesToRemove(move).size() == 7) {
+            allTilesScore += 50;
+        }
+
+        // Finally, return the addition of firstWordValue (with multiplier)
+        // and otherWordsValue (without multiplier)
+        // and allTilesScore
+        return firstWordScore + otherWordsScore + allTilesScore;
     }
 
     /**
@@ -625,19 +638,9 @@ public class Game {
 
 
 
-    public static void main(String[] args) {
-
-        List<String> testList = new ArrayList<>();
-        Scanner scan1 = new Scanner(System.in);
-        System.out.println("type something: ");
-        String input = scan1.nextLine();
-        Scanner scan2 = new Scanner(input);
-        do {
-            testList.add(scan2.next());
-        }
-        while (scan2.hasNext());
-        System.out.println(testList);
-    }
+//    public static void main(String[] args) {
+//
+//    }
 
 
 } // end of class
