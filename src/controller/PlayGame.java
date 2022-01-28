@@ -14,8 +14,6 @@ public class PlayGame {
 
     public static void main(String[] args) {
 
-        System.out.println(System.getProperty("user.dir"));
-
         // Initiate variables
         Game newGame;
         List<Player> players = new ArrayList<>();
@@ -25,9 +23,11 @@ public class PlayGame {
         // Initiate game and players
         System.out.println("Welcome, let's play a game of Scrabble!\n");
         System.out.println("Please enter the name of Player 1: ");
+        System.out.print("> ");
         Player player1 = new Player(scanner.nextLine());
         players.add(player1);
         System.out.println("Please enter the name of Player 2: ");
+        System.out.print("> ");
         Player player2 = new Player(scanner.nextLine());
         players.add(player2);
 
@@ -67,49 +67,87 @@ public class PlayGame {
                                     break;
                                 }
 
-                                // Check if the move is valid
                                 try {
-                                    if ( newGame.checkMoveInsideBoard(currentPlayer.getMove())
-                                            && newGame.checkUsingAvailableTiles(currentPlayer.getMove())
-                                            && newGame.checkMoveOverwrite(currentPlayer.getMove())
-                                            && newGame.checkFirstMoveCenter(currentPlayer.getMove()) ) {
-                                        
-                                        // If a blank tile is played, change it to another letter
-                                        if (currentPlayer.getMove().getWord().contains("?")) {
-                                            System.out.println("Please input the letter for '?' : ");
-                                            char blankTile = scanner.nextLine().toUpperCase().charAt(0);
-                                            currentPlayer.getMove().getWord().replace('?', blankTile);
-                                        }
-                                        
-                                        // Check if the word is valid
-                                        if (newGame.checkWordsValid(newGame.getAllWords(currentPlayer.getMove()))) {
-                                            // If valid, then do the move :
-                                            // 1. remove tiles from player's rack
-                                            currentPlayer.removeTilesFromRack(newGame.tilesToRemove(currentPlayer.getMove()));
-                                            // 2. calculate points and update the player's points
-                                            currentPlayer.addScore(newGame.calculateScore(currentPlayer.getMove()));
-                                            // 3. players draw new tiles
-                                            int tileUsed = newGame.tilesToRemove(currentPlayer.getMove()).size();
-                                            currentPlayer.addTilesToRack(newGame.getTileBag().drawTiles(tileUsed));
-                                            // 4. place tiles on board
-                                            newGame.placeTileOnBoard(currentPlayer.getMove());
-                                            // 5.print player's name, score, and current rack
-                                            System.out.println(String.format("Player %s, points : %d", currentPlayer.getName(), currentPlayer.getScore()));
-                                            System.out.println("New rack : " + currentPlayer.getCurrentTiles());
+                                    // If blank tile(s) is played
+                                    if (currentPlayer.getMove().getWord().contains("-")) {
+                                        String originalWord = currentPlayer.getMove().getWord().toUpperCase();
+                                        String wordWithoutBlanks = newGame.removeMinus(currentPlayer.getMove());
+                                        String wordWithoutReplacement = newGame.removeCharAfterMinus(currentPlayer.getMove());
+
+                                        // Check if the move is valid
+                                        currentPlayer.getMove().setWord(wordWithoutReplacement);
+                                        if (newGame.checkMoveInsideBoard(currentPlayer.getMove())
+                                                && newGame.checkUsingAvailableTiles(currentPlayer.getMove())
+                                                && newGame.checkMoveOverwrite(currentPlayer.getMove())
+                                                && newGame.checkFirstMoveCenter(currentPlayer.getMove())
+                                                && newGame.checkMoveTouchTile(currentPlayer.getMove())) {
+
+                                            // Check if the word is valid
+                                            currentPlayer.getMove().setWord(wordWithoutBlanks);
+                                            if (newGame.checkWordsValid(newGame.getAllWords(currentPlayer.getMove()))) {
+                                                // If valid, then do the move :
+                                                // 1. remove tiles from player's rack
+                                                currentPlayer.getMove().setWord(wordWithoutReplacement);
+                                                currentPlayer.removeTilesFromRack(newGame.tilesToRemove(currentPlayer.getMove()));
+                                                // 2. calculate points and update the player's points
+                                                currentPlayer.getMove().setWord(wordWithoutBlanks);
+                                                int moveScore = newGame.calculateScore(currentPlayer.getMove());
+                                                currentPlayer.addScore(moveScore);
+                                                // 3. players draw new tiles
+                                                int tileUsed = newGame.tilesToRemove(currentPlayer.getMove()).size();
+                                                currentPlayer.addTilesToRack(newGame.getTileBag().drawTiles(tileUsed));
+                                                // 4. place tiles on board
+                                                newGame.placeTileOnBoard(currentPlayer.getMove());
+                                                // 5.print player's name, score, and current rack
+                                                tui.updateAfterMove(newGame, moveScore);
+                                            }
                                         }
                                     }
-                                } catch (InvalidMoveException | InvalidWordException e) {
+
+                                    // If no blank tiles are played
+                                    else {
+                                        // Check if the move is valid
+                                        if (newGame.checkMoveInsideBoard(currentPlayer.getMove())
+                                                && newGame.checkUsingAvailableTiles(currentPlayer.getMove())
+                                                && newGame.checkMoveOverwrite(currentPlayer.getMove())
+                                                && newGame.checkFirstMoveCenter(currentPlayer.getMove())
+                                                && newGame.checkMoveTouchTile(currentPlayer.getMove())) {
+
+                                            // Check if the word is valid
+                                            if (newGame.checkWordsValid(newGame.getAllWords(currentPlayer.getMove()))) {
+
+                                                // If move and word are valid, then do the move :
+                                                // 1. remove tiles from player's rack
+                                                currentPlayer.removeTilesFromRack(newGame.tilesToRemove(currentPlayer.getMove()));
+                                                // 2. calculate points and update the player's points
+                                                int moveScore = newGame.calculateScore(currentPlayer.getMove());
+                                                currentPlayer.addScore(moveScore);
+                                                // 3. players draw new tiles
+                                                int tileUsed = newGame.tilesToRemove(currentPlayer.getMove()).size();
+                                                currentPlayer.addTilesToRack(newGame.getTileBag().drawTiles(tileUsed));
+                                                // 4. place tiles on board
+                                                newGame.placeTileOnBoard(currentPlayer.getMove());
+                                                // 5.print player's name, score, and current rack
+                                                tui.updateAfterMove(newGame, moveScore);
+                                            }
+                                        }
+                                    }
+                                } // end of try
+
+                                // If the move or word is invalid
+                                catch (InvalidMoveException | InvalidWordException e) {
                                     System.err.println(e.getMessage());
                                     break;
                                 }
-                                loopSwitchAgain = false;
+
+                                loopSwitchAgain = false; // go to next player
                                 break;
 
                             case "SWAP":
                                 tui.askSwap(currentPlayer);
                                 // Check if the move is valid
                                 List<Character> tilesToSwap = new ArrayList<>();
-                                String[] swapTile = scanner.nextLine().split(",");
+                                String[] swapTile = scanner.nextLine().split(" ");
                                 for (String s : swapTile) {
                                     tilesToSwap.add(s.toUpperCase().charAt(0));
                                 }
@@ -125,12 +163,12 @@ public class PlayGame {
                                     System.err.println(e.getMessage()); // if swap is invalid
                                     break;
                                 }
-                                loopSwitchAgain = false;
+                                loopSwitchAgain = false; // go to next player
                                 break;
 
                             case "SKIP":
                                 tui.askSkip(currentPlayer);
-                                loopSwitchAgain = false;
+                                loopSwitchAgain = false; // go to next player
                                 break;
 
                             case "SCORE":
@@ -145,7 +183,7 @@ public class PlayGame {
                                 System.exit(0);
 
                             default:
-                                System.out.println("Unknown command!");
+                                System.err.println("Unknown command!");
                                 break;
 
                         } // end switch for command

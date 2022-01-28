@@ -365,8 +365,39 @@ public class Game {
                     }
                 }
             }
+            throw new InvalidMoveException("The first move must be made in the center of the board!");
         }
-        throw new InvalidMoveException("The first move must be made in the center of the board!");
+        return true;
+    }
+
+    /**
+     * Check if a move is adjacent to another existing tiles on board
+     * @param move - the move made by a player
+     * @return true if the move is adjacent to any existing tiles on board, or it's the first move
+     * @throws InvalidMoveException if otherwise
+     */
+    public boolean checkMoveTouchTile(Move move) throws InvalidMoveException {
+        String word = move.getWord().toUpperCase();
+        int startRow = board.convertRow(move.getPlaceRow());
+        int startCol = board.convertCol(move.getPlaceCol());
+
+        if (board.getTileOnBoard('H',8) != ' ') {
+            if (move.getDirection() == Move.HORIZONTAL) {
+                for (int i = 0; i < word.length(); i++) {
+                    if (board.getTileOnBoard(startRow, startCol + i) != ' ') {
+                        return true;
+                    }
+                }
+            } else if (move.getDirection() == Move.VERTICAL) {
+                for (int i = 0; i < word.length(); i++) {
+                    if (board.getTileOnBoard(startRow + i, startCol) != ' ') {
+                        return true;
+                    }
+                }
+            }
+            throw new InvalidMoveException("The move must be adjacent to any existing tiles on board!");
+        }
+        return true;
     }
 
     /**
@@ -634,6 +665,52 @@ public class Game {
                 board.setTileOnBoard(startRow + i, startCol, word.toUpperCase().charAt(i));
             }
         }
+    }
+
+    /**
+     * If a blank tile is played,
+     * remove the '-' sign from the word
+     * @param move - the move made by a player
+     * @return the word of the move without the '-' sign
+     */
+    public String removeMinus(Move move) {
+        String[] word = move.getWord().toUpperCase().split("-");
+        String fullWord = "";
+        for (String s : word) {
+            fullWord += s;
+        }
+        return fullWord;
+    }
+
+    /**
+     * If a blank tile is played,
+     * remove the replacement character(s) for the blank tile from the word
+     * @param move - the move made by a player
+     * @return the word of the move without the replacement character(s)
+     * @throws InvalidMoveException if blank tile played is more than 2
+     */
+    public String removeCharAfterMinus(Move move) throws InvalidMoveException {
+        List<Character> wordChars = new ArrayList<>();
+        String word = move.getWord().toUpperCase();
+        for (int i = 0; i < word.length(); i++) {
+            wordChars.add(word.charAt(i));
+        }
+
+        String fullWord = "";
+        int countBlankTile = (int) move.getWord().chars().filter(ch -> ch == '-').count();
+        if (countBlankTile == 1) {
+            wordChars.remove(wordChars.indexOf('-') + 1);
+        } else if (countBlankTile == 2) {
+            wordChars.remove(wordChars.indexOf('-') + 1);
+            wordChars.remove(wordChars.lastIndexOf('-') + 1);
+        } else {
+            throw new InvalidMoveException("You cannot possibly have more than 2 blank tiles!");
+        }
+
+        for (char c : wordChars) {
+            fullWord += c;
+        }
+        return fullWord;
     }
 
 

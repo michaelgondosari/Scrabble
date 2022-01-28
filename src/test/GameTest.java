@@ -230,5 +230,65 @@ public class GameTest {
         }
     }
 
+    @Test
+    public void testRemoveMinus() {
+        String[] blankTile1 = {"comp-UTER", "H", "H", "8"};
+        try {
+            p1.makeMove(blankTile1);
+            String newWord = newGame.removeMinus(p1.getMove());
+            assertEquals(newWord,"COMPUTER");
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
 
-}
+        String[] blankTile2 = {"-COMPUTER", "H", "H", "8"};
+        try {
+            p1.makeMove(blankTile2);
+            String newWord = newGame.removeMinus(p1.getMove());
+            assertEquals(newWord,"COMPUTER");
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String[] blankTile3 = {"COMPUTE-r", "H", "H", "8"};
+        try {
+            p1.makeMove(blankTile3);
+            String newWord = newGame.removeMinus(p1.getMove());
+            assertEquals(newWord,"COMPUTER");
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRemoveCharAfterMinus() {
+        String[] blankTile1 = {"COMP-uter", "H", "H", "8"};
+        try {
+            p1.makeMove(blankTile1);
+            String newWord = newGame.removeCharAfterMinus(p1.getMove());
+            assertEquals(newWord,"COMP-TER");
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String[] blankTile2 = {"-comp-UTER", "H", "H", "8"};
+        try {
+            p1.makeMove(blankTile2);
+            String newWord = newGame.removeCharAfterMinus(p1.getMove());
+            assertEquals(newWord,"-OMP-TER");
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+
+        String[] blankTile3 = {"-COMP-ute-R", "H", "H", "8"};
+        try {
+            p1.makeMove(blankTile3);
+            Exception exception = assertThrows(InvalidMoveException.class, () -> {
+                newGame.removeCharAfterMinus(p1.getMove());
+            });
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
+    }
+
+} // end of class
