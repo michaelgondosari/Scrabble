@@ -90,7 +90,7 @@ public class LocalTUI {
         System.out.println("SCORE : view current score");
         System.out.println("QUIT  : quit the game");
         System.out.println("Your current rack: " + player.getCurrentTiles());
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public void askMove(Player player) {
@@ -101,7 +101,7 @@ public class LocalTUI {
         System.out.println("direction     : H for horizontal or V for vertical");
         System.out.println("staringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O");
         System.out.println("startingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public void askSkip(Player player) {
@@ -109,8 +109,8 @@ public class LocalTUI {
     }
 
     public void askSwap(Player player) {
-        System.out.println(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by comma):", player.getName()));
-        System.out.println("> ");
+        System.out.println(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by space):", player.getName()));
+        System.out.print("> ");
     }
 
     public void askScore(Game game) {
@@ -120,19 +120,15 @@ public class LocalTUI {
         }
     }
 
+    public void updateAfterMove(Game game, int moveScore) {
+        System.out.println(String.format("Player %s, move score : %d, total points : %d",
+                game.getCurrentPlayer().getName(), moveScore, game.getCurrentPlayer().getScore()));
+        System.out.println("New rack : " + game.getCurrentPlayer().getCurrentTiles());
+    }
+
     public void gameOver(Game game) {
         System.out.println("\nGame over!");
         System.out.println(String.format("Player %s wins with a score of %d.", game.getWinner().getName(), game.getWinner().getScore()));
     }
 
-//    public static void main(String[] args) {
-//        LocalTUI tui = new LocalTUI();
-//        Board b = new Board();
-//        Player p = new Player("Michael");
-//        tui.printBoard(b);
-//        tui.askMove(p);
-//        tui.askCommand(p);
-//        tui.askSwap(p);
-//    }
-
-}
+} // end of class
