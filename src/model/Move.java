@@ -39,6 +39,10 @@ public class Move {
         return this.word;
     }
 
+    public void setWord(String wordBlankTile) {
+        this.word = wordBlankTile;
+    }
+
     /**
      * Get the direction of the word
      * @return H(HORIZONTAL) or V(VERTICAL)
