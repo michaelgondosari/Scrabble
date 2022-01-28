@@ -1,4 +1,4 @@
-package model;
+package protocol;
 
 /**
  * PROTOCOL GROUP A

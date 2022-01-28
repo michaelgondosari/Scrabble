@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Changed blank tile character from '?' to '-'">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Added methods and modified logics for blank tile plays">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/letters.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/letters.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/GameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LocalTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/ProtocolMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ProtocolMessages.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +65,7 @@
       <module name="Scrabble" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.*" />
+          <option name="PATTERN" value="protocol.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -368,7 +363,28 @@
       <option name="project" value="LOCAL" />
       <updated>1643357707001</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Added '&gt; ' for player's input&#10;Changed swap separator (comma to space)">
+      <created>1643360775772</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1643360775772</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Added setWord for blank tiles">
+      <created>1643360805906</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1643360805906</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Added methods and modified logics for blank tile plays">
+      <created>1643360835711</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1643360835711</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -384,9 +400,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="upeercase" />
-    <MESSAGE value="added blank tile to txt&#10;100 letters in the bag when the game begins" />
-    <MESSAGE value="added drawTiles() method" />
     <MESSAGE value="added swapTiles() method" />
     <MESSAGE value="created Player class" />
     <MESSAGE value="push" />
@@ -409,6 +422,9 @@
     <MESSAGE value="Added checkFirstMoveCenter&#10;Changed the parameter of makeMove to String array" />
     <MESSAGE value="Example board for testing purposes" />
     <MESSAGE value="Changed blank tile character from '?' to '-'" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed blank tile character from '?' to '-'" />
+    <MESSAGE value="Added '&gt; ' for player's input&#10;Changed swap separator (comma to space)" />
+    <MESSAGE value="Added setWord for blank tiles" />
+    <MESSAGE value="Added methods and modified logics for blank tile plays" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added methods and modified logics for blank tile plays" />
   </component>
 </project>
