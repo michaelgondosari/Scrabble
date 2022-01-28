@@ -17,7 +17,7 @@ public class ProtocolMessages {
     public static final int[] BOARD_DIMENSIONS = {15, 15};
 
     /** Command Separator: Used to separate values of a command sent to the server. */
-    public static final String SEPARATOR = "|";
+    public static final String SEPARATOR = ":;:";
 
     /** Array Separator: Used to separate values within an argument. */
     public static final String AS = " ";
