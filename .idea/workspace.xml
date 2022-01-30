@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Added methods and modified logics for blank tile plays">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Changed separator to :;:">
+      <change afterPath="$PROJECT_DIR$/src/client/ScrabbleClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/ScrabbleClientTUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exception/ExitProgram.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exception/ProtocolException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exception/ServerUnavailableException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/ProtocolMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ProtocolMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,10 +62,11 @@
       <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="protocol" />
       <recent name="exception" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PlayGame">
+  <component name="RunManager" selected="Application.Game">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.Game" />
       <module name="Scrabble" />
@@ -81,23 +88,52 @@
           <option name="PATTERN" value="controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="exception.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
       </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameTest.testCalculateScore" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestChecker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.wordchecker.TestChecker" />
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.wordchecker.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="Scrabble" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
+        <pattern>
+          <option name="PATTERN" value="model.Game" />
+          <option name="ENABLED" value="true" />
+        </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
       <option name="MAIN_CLASS_NAME" value="test.GameTest" />
-      <option name="METHOD_NAME" value="testCalculateScore" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -134,13 +170,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Game" />
+      <item itemvalue="Application.PlayGame" />
+      <item itemvalue="Application.TestChecker" />
+      <item itemvalue="JUnit.GameTest" />
+      <item itemvalue="JUnit.GameTest.testRemoveCharAfterMinus" />
+      <item itemvalue="JUnit.GameTest.testRemoveMinus" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Game" />
+        <item itemvalue="Application.TestChecker" />
         <item itemvalue="Application.PlayGame" />
         <item itemvalue="JUnit.GameTest.testRemoveCharAfterMinus" />
         <item itemvalue="JUnit.GameTest.testRemoveMinus" />
-        <item itemvalue="Application.Game" />
-        <item itemvalue="JUnit.GameTest.testCalculateScore" />
       </list>
     </recent_temporary>
   </component>
@@ -384,7 +428,21 @@
       <option name="project" value="LOCAL" />
       <updated>1643360835711</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Moved to protocol package">
+      <created>1643362880141</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1643362880141</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Changed separator to :;:">
+      <created>1643363107949</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1643363107949</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -400,8 +458,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added swapTiles() method" />
-    <MESSAGE value="created Player class" />
     <MESSAGE value="push" />
     <MESSAGE value="Square class (in case we need it)" />
     <MESSAGE value="reupdated TileBag" />
@@ -425,6 +481,20 @@
     <MESSAGE value="Added '&gt; ' for player's input&#10;Changed swap separator (comma to space)" />
     <MESSAGE value="Added setWord for blank tiles" />
     <MESSAGE value="Added methods and modified logics for blank tile plays" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added methods and modified logics for blank tile plays" />
+    <MESSAGE value="Moved to protocol package" />
+    <MESSAGE value="Changed separator to :;:" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed separator to :;:" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Scrabble$GameTest.ic" NAME="GameTest Coverage Results" MODIFIED="1643363996329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>test.*</FILTER>
+      <FILTER>model.Game</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Scrabble$PlayGame.ic" NAME="PlayGame Coverage Results" MODIFIED="1643363946606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>controller.*</FILTER>
+      <FILTER>model.*</FILTER>
+      <FILTER>view.*</FILTER>
+      <FILTER>exception.*</FILTER>
+    </SUITE>
   </component>
 </project>

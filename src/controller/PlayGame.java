@@ -18,7 +18,7 @@ public class PlayGame {
         Game newGame;
         List<Player> players = new ArrayList<>();
         LocalTUI tui = new LocalTUI();
-        Scanner scanner = new Scanner(System.in);;
+        Scanner scanner = new Scanner(System.in);
 
         // Initiate game and players
         System.out.println("Welcome, let's play a game of Scrabble!\n");
@@ -70,7 +70,6 @@ public class PlayGame {
                                 try {
                                     // If blank tile(s) is played
                                     if (currentPlayer.getMove().getWord().contains("-")) {
-                                        String originalWord = currentPlayer.getMove().getWord().toUpperCase();
                                         String wordWithoutBlanks = newGame.removeMinus(currentPlayer.getMove());
                                         String wordWithoutReplacement = newGame.removeCharAfterMinus(currentPlayer.getMove());
 

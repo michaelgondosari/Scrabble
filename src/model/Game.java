@@ -716,7 +716,11 @@ public class Game {
 
 
 //    public static void main(String[] args) {
-//
+//        try {
+//            System.out.println(InetAddress.getByName("michael"));
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
 //    }
 
 
