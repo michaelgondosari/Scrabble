@@ -312,9 +312,14 @@ public class Game {
         int startCol = board.convertCol(move.getPlaceCol());
 
         // invalid if move is outside board size
-        if (startCol + word.length() - 1 > Board.BOARD_SIZE
-                || startRow + word.length() - 1 > Board.BOARD_SIZE) {
-            throw new InvalidMoveException("You cannot place a tile outside the board!");
+        if (move.getDirection() == Move.HORIZONTAL) {
+            if (startCol + word.length() - 1 > Board.BOARD_SIZE) {
+                throw new InvalidMoveException("You cannot place a tile outside the board!");
+            }
+        } else if (move.getDirection() == Move.VERTICAL) {
+            if (startRow + word.length() - 1 > Board.BOARD_SIZE) {
+                throw new InvalidMoveException("You cannot place a tile outside the board!");
+            }
         }
         return true;
     }
