@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Changed separator to :;:">
-      <change afterPath="$PROJECT_DIR$/src/client/ScrabbleClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/ScrabbleClientTUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exception/ExitProgram.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exception/ProtocolException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/exception/ServerUnavailableException.java" afterDir="false" />
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Finished constructor with message parameter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ScrabbleClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ScrabbleClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ScrabbleClientTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ScrabbleClientTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ScrabbleClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ScrabbleClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ScrabbleServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ScrabbleServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ScrabbleServerTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ScrabbleServerTUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +64,7 @@
       <recent name="exception" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Game">
+  <component name="RunManager" selected="Application.PlayGame">
     <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="model.Game" />
       <module name="Scrabble" />
@@ -180,9 +178,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PlayGame" />
         <item itemvalue="Application.Game" />
         <item itemvalue="Application.TestChecker" />
-        <item itemvalue="Application.PlayGame" />
         <item itemvalue="JUnit.GameTest.testRemoveCharAfterMinus" />
         <item itemvalue="JUnit.GameTest.testRemoveMinus" />
       </list>
@@ -442,7 +440,21 @@
       <option name="project" value="LOCAL" />
       <updated>1643363107949</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Game is working&#10;Start making the server &amp; client">
+      <created>1643531380520</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1643531380520</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Finished constructor with message parameter">
+      <created>1643531595119</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1643531595119</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -458,8 +470,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="push" />
-    <MESSAGE value="Square class (in case we need it)" />
     <MESSAGE value="reupdated TileBag" />
     <MESSAGE value="updated Board" />
     <MESSAGE value="updated TileBag&#10;updated initBoardScores" />
@@ -483,7 +493,9 @@
     <MESSAGE value="Added methods and modified logics for blank tile plays" />
     <MESSAGE value="Moved to protocol package" />
     <MESSAGE value="Changed separator to :;:" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed separator to :;:" />
+    <MESSAGE value="Game is working&#10;Start making the server &amp; client" />
+    <MESSAGE value="Finished constructor with message parameter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished constructor with message parameter" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Scrabble$GameTest.ic" NAME="GameTest Coverage Results" MODIFIED="1643363996329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
