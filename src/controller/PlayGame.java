@@ -38,7 +38,7 @@ public class PlayGame {
         while (playAgain) {
 
             // Print the initial board
-            tui.printBoard(newGame.getBoard());
+            System.out.println(tui.printBoard(newGame.getBoard()));
 
             while (!newGame.gameOver()) {
                 Player currentPlayer = newGame.getCurrentPlayer();
@@ -46,14 +46,14 @@ public class PlayGame {
                 // Ask player for a command
                 boolean loopSwitchAgain = true;
                 while (loopSwitchAgain) {
-                    tui.askCommand(currentPlayer);
+                    System.out.println(tui.askCommand(currentPlayer));
 
                     if (scanner.hasNextLine()) {
                         String command = scanner.nextLine().toUpperCase();
                         switch (command) {
 
                             case "MOVE":
-                                tui.askMove(currentPlayer);
+                                System.out.println(tui.askMove(currentPlayer));
 
                                 String[] inputMove = scanner.nextLine().split(" ");
 
@@ -98,7 +98,7 @@ public class PlayGame {
                                                 // 4. place tiles on board
                                                 newGame.placeTileOnBoard(currentPlayer.getMove());
                                                 // 5.print player's name, score, and current rack
-                                                tui.updateAfterMove(newGame, moveScore);
+                                                System.out.println(tui.updateAfterMove(newGame, moveScore));
                                             }
                                         }
                                     }
@@ -127,7 +127,7 @@ public class PlayGame {
                                                 // 4. place tiles on board
                                                 newGame.placeTileOnBoard(currentPlayer.getMove());
                                                 // 5.print player's name, score, and current rack
-                                                tui.updateAfterMove(newGame, moveScore);
+                                                System.out.println(tui.updateAfterMove(newGame, moveScore));
                                             }
                                         }
                                     }
@@ -143,7 +143,7 @@ public class PlayGame {
                                 break;
 
                             case "SWAP":
-                                tui.askSwap(currentPlayer);
+                                System.out.println(tui.askSwap(currentPlayer));
                                 // Check if the move is valid
                                 List<Character> tilesToSwap = new ArrayList<>();
                                 String[] swapTile = scanner.nextLine().split(" ");
@@ -166,17 +166,17 @@ public class PlayGame {
                                 break;
 
                             case "SKIP":
-                                tui.askSkip(currentPlayer);
+                                System.out.println(tui.askSkip(currentPlayer));
                                 loopSwitchAgain = false; // go to next player
                                 break;
 
-                            case "SCORE":
-                                // Print score and loop the switch again
-                                tui.askScore(newGame);
-                                break;
+//                            case "SCORE":
+//                                // Print score and loop the switch again
+//                                System.out.println(tui.askScore(newGame));
+//                                break;
 
                             case "QUIT":
-                                tui.gameOver(newGame);
+                                System.out.println(tui.gameOver(newGame));
                                 System.out.println("Thank you for playing, see you next time!");
                                 scanner.close();
                                 System.exit(0);
@@ -193,12 +193,12 @@ public class PlayGame {
 
                 // Next player's turn
                 newGame.nextPlayer();
-                tui.printBoard(newGame.getBoard());
+                System.out.println(tui.printBoard(newGame.getBoard()));
 
             } // end while not game over
 
             // Game Over
-            tui.gameOver(newGame);
+            System.out.println(tui.gameOver(newGame));
             System.out.println("Play again (y/n): ");
             char charPlayAgain = scanner.next().charAt(0);
             if (charPlayAgain == 'n') {

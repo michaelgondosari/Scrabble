@@ -11,7 +11,7 @@ public class LocalTUI {
      * @param board - current Scrabble board
      * @return TUI of current Scrabble board
      */
-    public void printBoard(Board board) {
+    public String printBoard(Board board) {
 
         StringBuffer boardView = new StringBuffer();
 
@@ -78,57 +78,74 @@ public class LocalTUI {
         }
         boardView.append("───┘");
 
-        System.out.println(boardView);
+        return boardView.toString();
     }
 
-    public void askCommand(Player player) {
-        System.out.println(String.format("\nPlayer %s, your turn, choose one from below options:", player.getName()));
-        System.out.println("==========================================================");
-        System.out.println("MOVE  : enter a word onto the Scrabble board");
-        System.out.println("SWAP  : swap some or all of your current tiles");
-        System.out.println("SKIP  : skip your turn");
-        System.out.println("SCORE : view current score");
-        System.out.println("QUIT  : quit the game");
-        System.out.println("Your current rack: " + player.getCurrentTiles());
-        System.out.print("> ");
+    public String askReady() {
+        return "Type ready to start the game: ";
     }
 
-    public void askMove(Player player) {
-        System.out.println(String.format("\nPlayer %s, please enter your move in below format:", player.getName()));
-        System.out.println("word direction startingColumn startingRow");
-        System.out.println("==================================================================");
-        System.out.println("word          : Enter a valid English word");
-        System.out.println("direction     : H for horizontal or V for vertical");
-        System.out.println("staringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O");
-        System.out.println("startingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15");
-        System.out.print("> ");
+    public String askCommand(Player player) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(String.format("\nPlayer %s, your turn, choose one from below options:", player.getName()));
+        sb.append("\n==========================================================");
+        sb.append("\nMOVE  : enter a word onto the Scrabble board");
+        sb.append("\nSWAP  : swap some or all of your current tiles");
+        sb.append("\nSKIP  : skip your turn");
+//        sb.append("\nSCORE : view current score");
+        sb.append("\nQUIT  : quit the game");
+        sb.append("\nYour current rack: " + player.getCurrentTiles());
+        sb.append("\nEnter your input: ");
+        return sb.toString();
     }
 
-    public void askSkip(Player player) {
-        System.out.println(String.format("\nPlayer %s skips a turn.", player.getName()));
+    public String askMove(Player player) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(String.format("\nPlayer %s, please enter your move in below format:", player.getName()));
+        sb.append("\nword direction startingColumn startingRow");
+        sb.append("\n==================================================================");
+        sb.append("\nword          : Enter a valid English word");
+        sb.append("\ndirection     : H for horizontal or V for vertical");
+        sb.append("\nstaringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O");
+        sb.append("\nstartingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15");
+        sb.append("\nEnter your input: ");
+        return sb.toString();
     }
 
-    public void askSwap(Player player) {
-        System.out.println(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by space):", player.getName()));
-        System.out.print("> ");
+    public String askSkip(Player player) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(String.format("\nPlayer %s skips a turn.", player.getName()));
+        return sb.toString();
     }
 
-    public void askScore(Game game) {
-        System.out.println("");
-        for (Player p : game.getPlayers()) {
-            System.out.println(String.format("Player : %s, Score : %d", p.getName(), p.getScore()));
-        }
+    public String askSwap(Player player) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by space):", player.getName()));
+        sb.append("\nEnter your input: ");
+        return sb.toString();
     }
 
-    public void updateAfterMove(Game game, int moveScore) {
-        System.out.println(String.format("Player %s, move score : %d, total points : %d",
+//    public String askScore(Game game) {
+//        StringBuffer sb = new StringBuffer();
+//        for (Player p : game.getPlayers()) {
+//            sb.append(String.format("\nPlayer : %s, Score : %d", p.getName(), p.getScore()));
+//        }
+//        return sb.toString();
+//    }
+
+    public String updateAfterMove(Game game, int moveScore) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(String.format("\nPlayer %s, move score : %d, total points : %d",
                 game.getCurrentPlayer().getName(), moveScore, game.getCurrentPlayer().getScore()));
-        System.out.println("New rack : " + game.getCurrentPlayer().getCurrentTiles());
+        sb.append("\nNew rack : " + game.getCurrentPlayer().getCurrentTiles());
+        return sb.toString();
     }
 
-    public void gameOver(Game game) {
-        System.out.println("\nGame over!");
-        System.out.println(String.format("Player %s wins with a score of %d.", game.getWinner().getName(), game.getWinner().getScore()));
+    public String gameOver(Game game) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("\nGame over!");
+        sb.append(String.format("\nPlayer %s wins with a score of %d.", game.getWinner().getName(), game.getWinner().getScore()));
+        return sb.toString();
     }
 
 } // end of class
