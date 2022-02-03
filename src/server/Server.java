@@ -1,11 +1,14 @@
 package server;
 
 import exception.ExitProgram;
+import exception.InvalidMoveException;
+import exception.InvalidWordException;
 import model.Game;
 import model.Player;
 import protocol.ProtocolMessages;
 import protocol.ServerProtocol;
 import view.LocalTUI;
+import view.TerminalColors;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -31,9 +34,12 @@ public class Server implements Runnable, ServerProtocol {
     private Game newGame;
     private List<Player> players;
     LocalTUI tui;
-
+    boolean gameOver;
 
     private Map<Player, ClientHandler> playerHandler;
+    Player currentPlayer;
+    ClientHandler currentHandler;
+    ClientHandler opponentHandler;
 
     // --- Constructor -----------------------------
 
@@ -54,7 +60,6 @@ public class Server implements Runnable, ServerProtocol {
                 setup();
 
                 while (true) {
-
                     Socket sock = ssock.accept();
                     ClientHandler handler = new ClientHandler(sock, this);
                     addClient(handler);
@@ -87,48 +92,56 @@ public class Server implements Runnable, ServerProtocol {
                 setupGame();
 
                 synchronized (this) {
-                    boolean playAgain = true;
-                    while (playAgain) {
 
-                        // Broadcast the initial board
+                    // Broadcast the initial board
+                    broadcast(tui.printBoard(newGame.getBoard()));
+
+                    while (!gameOver) {
+
+                        // Determine current player
+                        currentPlayer = newGame.getCurrentPlayer();
+                        currentHandler = playerHandler.get(currentPlayer);
+                        currentHandler.setMyTurn(true);
+
+                        // Determine other player (opponent)
+                        List<ClientHandler> opponentList = new ArrayList<>();
+                        for (ClientHandler ch : readyClients) {
+                            opponentList.add(ch);
+                        }
+                        opponentList.remove(currentHandler);
+                        opponentHandler = opponentList.get(0);
+
+                        // Wait for the player to make a move
+                        broadcast(doTurn());
+                        currentHandler.sendMessage(tui.askCommand(currentPlayer));
+                        wait();
+
+                        // Next player's turn
+                        currentHandler.setMyTurn(false);
+                        newGame.nextPlayer();
                         broadcast(tui.printBoard(newGame.getBoard()));
 
-                        while (!newGame.gameOver()) {
+                    } // end while not game over
 
-                            // determine current player
-                            Player currentPlayer = newGame.getCurrentPlayer();
-                            ClientHandler currentHandler = playerHandler.get(currentPlayer);
-                            currentHandler.setMyTurn(true);
+                    doGameOver();
 
-                            // game logic here
-
-
-                            // Next player's turn
-                            currentHandler.setMyTurn(false);
-                            newGame.nextPlayer();
-                            broadcast(tui.printBoard(newGame.getBoard()));
-
-                        } // end while not game over
-
-                    } // end while play again
                 } // end synchronized
 
             } catch (ExitProgram e) {
                 openNewSocket = false;
+                view.showMessage("Closing the server...");
 
             } catch (IOException e) {
                 view.showMessage("A server IO error occurred: " + e.getMessage());
                 if (!view.getBoolean("Do you want to open a new socket (yes/no) ?")) {
                     openNewSocket = false;
+                    view.showMessage("Closing the server...");
                 }
 
             } catch (InterruptedException e) {
                 view.showMessage(e.getMessage());
             }
-
-            view.showMessage("Closing the server...");
         }
-
     }
 
     /**
@@ -169,6 +182,7 @@ public class Server implements Runnable, ServerProtocol {
      * Set up a new game with connected clients
      */
     public void setupGame() {
+        gameOver = false;
         players = new ArrayList<>();
         playerHandler = new HashMap<>();
         for (ClientHandler ch : readyClients) {
@@ -222,112 +236,256 @@ public class Server implements Runnable, ServerProtocol {
 
     @Override
     public synchronized String getHello(String name, String features) {
-        return ProtocolMessages.HELLO
-                + ProtocolMessages.SEPARATOR
-                + clientNames()
-                + ProtocolMessages.SEPARATOR
-                + FEATURES;
+        String str = "Welcome to Scrabble, " + name + "!" + " (features: " + FEATURES + ")";
+        return str;
     }
+//            return ProtocolMessages.HELLO
+//                + ProtocolMessages.SEPARATOR
+//                + clientNames()
+//                + ProtocolMessages.SEPARATOR
+//                + FEATURES;
 
     @Override
     public synchronized void doWelcome(String name, String features) {
-        broadcast(ProtocolMessages.WELCOME
-                    + ProtocolMessages.SEPARATOR
-                    + name
-                    + ProtocolMessages.SEPARATOR
-                    + features);
+        String str = "Current online players in the game: " + clientNames() + " (features: " + FEATURES + ")";
+        broadcast(str);
     }
+//            broadcast(ProtocolMessages.WELCOME
+//                    + ProtocolMessages.SEPARATOR
+//                    + name
+//                    + ProtocolMessages.SEPARATOR
+//                    + features
+//        );
 
     @Override
     public synchronized String doError(String errorCode) {
-        return ProtocolMessages.ERROR
-                + ProtocolMessages.SEPARATOR
-                + errorCode;
+        String str = TerminalColors.RED_BOLD + "ERROR: " + errorCode + TerminalColors.RESET;
+        return str;
     }
+//            return ProtocolMessages.ERROR
+//                + ProtocolMessages.SEPARATOR
+//                + errorCode;
 
     @Override
     public synchronized String doServerReady() {
-        return ProtocolMessages.SERVERREADY;
+        return "The server is ready!";
     }
+//            return ProtocolMessages.SERVERREADY;
 
     @Override
     public synchronized void doServerReady(ClientHandler clientHandler) {
         readyClients.add(clientHandler);
         StringBuffer result = new StringBuffer();
-        result.append(ProtocolMessages.SERVERREADY);
+        result.append("Players that are ready:");
         for (ClientHandler ch : readyClients) {
-            result.append(ProtocolMessages.SEPARATOR);
-            result.append(ch.getName());
+            result.append(System.lineSeparator() + ch.getName());
         }
         broadcast(result.toString());
         notifyAll();
     }
+//        result.append(ProtocolMessages.SERVERREADY);
+//        for (ClientHandler ch : readyClients) {
+//            result.append(ProtocolMessages.SEPARATOR);
+//            result.append(ch.getName());
+//        }
 
     @Override
     public synchronized String doStart() {
         StringBuffer result = new StringBuffer();
-        result.append(ProtocolMessages.START);
+        result.append("Starting the game..." + System.lineSeparator());
+        result.append("Players:");
         for (ClientHandler ch : readyClients) {
-            result.append(ProtocolMessages.SEPARATOR);
-            result.append(ch.getName());
+            result.append(System.lineSeparator() + ch.getName());
         }
         return result.toString();
     }
+//    result.append(ProtocolMessages.START);
+//        for (ClientHandler ch : readyClients) {
+//        result.append(ProtocolMessages.SEPARATOR);
+//        result.append(ch.getName());
+//    }
 
     @Override
-    public synchronized String doAbort(String name) {
-        return ProtocolMessages.ABORT
-                + ProtocolMessages.SEPARATOR
-                + name;
+    public synchronized void doAbort(ClientHandler clientHandler) {
+        broadcast("Player " + clientHandler.getName() + " quits the game server.");
+        doGameOver();
+        notifyAll();
     }
+//    return ProtocolMessages.ABORT
+//                + ProtocolMessages.SEPARATOR
+//                + name;
 
     @Override
-    public synchronized String doTiles(String tiles) {
-        return ProtocolMessages.TILES
-                + ProtocolMessages.SEPARATOR
-                + tiles;
+    public synchronized String doTiles(Player player) {
+        String str = "Your current rack: " + player.getCurrentTiles();
+        return str;
     }
+//    return ProtocolMessages.TILES
+//                + ProtocolMessages.SEPARATOR
+//                + tiles;
 
     @Override
-    public synchronized String doTurn(String name) {
-        return ProtocolMessages.TURN
-                + ProtocolMessages.SEPARATOR
-                + name;
+    public synchronized String doTurn() {
+        String str = "It is now " + newGame.getCurrentPlayer().getName() + "'s turn.";
+        return str;
     }
+//    return ProtocolMessages.TURN
+//                + ProtocolMessages.SEPARATOR
+//                + name;
 
     @Override
-    public synchronized String doMove(String name, String coordinates, int gainedPoints) {
-        return ProtocolMessages.MOVE
-                + ProtocolMessages.SEPARATOR
-                + name
-                + ProtocolMessages.SEPARATOR
-                + coordinates
-                + ProtocolMessages.SEPARATOR
-                + gainedPoints;
+    public synchronized void doMove(ClientHandler clientHandler, String coordinates) {
+        String[] inputMove = coordinates.split(ProtocolMessages.AS);
+
+        try {
+            currentPlayer.makeMove(inputMove);
+        } catch (InvalidMoveException e) {
+            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + e.getMessage());
+            notifyAll();
+        } catch (NumberFormatException nfe) {
+            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + "Please enter a valid number for the row!");
+            notifyAll();
+        }
+
+        try {
+            // If blank tile(s) is played
+            if (currentPlayer.getMove().getWord().contains("-")) {
+                String wordWithoutBlanks = newGame.removeMinus(currentPlayer.getMove());
+                String wordWithoutReplacement = newGame.removeCharAfterMinus(currentPlayer.getMove());
+
+                // Check if the move is valid
+                currentPlayer.getMove().setWord(wordWithoutReplacement);
+                if (newGame.checkMoveInsideBoard(currentPlayer.getMove())
+                        && newGame.checkUsingAvailableTiles(currentPlayer.getMove())
+                        && newGame.checkMoveOverwrite(currentPlayer.getMove())
+                        && newGame.checkFirstMoveCenter(currentPlayer.getMove())
+                        && newGame.checkMoveTouchTile(currentPlayer.getMove())) {
+
+                    // Check if the word is valid
+                    currentPlayer.getMove().setWord(wordWithoutBlanks);
+                    if (newGame.checkWordsValid(newGame.getAllWords(currentPlayer.getMove()))) {
+                        // If valid, then do the move :
+                        // 1. remove tiles from player's rack
+                        currentPlayer.getMove().setWord(wordWithoutReplacement);
+                        currentPlayer.removeTilesFromRack(newGame.tilesToRemove(currentPlayer.getMove()));
+                        // 2. calculate points and update the player's points
+                        currentPlayer.getMove().setWord(wordWithoutBlanks);
+                        int moveScore = newGame.calculateScore(currentPlayer.getMove());
+                        currentPlayer.addScore(moveScore);
+                        // 3. players draw new tiles
+                        int tileUsed = newGame.tilesToRemove(currentPlayer.getMove()).size();
+                        currentPlayer.addTilesToRack(newGame.getTileBag().drawTiles(tileUsed));
+                        // 4. place tiles on board
+                        newGame.placeTileOnBoard(currentPlayer.getMove());
+                        // 5.print player's name, score, and current rack
+                        StringBuffer sb = new StringBuffer();
+                        sb.append(tui.updateAfterMove(newGame, moveScore) + System.lineSeparator());
+                        opponentHandler.sendMessage(sb.toString());
+                        sb.append(doTiles(currentPlayer));
+                        currentHandler.sendMessage(sb.toString());
+                        // Don't forget to notify the waiting thread
+                        notifyAll();
+                    }
+                }
+            }
+
+            // If no blank tiles are played
+            else {
+                // Check if the move is valid
+                if (newGame.checkMoveInsideBoard(currentPlayer.getMove())
+                        && newGame.checkUsingAvailableTiles(currentPlayer.getMove())
+                        && newGame.checkMoveOverwrite(currentPlayer.getMove())
+                        && newGame.checkFirstMoveCenter(currentPlayer.getMove())
+                        && newGame.checkMoveTouchTile(currentPlayer.getMove())) {
+
+                    // Check if the word is valid
+                    if (newGame.checkWordsValid(newGame.getAllWords(currentPlayer.getMove()))) {
+
+                        // If move and word are valid, then do the move :
+                        // 1. remove tiles from player's rack
+                        currentPlayer.removeTilesFromRack(newGame.tilesToRemove(currentPlayer.getMove()));
+                        // 2. calculate points and update the player's points
+                        int moveScore = newGame.calculateScore(currentPlayer.getMove());
+                        currentPlayer.addScore(moveScore);
+                        // 3. players draw new tiles
+                        int tileUsed = newGame.tilesToRemove(currentPlayer.getMove()).size();
+                        currentPlayer.addTilesToRack(newGame.getTileBag().drawTiles(tileUsed));
+                        // 4. place tiles on board
+                        newGame.placeTileOnBoard(currentPlayer.getMove());
+                        // 5.print player's name, score, and current rack
+                        StringBuffer sb = new StringBuffer();
+                        sb.append(tui.updateAfterMove(newGame, moveScore) + System.lineSeparator());
+                        opponentHandler.sendMessage(sb.toString());
+                        sb.append(doTiles(currentPlayer));
+                        currentHandler.sendMessage(sb.toString());
+                        // Don't forget to notify the waiting thread
+                        notifyAll();
+                    }
+                }
+            }
+        } // end of try
+
+        // If the move or word is invalid
+        catch (InvalidMoveException | InvalidWordException e) {
+            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + e.getMessage());
+            notifyAll();
+        }
     }
+//    return ProtocolMessages.MOVE
+//                + ProtocolMessages.SEPARATOR
+//                + name
+//                + ProtocolMessages.SEPARATOR
+//                + coordinates
+//                + ProtocolMessages.SEPARATOR
+//                + gainedPoints;
 
     @Override
-    public synchronized String doPass(String name) {
-        return ProtocolMessages.PASS
-                + ProtocolMessages.SEPARATOR
-                + name;
+    public synchronized void doPass(ClientHandler clientHandler) {
+        broadcast("Player " + clientHandler.getName() + " has passed his/her turn.");
+        notifyAll();
     }
+//    return ProtocolMessages.PASS
+//                + ProtocolMessages.SEPARATOR
+//                + name;
 
     @Override
-    public synchronized String doPass(String name, String tiles) {
-        return ProtocolMessages.PASS
-                + ProtocolMessages.SEPARATOR
-                + name
-                + ProtocolMessages.SEPARATOR
-                + tiles;
+    public synchronized void doPass(ClientHandler clientHandler, String tiles) {
+        // Check if the move is valid
+        List<Character> tilesToSwap = new ArrayList<>();
+        String[] swapTile = tiles.split(" ");
+        for (String s : swapTile) {
+            tilesToSwap.add(s.toUpperCase().charAt(0));
+        }
+        try {
+            if (currentPlayer.checkSwapTilesInRack(tilesToSwap)) {
+                // If valid, then do the move
+                currentPlayer.removeTilesFromRack(tilesToSwap);
+                List<Character> swappedTiles = newGame.getTileBag().swapTiles(tilesToSwap);
+                currentPlayer.addTilesToRack(swappedTiles);
+                // send message
+                broadcast("Player " + clientHandler.getName() + " has passed his/her turn and swap tiles.");
+                currentHandler.sendMessage(doTiles(currentPlayer));
+                notifyAll();
+            }
+        } catch (InvalidMoveException e) {
+            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + e.getMessage()); // if swap is invalid
+            notifyAll();
+        }
     }
+//    return ProtocolMessages.PASS
+//                + ProtocolMessages.SEPARATOR
+//                + name
+//                + ProtocolMessages.SEPARATOR
+//                + tiles;
 
     @Override
-    public synchronized String doGameOver(String name) {
-        return ProtocolMessages.GAMEOVER
-                + ProtocolMessages.SEPARATOR
-                + name;
+    public synchronized void doGameOver() {
+        gameOver = true;
+        broadcast(tui.gameOver(newGame));
     }
+//    return ProtocolMessages.GAMEOVER
+//                + ProtocolMessages.SEPARATOR
+//                + name;
 
     // ------------------ Main --------------------------
 

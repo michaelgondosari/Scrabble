@@ -1,5 +1,6 @@
 package protocol;
 
+import model.Player;
 import server.ClientHandler;
 
 public interface ServerProtocol {
@@ -45,8 +46,7 @@ public interface ServerProtocol {
      * This is sent by the server to all clients connected to indicate that the server is ready to start,
      * and so are the clients names in the arguments.
      *
-     * @param clientHandler The name of the client that is ready to start
-     * @return textual result, to be shown to the user
+     * @param clientHandler The client handler that is ready to start
      */
     public void doServerReady(ClientHandler clientHandler);
 
@@ -63,30 +63,27 @@ public interface ServerProtocol {
      * This is broadcast by the server to all clients to indicate that another player has just disconnected.
      * This player will pass every turn he/she gets automatically
      *
-     * @param name The name of the disconnected client
+     * @param clientHandler The disconnected client
      * @return textual result, to be shown to the user
      */
-    public String doAbort(String name);
+    public void doAbort(ClientHandler clientHandler);
 
     /**
      * This is sent by the server when a player is drawing new tiles.
      * This happens after every move, then all the tiles are sent back (new & old)
      * Each player connected will get different randomized tiles.
      *
-     * @param tiles The tiles assigned to the receiver of this message. The tiles will be displayed in the form:
-     * A X C...
-     * Using a space [ ] as separator, and a [-] for a blank cell
+     * @param player The player owning the tiles
      *
      * @return textual result, to be shown to the user
      */
-    public String doTiles(String tiles);
+    public String doTiles(Player player);
 
     /**
      * Used to inform every client connected who has to make a move
-     * @param name The name of the player whose current turn it is
      * @return textual result, to be shown to the user
      */
-    public String doTurn(String name);
+    public String doTurn();
 
     /**
      * This message is broadcast by the server to all connected clients
@@ -94,41 +91,35 @@ public interface ServerProtocol {
      * as well as the coordinates and the points the player gained.
      * Server will then send TILES to the player
      *
-     * @param name The name of the player who made the move
-     * @param coordinates Coordinates that were chosen by the player
-     * @param gainedPoints The points gained by the player following that move
+     * @param clientHandler The player who made the move
+     * @param coordinates Coordinates of move that were chosen by the player
      * @return textual result, to be shown to the user
      */
-    public String doMove(String name, String coordinates, int gainedPoints);
+    public void doMove(ClientHandler clientHandler, String coordinates);
 
     /**
      * This command is broadcast by the server to indicate which client passed their turn
      * so that the rest knows that a player is finished
      *
-     * @param name The name of the player who made the pass
-     * @return textual result, to be shown to the user
+     * @param clientHandler The player who made the pass
      */
-    public String doPass(String name);
+    public void doPass(ClientHandler clientHandler);
 
     /**
      * This command is sent by the server to the player that just passed
      * to confirm that the pass worked
      * and to assign the new tiles to the player.
      *
-     * @param name The name of the player who made the pass
+     * @param clientHandler The player who made the pass
      * @param tiles The new tiles for the player that passed. in the format: D O G
      * @return textual result, to be shown to the user
      */
-    public String doPass(String name, String tiles);
+    public void doPass(ClientHandler clientHandler, String tiles);
 
     /**
      * This message is broadcast by the server to let all clients know
      * that the game is over and to announce who the winner is
-     *
-     * @param name The name of the player who won the game.
-     * @return textual result, to be shown to the user
      */
-    public String doGameOver(String name);
-
+    public void doGameOver();
 
 }

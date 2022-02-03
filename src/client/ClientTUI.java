@@ -44,11 +44,12 @@ public class ClientTUI implements ClientView {
             try {
                 handleUserInput(input);
             } catch (ExitProgram e) {
+                showMessage(e.getMessage());
                 repeat = false;
                 try {
                     client.doAbort(client.getName());
                 } catch (ProtocolException ex) {
-                    ex.printStackTrace();
+                    showMessage(ex.getMessage());
                 }
             } catch (InvalidMoveException e) {
                 showMessage(e.getMessage());
@@ -68,8 +69,9 @@ public class ClientTUI implements ClientView {
                 break;
 
             case "MOVE":
-                String[] answerMove = getString(printAskMove()).split(ProtocolMessages.AS);
-                String coordinate = client.translateMoveToCoordinate(answerMove);
+//                String[] answerMove = getString(printAskMove()).split(ProtocolMessages.AS);
+//                String coordinate = client.translateMoveToCoordinate(answerMove);
+                String coordinate = getString(printAskMove());
                 client.doMove(client.getName(), coordinate);
                 break;
 
@@ -84,6 +86,11 @@ public class ClientTUI implements ClientView {
 
             case "QUIT":
                 throw new ExitProgram("Exiting...");
+
+            case "CHAT":
+                String message = getString("Enter your message:");
+                client.doChat(message);
+                break;
 
             default:
                 showMessage("Unknown command!");
@@ -156,6 +163,7 @@ public class ClientTUI implements ClientView {
         sb.append("\nSWAP  : swap some or all of your current tiles");
         sb.append("\nSKIP  : skip your turn");
         sb.append("\nQUIT  : quit the game");
+        sb.append("\nCHAT  : send a message to other players");
         sb.append("\nEnter your input: ");
         showMessage(sb.toString());
     }
@@ -170,7 +178,7 @@ public class ClientTUI implements ClientView {
         sb.append("\nstaringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O");
         sb.append("\nstartingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15");
         sb.append("\nFor blank tiles, put a minus sign and the letter that you want to change it to.");
-        sb.append("\nExample: SCRA-BBLE H A 1");
+        sb.append("\nExample: SCRABBLE V H 8   or   SCRA-BBLE H A 1");
         sb.append("\nEnter your input: ");
         return sb.toString();
     }

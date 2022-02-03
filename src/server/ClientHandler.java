@@ -133,7 +133,50 @@ public class ClientHandler implements Runnable {
                 }
                 break;
 
-                // check if current player makes the move?
+            case ProtocolMessages.MOVE:
+                if (isMyTurn) {
+                    if (msgArray.length == 3) {
+                        String coordinate = msgArray[2];
+                        srv.doMove(this, coordinate);
+                    } else {
+                        sendMessage("Wrong command for MOVE!");
+                    }
+                } else {
+                    sendMessage(srv.doError(ProtocolMessages.OUT_OF_TURN) + ", it is not your turn!");
+                }
+                break;
+
+            case ProtocolMessages.PASS:
+                if (isMyTurn) {
+                    if (msgArray.length == 1) { // skip
+                        srv.doPass(this);
+                    } else if (msgArray.length == 2) { // swap
+                        String tiles = msgArray[1];
+                        srv.doPass(this, tiles);
+                    } else {
+                        sendMessage("Wrong command for PASS!");
+                    }
+                } else {
+                    sendMessage(srv.doError(ProtocolMessages.OUT_OF_TURN) + ", it is not your turn!");
+                }
+                break;
+
+            case ProtocolMessages.ABORT:
+                srv.doAbort(this);
+                shutdown();
+
+            case ProtocolMessages.MSGSEND:
+                if (msgArray.length == 2) {
+                    String chatMessage = msgArray[1];
+                    srv.broadcast("[" + name + "]: " + chatMessage);
+                } else {
+                    sendMessage(srv.doError(ProtocolMessages.UNRECOGNIZED) + ", wrong command for CHAT");
+                }
+                break;
+
+            default:
+                sendMessage("Unknown command!");
+                break;
         }
     }
 

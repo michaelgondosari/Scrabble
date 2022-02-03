@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="revised checkMoveInsideBoard">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Changed return from void to String">
       <change afterPath="$PROJECT_DIR$/src/aaron/Client.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/aaron/ClientHandler.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/aaron/ClientManager.java" afterDir="false" />
@@ -10,22 +10,13 @@
       <change afterPath="$PROJECT_DIR$/src/aaron/ScrabbleClient.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/aaron/Server.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/aaron/ServerTUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/ClientTUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/ClientView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol/ClientProtocol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol/ServerProtocol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/ServerTUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/ServerView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ScrabbleClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ClientTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientTUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/ScrabbleClientTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aaron/ClientTUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ScrabbleClientHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ScrabbleServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ScrabbleServerTUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ServerProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ServerProtocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LocalTUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +83,7 @@
       <recent name="exception" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.test">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.Client" />
       <module name="Scrabble" />
@@ -200,10 +191,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.test" />
         <item itemvalue="Application.Client" />
         <item itemvalue="Application.Server" />
         <item itemvalue="Application.ServerTUI" />
-        <item itemvalue="Application.test" />
         <item itemvalue="Application.PlayGame" />
       </list>
     </recent_temporary>
@@ -490,7 +481,21 @@
       <option name="project" value="LOCAL" />
       <updated>1643634400917</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="fixed the hello welcome and ready handling issue">
+      <created>1643896308553</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1643896308553</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Changed return from void to String">
+      <created>1643896333734</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1643896333734</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -506,8 +511,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated TileBag&#10;updated initBoardScores" />
-    <MESSAGE value="updated Saturday" />
     <MESSAGE value="updated Sunday" />
     <MESSAGE value="fixed 0 to O" />
     <MESSAGE value="added BoardPrinter" />
@@ -531,7 +534,9 @@
     <MESSAGE value="Finished constructor with message parameter" />
     <MESSAGE value="#milestone2" />
     <MESSAGE value="revised checkMoveInsideBoard" />
-    <option name="LAST_COMMIT_MESSAGE" value="revised checkMoveInsideBoard" />
+    <MESSAGE value="fixed the hello welcome and ready handling issue" />
+    <MESSAGE value="Changed return from void to String" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed return from void to String" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

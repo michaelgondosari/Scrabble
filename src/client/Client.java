@@ -275,8 +275,9 @@ public class Client implements ClientProtocol, Runnable {
                     + ProtocolMessages.SEPARATOR
                     + name
             );
-
-//            String[] serverAnswer = readLineFromServer().split(ProtocolMessages.SEPARATOR);
+        }
+    }
+//                String[] serverAnswer = readLineFromServer().split(ProtocolMessages.SEPARATOR);
 //            if (serverAnswer[0].equals(ProtocolMessages.SERVERREADY) && serverAnswer.length == 2) {
 //                tui.showMessage("You are ready. Waiting for 1 more player to join...");
 //            } else if (serverAnswer[0].equals(ProtocolMessages.SERVERREADY) && serverAnswer.length == 3) {
@@ -284,8 +285,6 @@ public class Client implements ClientProtocol, Runnable {
 //            } else {
 //                throw new ProtocolException("Response is not valid!");
 //            }
-        }
-    }
 
     @Override
     public void doAbort(String name) throws ServerUnavailableException, ProtocolException {
@@ -294,13 +293,7 @@ public class Client implements ClientProtocol, Runnable {
                     + ProtocolMessages.SEPARATOR
                     + name
             );
-
-            String[] serverAnswer = readLineFromServer().split(ProtocolMessages.SEPARATOR);
-            if (serverAnswer[0].equals(ProtocolMessages.ABORT)) {
-                closeConnection();
-            } else {
-                throw new ProtocolException("Response is not valid!");
-            }
+            closeConnection();
         }
     }
 
@@ -313,14 +306,12 @@ public class Client implements ClientProtocol, Runnable {
                     + ProtocolMessages.SEPARATOR
                     + coordinates
             );
-            tui.showMessage("[server] : " + readLineFromServer());
         }
     }
 
     @Override
     public void doPass() throws ServerUnavailableException {
         sendMessage(ProtocolMessages.PASS);
-        tui.showMessage("[server] : " + readLineFromServer());
     }
 
     @Override
@@ -330,7 +321,15 @@ public class Client implements ClientProtocol, Runnable {
                     + ProtocolMessages.SEPARATOR
                     + tiles
             );
-            tui.showMessage("[server] : " + readLineFromServer());
+        }
+    }
+
+    public void doChat(String msg) throws ServerUnavailableException {
+        if (msg != null) {
+            sendMessage(ProtocolMessages.MSGSEND
+                    + ProtocolMessages.SEPARATOR
+                    + msg
+            );
         }
     }
 

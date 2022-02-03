@@ -94,6 +94,7 @@ public class LocalTUI {
         sb.append("\nSKIP  : skip your turn");
 //        sb.append("\nSCORE : view current score");
         sb.append("\nQUIT  : quit the game");
+        sb.append("\nCHAT  : send a message to other players");
         sb.append("\nYour current rack: " + player.getCurrentTiles());
         sb.append("\nEnter your input: ");
         return sb.toString();
@@ -137,7 +138,7 @@ public class LocalTUI {
         StringBuffer sb = new StringBuffer();
         sb.append(String.format("\nPlayer %s, move score : %d, total points : %d",
                 game.getCurrentPlayer().getName(), moveScore, game.getCurrentPlayer().getScore()));
-        sb.append("\nNew rack : " + game.getCurrentPlayer().getCurrentTiles());
+//        sb.append("\nNew rack : " + game.getCurrentPlayer().getCurrentTiles());
         return sb.toString();
     }
 
