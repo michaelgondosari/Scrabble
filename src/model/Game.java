@@ -3,6 +3,7 @@ package model;
 import exception.InvalidMoveException;
 import exception.InvalidWordException;
 import model.wordchecker.InMemoryScrabbleWordChecker;
+import view.TerminalColors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +20,18 @@ public class Game {
 
     // --- Constructor -----------------------------
 
+    /**
+     * Constructor for Game class
+     *
+     * @param players List of players playing this game
+     * @requires players.size() == 2
+     */
     public Game(List<Player> players) {
         // Generate new board
         this.board = new Board();
 
         // Generate new tilebag
         this.tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
-
 
         // Generate new list of players
         this.players = players;
@@ -44,14 +50,6 @@ public class Game {
      */
     public Board getBoard() {
         return board;
-    }
-
-    /**
-     * Get a list of players in the current game
-     * @return a list of players in the current game
-     */
-    public List<Player> getPlayers() {
-        return players;
     }
 
     /**
@@ -74,6 +72,9 @@ public class Game {
 
     /**
      * Change turn to the next player
+     *
+     * @ensures if (currentPlayerIndex) == 0 -> currentPlayerIndex == 1
+     *          || if (currentPlayerIndex) == 1 -> currentPlayerIndex == 0
      */
     public void nextPlayer() {
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % players.size();
@@ -81,8 +82,11 @@ public class Game {
 
     /**
      * Get all words formed from a player's move
-     * @param move - the player's move
+     *
+     * @param move the player's move
      * @return a list of words formed by the player's move
+     * @requires move != null
+     * @ensures all words are put into a list from the move
      */
     public List<String> getAllWords(Move move) {
         List<String> result = new ArrayList<>();
@@ -255,9 +259,12 @@ public class Game {
 
     /**
      * Check if all the words in a list are defined in the dictionary
-     * @param words - a list of words to be checked
+     *
+     * @param words a list of words to be checked
      * @return true if all words in the list are valid, false otherwise
      * @throws InvalidWordException if word is not found in the dictionary
+     * @requires words != null
+     * @ensures true if all words are valid, false if at least one word is invalid
      */
     public boolean checkWordsValid(List<String> words) throws InvalidWordException {
         InMemoryScrabbleWordChecker checker = new InMemoryScrabbleWordChecker();
@@ -271,9 +278,12 @@ public class Game {
 
     /**
      * Check if a move is valid and does not overwrite an existing tile on board
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return true if a move does not overwrite an existing tile
      * @throws InvalidMoveException if a move overwrites an existing tile
+     * @requires move != null
+     * @ensures true if a move overwrites an existing tile on board, an InvalidMoveException is thrown otherwise
      */
     public boolean checkMoveOverwrite(Move move) throws InvalidMoveException {
         String word = move.getWord().toUpperCase();
@@ -287,13 +297,15 @@ public class Game {
             if (move.getDirection() == Move.HORIZONTAL) {
                 if (board.getTileOnBoard(startRow, startCol + i) != ' '
                         && board.getTileOnBoard(startRow, startCol + i) != c) {
-                    throw new InvalidMoveException("You cannot overwrite an existing tile on the board!");
+                    throw new InvalidMoveException(TerminalColors.RED_BOLD
+                            + "You cannot overwrite an existing tile on the board!" + TerminalColors.RESET);
                 }
 
             } else if (move.getDirection() == Move.VERTICAL) {
                 if (board.getTileOnBoard(startRow + i, startCol) != ' '
                         && board.getTileOnBoard(startRow + i, startCol) != c) {
-                    throw new InvalidMoveException("You cannot overwrite an existing tile on the board!");
+                    throw new InvalidMoveException(TerminalColors.RED_BOLD
+                            + "You cannot overwrite an existing tile on the board!" + TerminalColors.RESET);
                 }
             }
         }
@@ -302,9 +314,12 @@ public class Game {
 
     /**
      * Check if a move is valid and all the tiles placed are inside the board
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return true if a move is inside the board
      * @throws InvalidMoveException if a move is outside the board
+     * @requires move != null
+     * @ensures true if a move is inside the board, an InvalidMoveException is thrown otherwise
      */
     public boolean checkMoveInsideBoard(Move move) throws InvalidMoveException {
         String word = move.getWord().toUpperCase();
@@ -314,11 +329,13 @@ public class Game {
         // invalid if move is outside board size
         if (move.getDirection() == Move.HORIZONTAL) {
             if (startCol + word.length() - 1 > Board.BOARD_SIZE) {
-                throw new InvalidMoveException("You cannot place a tile outside the board!");
+                throw new InvalidMoveException(TerminalColors.RED_BOLD
+                        + "You cannot place a tile outside the board!" + TerminalColors.RESET);
             }
         } else if (move.getDirection() == Move.VERTICAL) {
             if (startRow + word.length() - 1 > Board.BOARD_SIZE) {
-                throw new InvalidMoveException("You cannot place a tile outside the board!");
+                throw new InvalidMoveException(TerminalColors.RED_BOLD
+                        + "You cannot place a tile outside the board!" + TerminalColors.RESET);
             }
         }
         return true;
@@ -326,9 +343,12 @@ public class Game {
 
     /**
      * Check if a move made is using available tiles
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return true if a move made is using available tiles
      * @throws InvalidMoveException if there are tile(s) used not from the current rack
+     * @requires move != null
+     * @ensures true if a move is made using available tiles, an InvalidMoveException is thrown otherwise
      */
     public boolean checkUsingAvailableTiles(Move move) throws InvalidMoveException {
         List<Character> wordChar = tilesToRemove(move);
@@ -339,7 +359,8 @@ public class Game {
             if (playerRack.contains(c)) {
                 playerRack.remove((Character) c);
             } else {
-                throw new InvalidMoveException("You must use the tiles from your rack!");
+                throw new InvalidMoveException(TerminalColors.RED_BOLD
+                        + "You must use the tiles from your rack!" + TerminalColors.RESET);
             }
         }
         return true;
@@ -347,9 +368,12 @@ public class Game {
 
     /**
      * Check if the first move is played in the center of the board
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return true if the first move is played in the center of the board
      * @throws InvalidMoveException if the first move is not played in the center of the board
+     * @requires move != null
+     * @ensures true if the first move is played in the center of the board, an InvalidMoveException is thrown otherwise
      */
     public boolean checkFirstMoveCenter(Move move) throws InvalidMoveException {
         String word = move.getWord().toUpperCase();
@@ -370,16 +394,21 @@ public class Game {
                     }
                 }
             }
-            throw new InvalidMoveException("The first move must be made in the center of the board!");
+            throw new InvalidMoveException(TerminalColors.RED_BOLD
+                    + "The first move must be made in the center of the board!" + TerminalColors.RESET);
         }
         return true;
     }
 
     /**
      * Check if a move is adjacent to another existing tiles on board
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return true if the move is adjacent to any existing tiles on board, or it's the first move
      * @throws InvalidMoveException if otherwise
+     * @requires move != null
+     * @ensures true if the move is adjacent to any existing tiles on board, or it's the first move,
+     *          an InvalidMoveException is thrown otherwise
      */
     public boolean checkMoveTouchTile(Move move) throws InvalidMoveException {
         String word = move.getWord().toUpperCase();
@@ -400,15 +429,19 @@ public class Game {
                     }
                 }
             }
-            throw new InvalidMoveException("The move must be adjacent to any existing tiles on board!");
+            throw new InvalidMoveException(TerminalColors.RED_BOLD
+                    + "The move must be adjacent to any existing tiles on board!" + TerminalColors.RESET);
         }
         return true;
     }
 
     /**
      * Exclude the letter in player's move that already exists on the board accordingly
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return a modified list of letters from the move's word
+     * @requires move != null
+     * @ensures tiles removed from player's rack are the tiles not existing on board
      */
     public List<Character> tilesToRemove(Move move) {
         String word = move.getWord().toUpperCase();
@@ -436,15 +469,17 @@ public class Game {
                 }
             }
         }
-
         return result;
     }
 
 
     /**
      * Calculate the total score of a move by a player
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return the total score of the player's move
+     * @requires move != null
+     * @ensures calculate the score from the move, multipliers included
      */
     public int calculateScore(Move move) {
         TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/src/letters.txt");
@@ -611,7 +646,11 @@ public class Game {
 
     /**
      * Returns if the game is over
+     *
      * @return true if game is finished, false otherwise
+     * @requires game is started
+     * @ensures true if tile bag contains no more tiles, and one of the player does not have anymore tiles
+     *          || there are no more possible moves
      */
     public boolean gameOver() {
         boolean gameOver = false;
@@ -624,7 +663,10 @@ public class Game {
 
     /**
      * Get the winner of the current game
+     *
      * @return the player who wins the game
+     * @requires game has started
+     * @ensures return the player with the highest score
      */
     public Player getWinner() {
         Player winner = null;
@@ -640,6 +682,8 @@ public class Game {
 
     /**
      * Resets the board
+     *
+     * @ensures the board, player components, and tile bag are reset
      */
     public void reset() {
         this.board.initBoard();
@@ -650,7 +694,10 @@ public class Game {
 
     /**
      * Place the tiles on the board
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
+     * @requires move != null
+     * @ensures the tiles from the move are placed onto the board
      */
     public void placeTileOnBoard(Move move) {
         String word = move.getWord().toUpperCase();
@@ -675,8 +722,11 @@ public class Game {
     /**
      * If a blank tile is played,
      * remove the '-' sign from the word
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return the word of the move without the '-' sign
+     * @requires move != null
+     * @ensures all the "-" characters are removed from move.getWord()
      */
     public String removeMinus(Move move) {
         String[] word = move.getWord().toUpperCase().split("-");
@@ -690,9 +740,12 @@ public class Game {
     /**
      * If a blank tile is played,
      * remove the replacement character(s) for the blank tile from the word
-     * @param move - the move made by a player
+     *
+     * @param move the move made by a player
      * @return the word of the move without the replacement character(s)
      * @throws InvalidMoveException if blank tile played is more than 2
+     * @requires move != null
+     * @ensures all the characters following the "-" are removed from move.getWord()
      */
     public String removeCharAfterMinus(Move move) throws InvalidMoveException {
         List<Character> wordChars = new ArrayList<>();
@@ -709,7 +762,8 @@ public class Game {
             wordChars.remove(wordChars.indexOf('-') + 1);
             wordChars.remove(wordChars.lastIndexOf('-') + 1);
         } else {
-            throw new InvalidMoveException("You cannot possibly have more than 2 blank tiles!");
+            throw new InvalidMoveException(TerminalColors.RED_BOLD
+                    + "You cannot possibly have more than 2 blank tiles!" + TerminalColors.RESET);
         }
 
         for (char c : wordChars) {
@@ -717,16 +771,5 @@ public class Game {
         }
         return fullWord;
     }
-
-
-
-//    public static void main(String[] args) {
-//        try {
-//            System.out.println(InetAddress.getByName("michael"));
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
 } // end of class

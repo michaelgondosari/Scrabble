@@ -74,10 +74,4 @@ public class TerminalColors {
     public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m";  // CYAN
     public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
 
-//    public static void main(String[] args){
-//        System.out.println(TerminalColors.RED + "This text is RED!" + TerminalColors.RESET);
-//        System.out.println(TerminalColors.RED_BACKGROUND + "  " + TerminalColors.RESET);
-//    }
-
 }
-

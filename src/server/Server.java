@@ -28,7 +28,7 @@ public class Server implements Runnable, ServerProtocol {
     private static ServerTUI view;
     private List<ClientHandler> readyClients;
 
-    private final String FEATURES = ProtocolMessages.PASS_TURN_FLAG;
+    private final String FEATURES = ProtocolMessages.PASS_TURN_FLAG + ProtocolMessages.CHAT_FLAG;
 
     // Game objects
     private Game newGame;
@@ -43,6 +43,9 @@ public class Server implements Runnable, ServerProtocol {
 
     // --- Constructor -----------------------------
 
+    /**
+     * Constructor for the Server class
+     */
     public Server() {
         clients = new ArrayList<>();
         view = new ServerTUI();
@@ -64,9 +67,9 @@ public class Server implements Runnable, ServerProtocol {
                     ClientHandler handler = new ClientHandler(sock, this);
                     addClient(handler);
                     new Thread(handler).start();
-                    view.showMessage("[" + handler.getName() + "] connected!");
+                    view.showMessage("> [" + handler.getName() + "] connected!");
 
-                    // after making client handler, if 2 players or more connected, send server ready, then break
+                    // After making client handler, if 2 players or more connected, send server ready, then break
                     synchronized (this) {
                         if (clients.size() > 1) {
                             broadcast(doServerReady()); // server ready confirmation
@@ -76,7 +79,7 @@ public class Server implements Runnable, ServerProtocol {
                     }
                 }
 
-                // wait until there are 2 ready clients
+                // Wait until there are 2 clients that are ready
                 synchronized (this) {
                     while (true) {
                         wait();
@@ -132,14 +135,15 @@ public class Server implements Runnable, ServerProtocol {
                 view.showMessage("Closing the server...");
 
             } catch (IOException e) {
-                view.showMessage("A server IO error occurred: " + e.getMessage());
+                view.showMessage(TerminalColors.RED_BOLD + "A server IO error occurred: "
+                        + e.getMessage() + TerminalColors.RESET);
                 if (!view.getBoolean("Do you want to open a new socket (yes/no) ?")) {
                     openNewSocket = false;
                     view.showMessage("Closing the server...");
                 }
 
             } catch (InterruptedException e) {
-                view.showMessage(e.getMessage());
+                view.showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
             }
         }
     }
@@ -162,15 +166,16 @@ public class Server implements Runnable, ServerProtocol {
         ssock = null;
         while (ssock == null) {
             String host = view.getString("Please enter the host: ");
-            int port = view.getInt("Please enter the server port (between 0 and 65535) : ");
+            int port = view.getInt("Please enter the server port (between 0 and 65535): ");
 
-            // try to open a new ServerSocket
+            // Try to open a new ServerSocket
             try {
                 view.showMessage("Attempting to open a socket at " + host + " on port " + port + "...");
                 ssock = new ServerSocket(port, 0, InetAddress.getByName(host));
                 view.showMessage("Server started at " + host + " port " + port);
             } catch (IOException e) {
-                view.showMessage("ERROR: could not create a socket on " + host + " and port " + port);
+                view.showMessage(TerminalColors.RED_BOLD + "ERROR: could not create a socket on " + host
+                        + " and port " + port + TerminalColors.RESET);
                 if (!view.getBoolean("Do you want to try again?")) {
                     throw new ExitProgram("User indicated to exit the program.");
                 }
@@ -239,38 +244,23 @@ public class Server implements Runnable, ServerProtocol {
         String str = "Welcome to Scrabble, " + name + "!" + " (features: " + FEATURES + ")";
         return str;
     }
-//            return ProtocolMessages.HELLO
-//                + ProtocolMessages.SEPARATOR
-//                + clientNames()
-//                + ProtocolMessages.SEPARATOR
-//                + FEATURES;
 
     @Override
     public synchronized void doWelcome(String name, String features) {
         String str = "Current online players in the game: " + clientNames() + " (features: " + FEATURES + ")";
         broadcast(str);
     }
-//            broadcast(ProtocolMessages.WELCOME
-//                    + ProtocolMessages.SEPARATOR
-//                    + name
-//                    + ProtocolMessages.SEPARATOR
-//                    + features
-//        );
 
     @Override
     public synchronized String doError(String errorCode) {
         String str = TerminalColors.RED_BOLD + "ERROR: " + errorCode + TerminalColors.RESET;
         return str;
     }
-//            return ProtocolMessages.ERROR
-//                + ProtocolMessages.SEPARATOR
-//                + errorCode;
 
     @Override
     public synchronized String doServerReady() {
         return "The server is ready!";
     }
-//            return ProtocolMessages.SERVERREADY;
 
     @Override
     public synchronized void doServerReady(ClientHandler clientHandler) {
@@ -283,11 +273,6 @@ public class Server implements Runnable, ServerProtocol {
         broadcast(result.toString());
         notifyAll();
     }
-//        result.append(ProtocolMessages.SERVERREADY);
-//        for (ClientHandler ch : readyClients) {
-//            result.append(ProtocolMessages.SEPARATOR);
-//            result.append(ch.getName());
-//        }
 
     @Override
     public synchronized String doStart() {
@@ -299,11 +284,6 @@ public class Server implements Runnable, ServerProtocol {
         }
         return result.toString();
     }
-//    result.append(ProtocolMessages.START);
-//        for (ClientHandler ch : readyClients) {
-//        result.append(ProtocolMessages.SEPARATOR);
-//        result.append(ch.getName());
-//    }
 
     @Override
     public synchronized void doAbort(ClientHandler clientHandler) {
@@ -311,27 +291,18 @@ public class Server implements Runnable, ServerProtocol {
         doGameOver();
         notifyAll();
     }
-//    return ProtocolMessages.ABORT
-//                + ProtocolMessages.SEPARATOR
-//                + name;
 
     @Override
     public synchronized String doTiles(Player player) {
         String str = "Your current rack: " + player.getCurrentTiles();
         return str;
     }
-//    return ProtocolMessages.TILES
-//                + ProtocolMessages.SEPARATOR
-//                + tiles;
 
     @Override
     public synchronized String doTurn() {
         String str = "It is now " + newGame.getCurrentPlayer().getName() + "'s turn.";
         return str;
     }
-//    return ProtocolMessages.TURN
-//                + ProtocolMessages.SEPARATOR
-//                + name;
 
     @Override
     public synchronized void doMove(ClientHandler clientHandler, String coordinates) {
@@ -340,10 +311,12 @@ public class Server implements Runnable, ServerProtocol {
         try {
             currentPlayer.makeMove(inputMove);
         } catch (InvalidMoveException e) {
-            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + e.getMessage());
+            currentHandler.sendMessage(doError(ProtocolMessages.INVALID_MOVE)
+                    + TerminalColors.RED_BOLD + ": " + e.getMessage() + TerminalColors.RESET);
             notifyAll();
         } catch (NumberFormatException nfe) {
-            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + "Please enter a valid number for the row!");
+            currentHandler.sendMessage(doError(ProtocolMessages.INVALID_MOVE) + TerminalColors.RED_BOLD
+                    + ": " + "Please enter a valid number for the row!" + TerminalColors.RESET);
             notifyAll();
         }
 
@@ -427,26 +400,17 @@ public class Server implements Runnable, ServerProtocol {
 
         // If the move or word is invalid
         catch (InvalidMoveException | InvalidWordException e) {
-            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + e.getMessage());
+            currentHandler.sendMessage(doError(ProtocolMessages.INVALID_MOVE)
+                    + TerminalColors.RED_BOLD + ": " + e.getMessage() + TerminalColors.RESET);
             notifyAll();
         }
     }
-//    return ProtocolMessages.MOVE
-//                + ProtocolMessages.SEPARATOR
-//                + name
-//                + ProtocolMessages.SEPARATOR
-//                + coordinates
-//                + ProtocolMessages.SEPARATOR
-//                + gainedPoints;
 
     @Override
     public synchronized void doPass(ClientHandler clientHandler) {
         broadcast("Player " + clientHandler.getName() + " has passed his/her turn.");
         notifyAll();
     }
-//    return ProtocolMessages.PASS
-//                + ProtocolMessages.SEPARATOR
-//                + name;
 
     @Override
     public synchronized void doPass(ClientHandler clientHandler, String tiles) {
@@ -468,31 +432,24 @@ public class Server implements Runnable, ServerProtocol {
                 notifyAll();
             }
         } catch (InvalidMoveException e) {
-            currentHandler.sendMessage(ProtocolMessages.INVALID_MOVE + ": " + e.getMessage()); // if swap is invalid
+            currentHandler.sendMessage(doError(ProtocolMessages.INVALID_MOVE)
+                    + TerminalColors.RED_BOLD + ": " + e.getMessage() + TerminalColors.RESET); // if swap is invalid
             notifyAll();
         }
     }
-//    return ProtocolMessages.PASS
-//                + ProtocolMessages.SEPARATOR
-//                + name
-//                + ProtocolMessages.SEPARATOR
-//                + tiles;
 
     @Override
     public synchronized void doGameOver() {
         gameOver = true;
         broadcast(tui.gameOver(newGame));
     }
-//    return ProtocolMessages.GAMEOVER
-//                + ProtocolMessages.SEPARATOR
-//                + name;
 
     // ------------------ Main --------------------------
 
     /** Start a new HotelServer */
     public static void main(String[] args) {
         Server server = new Server();
-        view.showMessage("Welcome to the Scrabble Server! Starting...");
+        view.showMessage(TerminalColors.WHITE_BOLD + "Welcome to the Scrabble Server! Starting..." + TerminalColors.RESET);
         new Thread(server).start();
     }
 

@@ -1,6 +1,7 @@
 package server;
 
 import protocol.ProtocolMessages;
+import view.TerminalColors;
 
 import java.io.*;
 import java.net.Socket;
@@ -20,6 +21,11 @@ public class ClientHandler implements Runnable {
 
     // --- Constructor -----------------------------
 
+    /**
+     * Constructor of the ClientHandler class
+     * @param sock socket of the ClientHandler
+     * @param srv server to be connected to
+     */
     public ClientHandler (Socket sock, Server srv) {
         try {
             in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -33,26 +39,34 @@ public class ClientHandler implements Runnable {
 
     // --- Queries ---------------------------------
 
+    /**
+     * Gets the name of the ClientHandler
+     * @return the name of the ClientHandler
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Sets the name of the ClientHandler
+     * @param name the name to be set to
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    public boolean isReady() {
-        return isReady;
-    }
-
+    /**
+     * Sets the ready status of the ClientHandler
+     * @param ready true if ready, false otherwise
+     */
     public void setReady(boolean ready) {
         isReady = ready;
     }
 
-    public boolean isMyTurn() {
-        return isMyTurn;
-    }
-
+    /**
+     * Sets the turn status of the ClientHandler
+     * @param myTurn true if this is the current player to make a move, false otherwise
+     */
     public void setMyTurn(boolean myTurn) {
         isMyTurn = myTurn;
     }
@@ -119,7 +133,7 @@ public class ClientHandler implements Runnable {
                     sendMessage(srv.getHello(name, features));
                     srv.doWelcome(name, features);
                 } else {
-                    sendMessage("Wrong command for HELLO!");
+                    sendMessage(TerminalColors.RED_BOLD + "Wrong command for HELLO!" + TerminalColors.RESET);
                 }
                 break;
 
@@ -129,7 +143,7 @@ public class ClientHandler implements Runnable {
                     setReady(true);
                     srv.doServerReady(this);
                 } else {
-                    sendMessage("Wrong command for CLIENTREADY!");
+                    sendMessage(TerminalColors.RED_BOLD + "Wrong command for CLIENTREADY!" + TerminalColors.RESET);
                 }
                 break;
 
@@ -139,10 +153,11 @@ public class ClientHandler implements Runnable {
                         String coordinate = msgArray[2];
                         srv.doMove(this, coordinate);
                     } else {
-                        sendMessage("Wrong command for MOVE!");
+                        sendMessage(TerminalColors.RED_BOLD + "Wrong command for MOVE!" + TerminalColors.RESET);
                     }
                 } else {
-                    sendMessage(srv.doError(ProtocolMessages.OUT_OF_TURN) + ", it is not your turn!");
+                    sendMessage(srv.doError(ProtocolMessages.OUT_OF_TURN)
+                            + TerminalColors.RED_BOLD + ", it is not your turn!" + TerminalColors.RESET);
                 }
                 break;
 
@@ -154,10 +169,11 @@ public class ClientHandler implements Runnable {
                         String tiles = msgArray[1];
                         srv.doPass(this, tiles);
                     } else {
-                        sendMessage("Wrong command for PASS!");
+                        sendMessage(TerminalColors.RED_BOLD + "Wrong command for PASS!" + TerminalColors.RESET);
                     }
                 } else {
-                    sendMessage(srv.doError(ProtocolMessages.OUT_OF_TURN) + ", it is not your turn!");
+                    sendMessage(srv.doError(ProtocolMessages.OUT_OF_TURN)
+                            + TerminalColors.RED_BOLD + ", it is not your turn!" + TerminalColors.RESET);
                 }
                 break;
 
@@ -170,12 +186,13 @@ public class ClientHandler implements Runnable {
                     String chatMessage = msgArray[1];
                     srv.broadcast("[" + name + "]: " + chatMessage);
                 } else {
-                    sendMessage(srv.doError(ProtocolMessages.UNRECOGNIZED) + ", wrong command for CHAT");
+                    sendMessage(srv.doError(ProtocolMessages.UNRECOGNIZED)
+                            + TerminalColors.RED_BOLD + ", wrong command for CHAT" + TerminalColors.RESET);
                 }
                 break;
 
             default:
-                sendMessage("Unknown command!");
+                sendMessage(TerminalColors.RED_BOLD + "Unknown command!" + TerminalColors.RESET);
                 break;
         }
     }
@@ -196,4 +213,4 @@ public class ClientHandler implements Runnable {
         }
     }
 
-}
+} // end of class

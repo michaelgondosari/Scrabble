@@ -170,11 +170,6 @@ public class PlayGame {
                                 loopSwitchAgain = false; // go to next player
                                 break;
 
-//                            case "SCORE":
-//                                // Print score and loop the switch again
-//                                System.out.println(tui.askScore(newGame));
-//                                break;
-
                             case "QUIT":
                                 System.out.println(tui.gameOver(newGame));
                                 System.out.println("Thank you for playing, see you next time!");
@@ -187,7 +182,6 @@ public class PlayGame {
 
                         } // end switch for command
                     } // end of scanner has next line
-
 
                 } // end while loop for switch
 

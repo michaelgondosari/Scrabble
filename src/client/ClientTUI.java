@@ -5,10 +5,9 @@ import exception.InvalidMoveException;
 import exception.ProtocolException;
 import exception.ServerUnavailableException;
 import protocol.ProtocolMessages;
+import view.TerminalColors;
 
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class ClientTUI implements ClientView {
@@ -21,6 +20,10 @@ public class ClientTUI implements ClientView {
 
     // --- Constructor -----------------------------
 
+    /**
+     * Constructor of the ClientTUI class
+     * @param client client class connected to this TUI
+     */
     public ClientTUI(Client client) {
         this.client = client;
         scanner = new Scanner(System.in);
@@ -33,26 +36,25 @@ public class ClientTUI implements ClientView {
     public void start() throws ServerUnavailableException {
         boolean repeat = true;
         while (repeat) {
-//            printHelpMenu();
             String input = null;
             while (input == null) {
                 input = scanner.nextLine();
                 if (input == null) {
-                    showMessage("Input cannot be empty!");
+                    showMessage(TerminalColors.RED_BOLD + "Input cannot be empty!" + TerminalColors.RESET);
                 }
             }
             try {
                 handleUserInput(input);
             } catch (ExitProgram e) {
-                showMessage(e.getMessage());
+                showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
                 repeat = false;
                 try {
                     client.doAbort(client.getName());
                 } catch (ProtocolException ex) {
-                    showMessage(ex.getMessage());
+                    showMessage(TerminalColors.RED_BOLD + ex.getMessage() + TerminalColors.RESET);
                 }
             } catch (InvalidMoveException e) {
-                showMessage(e.getMessage());
+                showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
             }
         }
     }
@@ -63,35 +65,26 @@ public class ClientTUI implements ClientView {
         String command = inputArray[0];
 
         switch (command) {
-
             case "READY":
                 client.doClientReady(client.getName());
                 break;
-
             case "MOVE":
-//                String[] answerMove = getString(printAskMove()).split(ProtocolMessages.AS);
-//                String coordinate = client.translateMoveToCoordinate(answerMove);
                 String coordinate = getString(printAskMove());
                 client.doMove(client.getName(), coordinate);
                 break;
-
             case "SWAP":
                 String tilesToSwap = getString(printAskSwap());
                 client.doPass(tilesToSwap);
                 break;
-
             case "SKIP":
                 client.doPass();
                 break;
-
             case "QUIT":
                 throw new ExitProgram("Exiting...");
-
             case "CHAT":
                 String message = getString("Enter your message:");
                 client.doChat(message);
                 break;
-
             default:
                 showMessage("Unknown command!");
                 break;
@@ -101,21 +94,6 @@ public class ClientTUI implements ClientView {
     @Override
     public void showMessage(String message) {
         console.println(message);
-    }
-
-    @Override
-    public InetAddress getIp() {
-        InetAddress result = null;
-        while (result == null) {
-            System.out.println("Please enter a valid IP Address: ");
-            String ip = scanner.nextLine();
-            try {
-                result = InetAddress.getByName(ip);
-            } catch (UnknownHostException e) {
-                showMessage(e.getMessage());
-            }
-        }
-        return result;
     }
 
     @Override
@@ -134,7 +112,7 @@ public class ClientTUI implements ClientView {
                 answerInt = Integer.parseInt(scanner.nextLine());
                 return answerInt;
             } catch (NumberFormatException e) {
-                showMessage("That is not a valid number!");
+                showMessage(TerminalColors.RED + "That is not a valid number!" + TerminalColors.RESET);
             }
         }
     }
@@ -149,44 +127,40 @@ public class ClientTUI implements ClientView {
             } else if (answer.equalsIgnoreCase("NO")) {
                 return false;
             } else {
-                showMessage("Invalid input! Enter yes or no.");
+                showMessage(TerminalColors.RED_BOLD + "Invalid input! Enter yes or no." + TerminalColors.RESET);
             }
         }
     }
 
-    @Override
-    public void printHelpMenu() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPossible commands, choose one from below options:"));
-        sb.append("\n==========================================================");
-        sb.append("\nMOVE  : enter a word onto the Scrabble board");
-        sb.append("\nSWAP  : swap some or all of your current tiles");
-        sb.append("\nSKIP  : skip your turn");
-        sb.append("\nQUIT  : quit the game");
-        sb.append("\nCHAT  : send a message to other players");
-        sb.append("\nEnter your input: ");
-        showMessage(sb.toString());
-    }
-
+    /**
+     * Ask the user about the move to be made
+     * @return String to ask user for the move
+     */
     public String printAskMove() {
         StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPlayer %s, please enter your move in below format:", client.getName()));
-        sb.append("\nword direction startingColumn startingRow");
-        sb.append("\n==================================================================");
-        sb.append("\nword          : Enter a valid English word");
-        sb.append("\ndirection     : H for horizontal or V for vertical");
-        sb.append("\nstaringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O");
-        sb.append("\nstartingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15");
-        sb.append("\nFor blank tiles, put a minus sign and the letter that you want to change it to.");
-        sb.append("\nExample: SCRABBLE V H 8   or   SCRA-BBLE H A 1");
-        sb.append("\nEnter your input: ");
+        sb.append(String.format("Player %s, please enter your move in below format:"
+                + System.lineSeparator(), client.getName()));
+        sb.append("word direction startingColumn startingRow" + System.lineSeparator());
+        sb.append("==================================================================" + System.lineSeparator());
+        sb.append("word          : Enter a valid English word" + System.lineSeparator());
+        sb.append("direction     : H for horizontal or V for vertical" + System.lineSeparator());
+        sb.append("staringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O" + System.lineSeparator());
+        sb.append("startingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" + System.lineSeparator());
+        sb.append("For blank tiles, put a minus sign and the letter that you want to change it to." + System.lineSeparator());
+        sb.append("Example: SCRABBLE V H 8   or   SCRA-BBLE H A 1" + System.lineSeparator());
+        sb.append("Enter your input: " + System.lineSeparator());
         return sb.toString();
     }
 
+    /**
+     * Ask the user about the tiles to be swapped
+     * @return String to ask user for the swap
+     */
     public String printAskSwap() {
         StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by space):", client.getName()));
-        sb.append("\nEnter your input: ");
+        sb.append(String.format("Player %s, please enter your tiles to be swapped (separated by space):"
+                + System.lineSeparator(), client.getName()));
+        sb.append("Enter your input: " + System.lineSeparator());
         return sb.toString();
     }
 

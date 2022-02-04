@@ -1,5 +1,7 @@
 package server;
 
+import view.TerminalColors;
+
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -12,6 +14,9 @@ public class ServerTUI implements ServerView {
 
     // --- Constructor -----------------------------
 
+    /**
+     * Constructor of the ServerTUI class
+     */
     public ServerTUI() {
         console = new PrintWriter(System.out, true);
         scanner = new Scanner(System.in);
@@ -40,7 +45,7 @@ public class ServerTUI implements ServerView {
                 answerInt = Integer.parseInt(scanner.nextLine());
                 return answerInt;
             } catch (NumberFormatException e) {
-                showMessage("That is not a valid number!");
+                showMessage(TerminalColors.RED_BOLD + "That is not a valid number!" + TerminalColors.RESET);
             }
         }
     }
@@ -55,9 +60,9 @@ public class ServerTUI implements ServerView {
             } else if (answer.equalsIgnoreCase("NO")) {
                 return false;
             } else {
-                showMessage("Invalid input! Enter yes or no.");
+                showMessage(TerminalColors.RED_BOLD + "Invalid input! Enter yes or no." + TerminalColors.RESET);
             }
         }
     }
 
-}
+} // end of class

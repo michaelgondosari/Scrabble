@@ -1,5 +1,7 @@
 package model;
 
+import view.TerminalColors;
+
 import java.io.*;
 import java.util.*;
 
@@ -14,7 +16,7 @@ public class TileBag {
 
     /**
      * Constructor for a new tile bag
-     * @param fileName - "letters.txt" file containing (letters/value/amount)
+     * @param fileName "letters.txt" file containing (letters/value/amount)
      */
     public TileBag (String fileName) {
         try {
@@ -32,7 +34,8 @@ public class TileBag {
 
     /**
      * Returns the amount left of a character
-     * @param c - the character (A-Z)
+     *
+     * @param c the character (A-Z)
      * @return the amount left of the character
      */
     public int getLetterAmountLeft(char c) {
@@ -41,7 +44,8 @@ public class TileBag {
 
     /**
      * Returns the value of a character
-     * @param c - the character (A-Z)
+     *
+     * @param c the character (A-Z)
      * @return the value of the character
      */
     public int getLetterValue(char c) {
@@ -52,8 +56,8 @@ public class TileBag {
 
     /**
      * Read file to put amount left and value of each letter, then putting both in maps of letter
-     * @param fileName - file to read the amount left and value of each letter
-     * @throws IOException - if file is not found or broken
+     * @param fileName file to read the amount left and value of each letter
+     * @throws IOException if file is not found or broken
      */
     private void readTxt(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -91,7 +95,7 @@ public class TileBag {
 
         // If there are no tiles left, this method should throw an exception
         if (tilesLeft < 1) {
-            throw new RuntimeException("There are no tiles left!");
+            throw new RuntimeException(TerminalColors.RED_BOLD + "There are no tiles left!" + TerminalColors.RESET);
         }
 
         int randomNumber = random.nextInt(tilesLeft); // randomize pick to a number between 0 and tilesLeft
@@ -110,7 +114,7 @@ public class TileBag {
 
     /**
      * Draw random tiles from the tile bag as many as requested, then putting the tiles drawn into a list
-     * @param amount - the number of tiles to be drawn
+     * @param amount the number of tiles to be drawn
      * @return list of tiles as many as requested
      */
     public List<Character> drawTiles(int amount) {
@@ -128,7 +132,7 @@ public class TileBag {
 
     /**
      * Swap tiles
-     * @param tilesSwap - list of tiles that the player wants to swap (put back into the tile bag)
+     * @param tilesSwap list of tiles that the player wants to swap (put back into the tile bag)
      * @return a list of random new tiles drawn from the bag, as many as the tiles put back into the bag
      */
     public List<Character> swapTiles(List<Character> tilesSwap) {

@@ -8,7 +8,7 @@ public class LocalTUI {
 
     /**
      * Print the current Scrabble board
-     * @param board - current Scrabble board
+     * @param board current Scrabble board
      * @return TUI of current Scrabble board
      */
     public String printBoard(Board board) {
@@ -82,70 +82,61 @@ public class LocalTUI {
     }
 
     public String askReady() {
-        return "Type ready to start the game: ";
+        return TerminalColors.WHITE_BOLD + "Type ready to start the game: " + TerminalColors.RESET;
     }
 
     public String askCommand(Player player) {
         StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPlayer %s, your turn, choose one from below options:", player.getName()));
-        sb.append("\n==========================================================");
-        sb.append("\nMOVE  : enter a word onto the Scrabble board");
-        sb.append("\nSWAP  : swap some or all of your current tiles");
-        sb.append("\nSKIP  : skip your turn");
-//        sb.append("\nSCORE : view current score");
-        sb.append("\nQUIT  : quit the game");
-        sb.append("\nCHAT  : send a message to other players");
-        sb.append("\nYour current rack: " + player.getCurrentTiles());
-        sb.append("\nEnter your input: ");
+        sb.append(String.format("Player %s, your turn, choose one from below options:" + System.lineSeparator(), player.getName()));
+        sb.append("==========================================================" + System.lineSeparator());
+        sb.append("MOVE  : enter a word onto the Scrabble board" + System.lineSeparator());
+        sb.append("SWAP  : swap some or all of your current tiles" + System.lineSeparator());
+        sb.append("SKIP  : skip your turn" + System.lineSeparator());
+        sb.append("QUIT  : quit the game" + System.lineSeparator());
+        sb.append("CHAT  : send a message to other players" + System.lineSeparator());
+        sb.append("Your current rack: " + player.getCurrentTiles());
+        sb.append("Enter your input: " + player.getCurrentTiles());
         return sb.toString();
     }
 
     public String askMove(Player player) {
         StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPlayer %s, please enter your move in below format:", player.getName()));
-        sb.append("\nword direction startingColumn startingRow");
-        sb.append("\n==================================================================");
-        sb.append("\nword          : Enter a valid English word");
-        sb.append("\ndirection     : H for horizontal or V for vertical");
-        sb.append("\nstaringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O");
-        sb.append("\nstartingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15");
-        sb.append("\nEnter your input: ");
+        sb.append(String.format("Player %s, please enter your move in below format:" + System.lineSeparator(), player.getName()));
+        sb.append("word direction startingColumn startingRow" + System.lineSeparator());
+        sb.append("==================================================================" + System.lineSeparator());
+        sb.append("word          : Enter a valid English word" + System.lineSeparator());
+        sb.append("direction     : H for horizontal or V for vertical" + System.lineSeparator());
+        sb.append("staringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O" + System.lineSeparator());
+        sb.append("startingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" + System.lineSeparator());
+        sb.append("Enter your input: " + System.lineSeparator());
         return sb.toString();
     }
 
     public String askSkip(Player player) {
         StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPlayer %s skips a turn.", player.getName()));
+        sb.append(String.format("Player %s skips a turn.", player.getName()));
         return sb.toString();
     }
 
     public String askSwap(Player player) {
         StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPlayer %s, please enter your tiles to be swapped (separated by space):", player.getName()));
-        sb.append("\nEnter your input: ");
+        sb.append(String.format("Player %s, please enter your tiles to be swapped (separated by space):"
+                + System.lineSeparator(), player.getName()));
+        sb.append("Enter your input: " + System.lineSeparator());
         return sb.toString();
     }
 
-//    public String askScore(Game game) {
-//        StringBuffer sb = new StringBuffer();
-//        for (Player p : game.getPlayers()) {
-//            sb.append(String.format("\nPlayer : %s, Score : %d", p.getName(), p.getScore()));
-//        }
-//        return sb.toString();
-//    }
-
     public String updateAfterMove(Game game, int moveScore) {
         StringBuffer sb = new StringBuffer();
-        sb.append(String.format("\nPlayer %s, move score : %d, total points : %d",
+        sb.append(String.format("Player %s, move score : %d, total points : %d",
                 game.getCurrentPlayer().getName(), moveScore, game.getCurrentPlayer().getScore()));
-//        sb.append("\nNew rack : " + game.getCurrentPlayer().getCurrentTiles());
         return sb.toString();
     }
 
     public String gameOver(Game game) {
         StringBuffer sb = new StringBuffer();
-        sb.append("\nGame over!");
-        sb.append(String.format("\nPlayer %s wins with a score of %d.", game.getWinner().getName(), game.getWinner().getScore()));
+        sb.append("Game over!" + System.lineSeparator());
+        sb.append(String.format("Player %s wins with a score of %d.", game.getWinner().getName(), game.getWinner().getScore()));
         return sb.toString();
     }
 

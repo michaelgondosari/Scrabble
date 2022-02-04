@@ -4,8 +4,6 @@ import exception.ExitProgram;
 import exception.InvalidMoveException;
 import exception.ServerUnavailableException;
 
-import java.net.InetAddress;
-
 public interface ClientView {
 
     /**
@@ -41,12 +39,6 @@ public interface ClientView {
     public void showMessage(String message);
 
     /**
-     * Ask the user to input a valid IP. If it is not valid, show a message and ask again.
-     * @return a valid IP
-     */
-    public InetAddress getIp();
-
-    /**
      * Prints the question and asks the user to input a String.
      * @param question The question to show to the user
      * @return The user input as a String
@@ -66,10 +58,5 @@ public interface ClientView {
      * @return The user input as boolean.
      */
     public boolean getBoolean(String question);
-
-    /**
-     * Prints the help menu with available input options.
-     */
-    public void printHelpMenu();
 
 }

@@ -8,6 +8,7 @@ import model.Board;
 import model.Move;
 import protocol.ClientProtocol;
 import protocol.ProtocolMessages;
+import view.TerminalColors;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -23,10 +24,13 @@ public class Client implements ClientProtocol, Runnable {
     private static ClientTUI tui;
     private static String name;
 
-    private final static String FEATURES = ProtocolMessages.PASS_TURN_FLAG;
+    private final static String FEATURES = ProtocolMessages.PASS_TURN_FLAG + ProtocolMessages.CHAT_FLAG;
 
     // --- Constructor -----------------------------
 
+    /**
+     * Constructor for the Client class
+     */
     public Client() {
         serverSock = null;
         in = null;
@@ -36,10 +40,18 @@ public class Client implements ClientProtocol, Runnable {
 
     // --- Queries ---------------------------------
 
+    /**
+     * Set the name of the client
+     * @param name name of the client
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get this client's name
+     * @return this client's name
+     */
     public String getName() {
         return this.name;
     }
@@ -47,27 +59,21 @@ public class Client implements ClientProtocol, Runnable {
     // --- Commands --------------------------------
 
     /**
-     * Starts a new Client by creating a connection,
-     * followed by the HELLO handshake as defined in the protocol.
-     * After a successful connection and handshake, the view is started.
-     * The view asks for user input and handles all further calls to methods of this class.
-     *
-     * When errors occur, or when the user terminates a server connection,
-     * the user is asked whether a new connection should be made.
+     * Starts a new Client thread
+     * to keep on reading incoming message in the stream
      */
     public void run() {
-        // continuously read incoming message
         try {
             String line;
             while ((line = in.readLine()) != null) {
                 tui.showMessage(line);
             }
         } catch (IOException e) {
-            tui.showMessage(e.getMessage());
+            tui.showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
         }
     }
 
-        /**
+    /**
      * Creates a connection to the server. Requests the IP and port to
      * connect to at the view (TUI).
      *
@@ -88,16 +94,13 @@ public class Client implements ClientProtocol, Runnable {
             // try to open a Socket to the server
             try {
                 InetAddress addr = InetAddress.getByName(host);
-                System.out.println("Attempting to connect to " + addr + ":"
-                        + port + "...");
+                tui.showMessage("Attempting to connect to " + addr + ":" + port + "...");
                 serverSock = new Socket(addr, port);
-                in = new BufferedReader(new InputStreamReader(
-                        serverSock.getInputStream()));
-                out = new BufferedWriter(new OutputStreamWriter(
-                        serverSock.getOutputStream()));
+                in = new BufferedReader(new InputStreamReader(serverSock.getInputStream()));
+                out = new BufferedWriter(new OutputStreamWriter(serverSock.getOutputStream()));
             } catch (IOException e) {
-                System.out.println("ERROR: could not create a socket on "
-                        + host + " and port " + port + ".");
+                tui.showMessage(TerminalColors.RED_BOLD + "ERROR: could not create a socket on "
+                        + host + " and port " + port + "." + TerminalColors.RESET);
 
                 //Do you want to try again?
                 if (!tui.getBoolean("Do you want to try again (yes/no) ?")) {
@@ -134,63 +137,13 @@ public class Client implements ClientProtocol, Runnable {
                 out.newLine();
                 out.flush();
             } catch (IOException e) {
-                tui.showMessage(e.getMessage());
-                throw new ServerUnavailableException("Could not write to server.");
+                tui.showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
+                throw new ServerUnavailableException(TerminalColors.RED_BOLD
+                        + "Could not write to server." + TerminalColors.RESET);
             }
         } else {
-            throw new ServerUnavailableException("Could not write to server.");
-        }
-    }
-
-
-
-    /**
-     * Reads and returns one line from the server.
-     *
-     * @return the line sent by the server.
-     * @throws ServerUnavailableException if IO errors occur.
-     */
-    public String readLineFromServer()
-            throws ServerUnavailableException {
-        if (in != null) {
-            try {
-                // Read and return answer from Server
-                String answer = in.readLine();
-                if (answer == null) {
-                    throw new ServerUnavailableException("Could not read from server.");
-                }
-                return answer;
-            } catch (IOException e) {
-                throw new ServerUnavailableException("Could not read from server.");
-            }
-        } else {
-            throw new ServerUnavailableException("Could not read from server.");
-        }
-    }
-
-    /**
-     * Reads and returns multiple lines from the server until the end of
-     * the text is indicated using a line containing ProtocolMessages.EOT.
-     *
-     * @return the concatenated lines sent by the server.
-     * @throws ServerUnavailableException if IO errors occur.
-     */
-    public String readMultipleLinesFromServer()
-            throws ServerUnavailableException {
-        if (in != null) {
-            try {
-                // Read and return answer from Server
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while((line = in.readLine()) != null) {
-                    sb.append(line + System.lineSeparator());
-                }
-                return sb.toString();
-            } catch (IOException e) {
-                throw new ServerUnavailableException("Could not read from server.");
-            }
-        } else {
-            throw new ServerUnavailableException("Could not read from server.");
+            throw new ServerUnavailableException(TerminalColors.RED_BOLD
+                    + "Could not write to server." + TerminalColors.RESET);
         }
     }
 
@@ -205,7 +158,7 @@ public class Client implements ClientProtocol, Runnable {
             out.close();
             serverSock.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            tui.showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
         }
     }
 
@@ -259,13 +212,6 @@ public class Client implements ClientProtocol, Runnable {
                 + ProtocolMessages.SEPARATOR
                 + features
         );
-
-//        String[] serverAnswer = readLineFromServer().split(ProtocolMessages.SEPARATOR);
-//        if (serverAnswer[0].equals(ProtocolMessages.HELLO) && serverAnswer.length == 3) {
-//            tui.showMessage("Welcome to Scrabble, " + name);
-//        } else {
-//            throw new ProtocolException("Response is not valid!");
-//        }
     }
 
     @Override
@@ -277,14 +223,6 @@ public class Client implements ClientProtocol, Runnable {
             );
         }
     }
-//                String[] serverAnswer = readLineFromServer().split(ProtocolMessages.SEPARATOR);
-//            if (serverAnswer[0].equals(ProtocolMessages.SERVERREADY) && serverAnswer.length == 2) {
-//                tui.showMessage("You are ready. Waiting for 1 more player to join...");
-//            } else if (serverAnswer[0].equals(ProtocolMessages.SERVERREADY) && serverAnswer.length == 3) {
-//                tui.showMessage("You and the opponent are ready. Game will begin soon...");
-//            } else {
-//                throw new ProtocolException("Response is not valid!");
-//            }
 
     @Override
     public void doAbort(String name) throws ServerUnavailableException, ProtocolException {
@@ -336,7 +274,13 @@ public class Client implements ClientProtocol, Runnable {
     // --- Main ------------------------------------
 
     /**
-     * This method starts a new Client.
+     * Starts a new Client by creating a connection,
+     * followed by the HELLO handshake as defined in the protocol.
+     * After a successful connection and handshake, the view is started.
+     * The view asks for user input and handles all further calls to methods of this class.
+     *
+     * When errors occur, or when the user terminates a server connection,
+     * the user is asked whether a new connection should be made.
      */
     public static void main(String[] args) {
         Client client = new Client();

@@ -16,6 +16,7 @@ public class Move {
 
     /**
      * Constructor for Move class
+     *
      * @param word - word to be played
      * @param direction - direction of the word; (H)HORIZONTAL or (V)VERTICAL
      * @param placeCol - starting column to place the word
@@ -65,36 +66,6 @@ public class Move {
      */
     public char getPlaceCol() {
         return this.placeCol;
-    }
-
-    // --- Commands --------------------------------
-
-    /**
-     * Convert a string to char array
-     * @param word - string to be converted
-     * @return char array of the string
-     */
-    public char[] stringToCharArray(String word) {
-        char[] result = new char[word.length()];
-        for (int i = 0; i < word.length(); i++) {
-            result[i] = word.charAt(i);
-        }
-        return result;
-    }
-
-    /**
-     * Calculate the score of a word
-     * @param word - string to be calculated
-     * @return score of the string (according to Scrabble)
-     */
-    public int scoreCalculator(String word) {
-        int score = 0;
-        TileBag tileBag = new TileBag(System.getProperty("user.dir") + "/letters.txt");
-        char[] charWord = stringToCharArray(word);
-        for (char c : charWord) {
-            score += tileBag.getLetterValue(c);
-        }
-        return score;
     }
 
 } // end of class
