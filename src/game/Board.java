@@ -1,6 +1,6 @@
-package model;
+package game;
 
-import view.TerminalColors;
+import game.tui.TerminalColors;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

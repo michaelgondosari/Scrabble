@@ -1,9 +1,9 @@
-package model;
+package game;
 
 import exception.InvalidMoveException;
 import exception.InvalidWordException;
-import model.wordchecker.InMemoryScrabbleWordChecker;
-import view.TerminalColors;
+import game.wordchecker.InMemoryScrabbleWordChecker;
+import game.tui.TerminalColors;
 
 import java.util.ArrayList;
 import java.util.List;

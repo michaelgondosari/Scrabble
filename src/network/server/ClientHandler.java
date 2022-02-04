@@ -1,7 +1,7 @@
-package server;
+package network.server;
 
-import protocol.ProtocolMessages;
-import view.TerminalColors;
+import network.protocol.ProtocolMessages;
+import game.tui.TerminalColors;
 
 import java.io.*;
 import java.net.Socket;
@@ -24,7 +24,7 @@ public class ClientHandler implements Runnable {
     /**
      * Constructor of the ClientHandler class
      * @param sock socket of the ClientHandler
-     * @param srv server to be connected to
+     * @param srv network.server to be connected to
      */
     public ClientHandler (Socket sock, Server srv) {
         try {
@@ -74,7 +74,7 @@ public class ClientHandler implements Runnable {
     // --- Commands --------------------------------
 
     /**
-     * Continuously listens to client input and forwards the input to the
+     * Continuously listens to network.client input and forwards the input to the
      * {@link #handleCommand(String)} method.
      */
     @Override
@@ -95,7 +95,7 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Send a message to the client
+     * Send a message to the network.client
      * @param msg message to be sent
      */
     public synchronized void sendMessage(String msg) {
@@ -109,14 +109,14 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Handles commands received from the client by calling the according methods at the Server.
+     * Handles commands received from the network.client by calling the according methods at the Server.
      * For example, when the message "HI:;:NAME:;:FEATURES" is received,
      * the method getHello() of Server should be called
-     * and the output must be sent to the client.
+     * and the output must be sent to the network.client.
      *
-     * If the received input is not valid, send an "Unknown Command" message to the server.
+     * If the received input is not valid, send an "Unknown Command" message to the network.server.
      *
-     * @param msg command from client
+     * @param msg command from network.client
      * @throws IOException if an IO errors occur.
      */
     private void handleCommand(String msg) throws IOException {
@@ -198,7 +198,7 @@ public class ClientHandler implements Runnable {
     }
 
     /**
-     * Shut down the connection to this client by closing the socket and
+     * Shut down the connection to this network.client by closing the socket and
      * the In- and OutputStreams.
      */
     private void shutdown() {

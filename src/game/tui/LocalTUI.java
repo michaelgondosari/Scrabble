@@ -1,8 +1,8 @@
-package view;
+package game.tui;
 
-import model.Board;
-import model.Game;
-import model.Player;
+import game.Board;
+import game.Game;
+import game.Player;
 
 public class LocalTUI {
 

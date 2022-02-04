@@ -1,7 +1,7 @@
-package protocol;
+package network.protocol;
 
-import model.Player;
-import server.ClientHandler;
+import game.Player;
+import network.server.ClientHandler;
 
 public interface ServerProtocol {
 
@@ -10,66 +10,66 @@ public interface ServerProtocol {
      * including the name of the hotel:
      * ProtocolMessages.HELLO:;:[NAMES]:;:FEATURES;
      *
-     * @param name The list of names already in the server including your own
-     * @param features The extra optional features supported by this client
+     * @param name The list of names already in the network.server including your own
+     * @param features The extra optional features supported by this network.client
      *
      * @return textual result, to be shown to the user
      */
     public String getHello(String name, String features);
 
     /**
-     * This message is broadcasted to every client connected in the room,
+     * This message is broadcasted to every network.client connected in the room,
      * so that they are aware of the new connection,
      * as well as what features they support:
      * ProtocolMessages.WELCOME:;:NAME:;:FEATURES;
      *
      * @param name The name of the player who just joined
-     * @param features The extra optional features supported by this client
+     * @param features The extra optional features supported by this network.client
      */
     public void doWelcome(String name, String features);
 
     /**
-     * The appropriate error code is sent by the server when something has gone wrong
-     * @param errorCode the appropriate error code sent by the server
+     * The appropriate error code is sent by the network.server when something has gone wrong
+     * @param errorCode the appropriate error code sent by the network.server
      * @return textual result, to be shown to the user
      */
     public String doError(String errorCode);
 
     /**
-     * This is sent by the server to all clients connected to indicate that the server is ready to start.
-     * The first of these commands will be sent without arguments by the server to indicate readiness.
+     * This is sent by the network.server to all clients connected to indicate that the network.server is ready to start.
+     * The first of these commands will be sent without arguments by the network.server to indicate readiness.
      * @return textual result, to be shown to the user
      */
     public String doServerReady();
 
     /**
-     * This is sent by the server to all clients connected to indicate that the server is ready to start,
+     * This is sent by the network.server to all clients connected to indicate that the network.server is ready to start,
      * and so are the clients names in the arguments.
      *
-     * @param clientHandler The client handler that is ready to start
+     * @param clientHandler The network.client handler that is ready to start
      */
     public void doServerReady(ClientHandler clientHandler);
 
     /**
-     * This is sent by the server as the first command after starting a game.
+     * This is sent by the network.server as the first command after starting a game.
      * All the names of the players participating in the game will be given as arguments.
-     * It will be followed by the TILES and TURN commands from the server
+     * It will be followed by the TILES and TURN commands from the network.server
      *
      * @return textual result, to be shown to the user
      */
     public String doStart();
 
     /**
-     * This is broadcast by the server to all clients to indicate that another player has just disconnected.
+     * This is broadcast by the network.server to all clients to indicate that another player has just disconnected.
      * This player will pass every turn he/she gets automatically
      *
-     * @param clientHandler The disconnected client
+     * @param clientHandler The disconnected network.client
      * @return textual result, to be shown to the user
      */
     public void doAbort(ClientHandler clientHandler);
 
     /**
-     * This is sent by the server when a player is drawing new tiles.
+     * This is sent by the network.server when a player is drawing new tiles.
      * This happens after every move, then all the tiles are sent back (new & old)
      * Each player connected will get different randomized tiles.
      *
@@ -80,13 +80,13 @@ public interface ServerProtocol {
     public String doTiles(Player player);
 
     /**
-     * Used to inform every client connected who has to make a move
+     * Used to inform every network.client connected who has to make a move
      * @return textual result, to be shown to the user
      */
     public String doTurn();
 
     /**
-     * This message is broadcast by the server to all connected clients
+     * This message is broadcast by the network.server to all connected clients
      * to let them know of a valid move made by another player,
      * as well as the coordinates and the points the player gained.
      * Server will then send TILES to the player
@@ -98,7 +98,7 @@ public interface ServerProtocol {
     public void doMove(ClientHandler clientHandler, String coordinates);
 
     /**
-     * This command is broadcast by the server to indicate which client passed their turn
+     * This command is broadcast by the network.server to indicate which network.client passed their turn
      * so that the rest knows that a player is finished
      *
      * @param clientHandler The player who made the pass
@@ -106,7 +106,7 @@ public interface ServerProtocol {
     public void doPass(ClientHandler clientHandler);
 
     /**
-     * This command is sent by the server to the player that just passed
+     * This command is sent by the network.server to the player that just passed
      * to confirm that the pass worked
      * and to assign the new tiles to the player.
      *
@@ -117,7 +117,7 @@ public interface ServerProtocol {
     public void doPass(ClientHandler clientHandler, String tiles);
 
     /**
-     * This message is broadcast by the server to let all clients know
+     * This message is broadcast by the network.server to let all clients know
      * that the game is over and to announce who the winner is
      */
     public void doGameOver();

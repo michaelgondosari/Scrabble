@@ -1,14 +1,14 @@
-package server;
+package network.server;
 
 import exception.ExitProgram;
 import exception.InvalidMoveException;
 import exception.InvalidWordException;
-import model.Game;
-import model.Player;
-import protocol.ProtocolMessages;
-import protocol.ServerProtocol;
-import view.LocalTUI;
-import view.TerminalColors;
+import game.Game;
+import game.Player;
+import network.protocol.ProtocolMessages;
+import network.protocol.ServerProtocol;
+import game.tui.LocalTUI;
+import game.tui.TerminalColors;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -69,10 +69,10 @@ public class Server implements Runnable, ServerProtocol {
                     new Thread(handler).start();
                     view.showMessage("> [" + handler.getName() + "] connected!");
 
-                    // After making client handler, if 2 players or more connected, send server ready, then break
+                    // After making network.client handler, if 2 players or more connected, send network.server ready, then break
                     synchronized (this) {
                         if (clients.size() > 1) {
-                            broadcast(doServerReady()); // server ready confirmation
+                            broadcast(doServerReady()); // network.server ready confirmation
                             broadcast(tui.askReady()); // player ready confirmation
                             break;
                         }
@@ -132,14 +132,14 @@ public class Server implements Runnable, ServerProtocol {
 
             } catch (ExitProgram e) {
                 openNewSocket = false;
-                view.showMessage("Closing the server...");
+                view.showMessage("Closing the network.server...");
 
             } catch (IOException e) {
-                view.showMessage(TerminalColors.RED_BOLD + "A server IO error occurred: "
+                view.showMessage(TerminalColors.RED_BOLD + "A network.server IO error occurred: "
                         + e.getMessage() + TerminalColors.RESET);
                 if (!view.getBoolean("Do you want to open a new socket (yes/no) ?")) {
                     openNewSocket = false;
-                    view.showMessage("Closing the server...");
+                    view.showMessage("Closing the network.server...");
                 }
 
             } catch (InterruptedException e) {
@@ -166,7 +166,7 @@ public class Server implements Runnable, ServerProtocol {
         ssock = null;
         while (ssock == null) {
             String host = view.getString("Please enter the host: ");
-            int port = view.getInt("Please enter the server port (between 0 and 65535): ");
+            int port = view.getInt("Please enter the network.server port (between 0 and 65535): ");
 
             // Try to open a new ServerSocket
             try {
@@ -199,16 +199,16 @@ public class Server implements Runnable, ServerProtocol {
     }
 
     /**
-     * Adds a clientHandler to the client list.
-     * @requires client != null
+     * Adds a clientHandler to the network.client list.
+     * @requires network.client != null
      */
     public void addClient(ClientHandler client) {
         this.clients.add(client);
     }
 
     /**
-     * Removes a clientHandler from the client list.
-     * @requires client != null
+     * Removes a clientHandler from the network.client list.
+     * @requires network.client != null
      */
     public void removeClient(ClientHandler client) {
         this.clients.remove(client);
@@ -226,8 +226,8 @@ public class Server implements Runnable, ServerProtocol {
     }
 
     /**
-     * Gets a list of names from the connected client
-     * @return a list of names from the connected client
+     * Gets a list of names from the connected network.client
+     * @return a list of names from the connected network.client
      */
     public List<String> clientNames() {
         List<String> names = new ArrayList<>();
@@ -259,7 +259,7 @@ public class Server implements Runnable, ServerProtocol {
 
     @Override
     public synchronized String doServerReady() {
-        return "The server is ready!";
+        return "The network.server is ready!";
     }
 
     @Override
@@ -287,7 +287,7 @@ public class Server implements Runnable, ServerProtocol {
 
     @Override
     public synchronized void doAbort(ClientHandler clientHandler) {
-        broadcast("Player " + clientHandler.getName() + " quits the game server.");
+        broadcast("Player " + clientHandler.getName() + " quits the game network.server.");
         doGameOver();
         notifyAll();
     }

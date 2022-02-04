@@ -1,6 +1,6 @@
 package test;
 
-import model.TileBag;
+import game.TileBag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

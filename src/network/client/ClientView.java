@@ -1,4 +1,4 @@
-package client;
+package network.client;
 
 import exception.ExitProgram;
 import exception.InvalidMoveException;
@@ -11,7 +11,7 @@ public interface ClientView {
      * the {@link #handleUserInput(String input)} method.
      *
      * If an ExitProgram exception is thrown, stop asking for input, send an exit
-     * message to the server according to the protocol and close the connection.
+     * message to the network.server according to the network.protocol and close the connection.
      *
      * @throws ServerUnavailableException in case of IO exceptions.
      */

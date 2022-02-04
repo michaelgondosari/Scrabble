@@ -1,6 +1,6 @@
 package exception;
 
-import view.TerminalColors;
+import game.tui.TerminalColors;
 
 public class InvalidWordException extends Exception {
 

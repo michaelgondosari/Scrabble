@@ -1,4 +1,4 @@
-package model.wordchecker;
+package game.wordchecker;
 
 import java.io.BufferedReader;
 import java.io.IOException;

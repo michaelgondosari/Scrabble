@@ -1,7 +1,7 @@
-package model;
+package game;
 
 import exception.InvalidMoveException;
-import view.TerminalColors;
+import game.tui.TerminalColors;
 
 import java.util.ArrayList;
 import java.util.List;

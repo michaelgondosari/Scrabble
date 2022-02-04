@@ -1,4 +1,4 @@
-package model;
+package game;
 
 public class Move {
 

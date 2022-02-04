@@ -2,8 +2,8 @@ package test;
 
 import exception.InvalidMoveException;
 import exception.InvalidWordException;
-import model.Game;
-import model.Player;
+import game.Game;
+import game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

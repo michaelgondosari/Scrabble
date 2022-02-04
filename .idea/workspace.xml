@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Finished the client &amp; server implementation for all methods&#10;Implemented chat function">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Tidied up the codes, added JavaDoc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ClientTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientTUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/ClientView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ClientTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/ClientTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/ClientView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/exception/InvalidWordException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/exception/InvalidWordException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TileBag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ServerTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerTUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LocalTUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/TerminalColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/TerminalColors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/TileBag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/FileStreamScrabbleWordChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/FileStreamScrabbleWordChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/InMemoryScrabbleWordChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/InMemoryScrabbleWordChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/ScrabbleWordChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/ScrabbleWordChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/TestChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/TestChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/collins_scrabble_words_2019.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/collins_scrabble_words_2019.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ClientProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/ClientProtocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ProtocolMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/ProtocolMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ServerProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/ServerProtocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ServerTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/ServerTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ServerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/ServerView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/BoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/TileBagTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/TileBagTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/tui/LocalTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/TerminalColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/tui/TerminalColors.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +91,8 @@
       <recent name="C:\Users\HP\Desktop\MASTER\UniversityofTwente\PreMaster\PreMasterQ2\Programming\Project\Scrabble\src\model" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="game" />
+      <recent name="network" />
       <recent name="aaron" />
       <recent name="protocol" />
       <recent name="exception" />
@@ -85,11 +100,11 @@
   </component>
   <component name="RunManager" selected="Application.Server">
     <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="client.Client" />
+      <option name="MAIN_CLASS_NAME" value="network.client.Client" />
       <module name="Scrabble" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="client.*" />
+          <option name="PATTERN" value="network.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -106,11 +121,11 @@
           <option name="ENABLED" value="true" />
         </pattern>
         <pattern>
-          <option name="PATTERN" value="model.*" />
+          <option name="PATTERN" value="game.*" />
           <option name="ENABLED" value="true" />
         </pattern>
         <pattern>
-          <option name="PATTERN" value="view.*" />
+          <option name="PATTERN" value="game.tui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
         <pattern>
@@ -123,11 +138,11 @@
       </method>
     </configuration>
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="server.Server" />
+      <option name="MAIN_CLASS_NAME" value="network.server.Server" />
       <module name="Scrabble" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="server.*" />
+          <option name="PATTERN" value="network.server.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -149,11 +164,11 @@
       </method>
     </configuration>
     <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="client.test" />
+      <option name="MAIN_CLASS_NAME" value="network.client.test" />
       <module name="Scrabble" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="client.*" />
+          <option name="PATTERN" value="network.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -169,7 +184,7 @@
           <option name="ENABLED" value="true" />
         </pattern>
         <pattern>
-          <option name="PATTERN" value="model.Game" />
+          <option name="PATTERN" value="game.Game" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -502,7 +517,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643922728724</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Tidied up the codes, added JavaDoc">
+      <created>1643935533557</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1643935533557</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -518,7 +540,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed 0 to O" />
     <MESSAGE value="added BoardPrinter" />
     <MESSAGE value="updated Monday" />
     <MESSAGE value="updated Monday Evening" />
@@ -543,7 +564,8 @@
     <MESSAGE value="fixed the hello welcome and ready handling issue" />
     <MESSAGE value="Changed return from void to String" />
     <MESSAGE value="Finished the client &amp; server implementation for all methods&#10;Implemented chat function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished the client &amp; server implementation for all methods&#10;Implemented chat function" />
+    <MESSAGE value="Tidied up the codes, added JavaDoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tidied up the codes, added JavaDoc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -557,7 +579,7 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/client/test.java</url>
+          <url>file://$PROJECT_DIR$/src/network/client/test.java</url>
           <line>8</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>

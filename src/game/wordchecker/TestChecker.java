@@ -1,4 +1,4 @@
-package model.wordchecker;
+package game.wordchecker;
 
 import java.util.Scanner;
 

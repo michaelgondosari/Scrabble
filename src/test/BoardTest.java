@@ -1,6 +1,6 @@
 package test;
 
-import model.Board;
+import game.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package test;
 
-import model.Player;
-import model.TileBag;
+import game.Player;
+import game.TileBag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

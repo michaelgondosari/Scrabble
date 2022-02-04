@@ -1,4 +1,4 @@
-package view;
+package game.tui;
 
 public class TerminalColors {
     // Reset

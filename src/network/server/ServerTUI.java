@@ -1,6 +1,6 @@
-package server;
+package network.server;
 
-import view.TerminalColors;
+import game.tui.TerminalColors;
 
 import java.io.PrintWriter;
 import java.util.Scanner;

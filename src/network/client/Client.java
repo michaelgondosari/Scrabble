@@ -1,14 +1,14 @@
-package client;
+package network.client;
 
 import exception.ExitProgram;
 import exception.InvalidMoveException;
 import exception.ProtocolException;
 import exception.ServerUnavailableException;
-import model.Board;
-import model.Move;
-import protocol.ClientProtocol;
-import protocol.ProtocolMessages;
-import view.TerminalColors;
+import game.Board;
+import game.Move;
+import network.protocol.ClientProtocol;
+import network.protocol.ProtocolMessages;
+import game.tui.TerminalColors;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -41,16 +41,16 @@ public class Client implements ClientProtocol, Runnable {
     // --- Queries ---------------------------------
 
     /**
-     * Set the name of the client
-     * @param name name of the client
+     * Set the name of the network.client
+     * @param name name of the network.client
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Get this client's name
-     * @return this client's name
+     * Get this network.client's name
+     * @return this network.client's name
      */
     public String getName() {
         return this.name;
@@ -74,7 +74,7 @@ public class Client implements ClientProtocol, Runnable {
     }
 
     /**
-     * Creates a connection to the server. Requests the IP and port to
+     * Creates a connection to the network.server. Requests the IP and port to
      * connect to at the view (TUI).
      *
      * The method continues to ask for an IP and port and attempts to connect
@@ -83,7 +83,7 @@ public class Client implements ClientProtocol, Runnable {
      *
      * @throws ExitProgram if a connection is not established and the user
      * 				       indicates to want to exit the program.
-     * @ensures serverSock contains a valid socket connection to a server
+     * @ensures serverSock contains a valid socket connection to a network.server
      */
     public void createConnection() throws ExitProgram {
         clearConnection();
@@ -91,7 +91,7 @@ public class Client implements ClientProtocol, Runnable {
             String host = tui.getString("Enter a host: ");
             int port = tui.getInt("Enter a valid port (between 0 and 65535): ");
 
-            // try to open a Socket to the server
+            // try to open a Socket to the network.server
             try {
                 InetAddress addr = InetAddress.getByName(host);
                 tui.showMessage("Attempting to connect to " + addr + ":" + port + "...");
@@ -123,7 +123,7 @@ public class Client implements ClientProtocol, Runnable {
     }
 
     /**
-     * Sends a message to the connected server, followed by a new line.
+     * Sends a message to the connected network.server, followed by a new line.
      * The stream is then flushed.
      *
      * @param msg the message to write to the OutputStream.
@@ -139,11 +139,11 @@ public class Client implements ClientProtocol, Runnable {
             } catch (IOException e) {
                 tui.showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
                 throw new ServerUnavailableException(TerminalColors.RED_BOLD
-                        + "Could not write to server." + TerminalColors.RESET);
+                        + "Could not write to network.server." + TerminalColors.RESET);
             }
         } else {
             throw new ServerUnavailableException(TerminalColors.RED_BOLD
-                    + "Could not write to server." + TerminalColors.RESET);
+                    + "Could not write to network.server." + TerminalColors.RESET);
         }
     }
 
@@ -163,9 +163,9 @@ public class Client implements ClientProtocol, Runnable {
     }
 
     /**
-     * Translates move to coordinate used by protocol
+     * Translates move to coordinate used by network.protocol
      * @param move move made by player
-     * @return translation of move into protocol coordinate
+     * @return translation of move into network.protocol coordinate
      * @throws InvalidMoveException if move is invalid
      */
     public String translateMoveToCoordinate(String[] move) throws InvalidMoveException {
@@ -275,11 +275,11 @@ public class Client implements ClientProtocol, Runnable {
 
     /**
      * Starts a new Client by creating a connection,
-     * followed by the HELLO handshake as defined in the protocol.
+     * followed by the HELLO handshake as defined in the network.protocol.
      * After a successful connection and handshake, the view is started.
      * The view asks for user input and handles all further calls to methods of this class.
      *
-     * When errors occur, or when the user terminates a server connection,
+     * When errors occur, or when the user terminates a network.server connection,
      * the user is asked whether a new connection should be made.
      */
     public static void main(String[] args) {

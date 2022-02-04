@@ -1,4 +1,4 @@
-package model.wordchecker;
+package game.wordchecker;
 
 public interface ScrabbleWordChecker {
     ScrabbleWordChecker.WordResponse isValidWord(String var1);

@@ -1,11 +1,11 @@
-package client;
+package network.client;
 
 import exception.ExitProgram;
 import exception.InvalidMoveException;
 import exception.ProtocolException;
 import exception.ServerUnavailableException;
-import protocol.ProtocolMessages;
-import view.TerminalColors;
+import network.protocol.ProtocolMessages;
+import game.tui.TerminalColors;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -22,7 +22,7 @@ public class ClientTUI implements ClientView {
 
     /**
      * Constructor of the ClientTUI class
-     * @param client client class connected to this TUI
+     * @param client network.client class connected to this TUI
      */
     public ClientTUI(Client client) {
         this.client = client;
