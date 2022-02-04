@@ -99,7 +99,7 @@ public class Server implements Runnable, ServerProtocol {
                     // Broadcast the initial board
                     broadcast(tui.printBoard(newGame.getBoard()));
 
-                    while (!gameOver) {
+                    while (!gameOver || !newGame.gameOver()) {
 
                         // Determine current player
                         currentPlayer = newGame.getCurrentPlayer();
