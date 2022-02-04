@@ -1,37 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Tidied up the codes, added JavaDoc">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ClientTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/ClientTUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/ClientView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PlayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exception/InvalidWordException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/exception/InvalidWordException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TileBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/TileBag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/FileStreamScrabbleWordChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/FileStreamScrabbleWordChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/InMemoryScrabbleWordChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/InMemoryScrabbleWordChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/ScrabbleWordChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/ScrabbleWordChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/TestChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/TestChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/wordchecker/collins_scrabble_words_2019.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/wordchecker/collins_scrabble_words_2019.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/protocol/ClientProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/ClientProtocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/protocol/ProtocolMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/ProtocolMessages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/protocol/ServerProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/protocol/ServerProtocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ServerTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/ServerTUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ServerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/ServerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/BoardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/GameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/PlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/TileBagTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/TileBagTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/tui/LocalTUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/TerminalColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/tui/TerminalColors.java" afterDir="false" />
-    </list>
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Finalized all codes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -524,7 +494,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643935533557</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Finalized all codes">
+      <created>1643943385823</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1643943385823</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -540,7 +517,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added BoardPrinter" />
     <MESSAGE value="updated Monday" />
     <MESSAGE value="updated Monday Evening" />
     <MESSAGE value="updated Tuesday before lunch" />
@@ -565,7 +541,8 @@
     <MESSAGE value="Changed return from void to String" />
     <MESSAGE value="Finished the client &amp; server implementation for all methods&#10;Implemented chat function" />
     <MESSAGE value="Tidied up the codes, added JavaDoc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tidied up the codes, added JavaDoc" />
+    <MESSAGE value="Finalized all codes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finalized all codes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
