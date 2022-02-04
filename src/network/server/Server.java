@@ -33,13 +33,13 @@ public class Server implements Runnable, ServerProtocol {
     // Game objects
     private Game newGame;
     private List<Player> players;
-    LocalTUI tui;
-    boolean gameOver;
+    private LocalTUI tui;
+    private boolean gameOver;
 
     private Map<Player, ClientHandler> playerHandler;
-    Player currentPlayer;
-    ClientHandler currentHandler;
-    ClientHandler opponentHandler;
+    private Player currentPlayer;
+    private ClientHandler currentHandler;
+    private ClientHandler opponentHandler;
 
     // --- Constructor -----------------------------
 
@@ -173,7 +173,7 @@ public class Server implements Runnable, ServerProtocol {
                 view.showMessage("Attempting to open a socket at " + host + " on port " + port + "...");
                 ssock = new ServerSocket(port, 0, InetAddress.getByName(host));
                 view.showMessage("Server started at " + host + " port " + port);
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 view.showMessage(TerminalColors.RED_BOLD + "ERROR: could not create a socket on " + host
                         + " and port " + port + TerminalColors.RESET);
                 if (!view.getBoolean("Do you want to try again?")) {

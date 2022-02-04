@@ -291,4 +291,133 @@ public class GameTest {
         }
     }
 
+    @Test
+    public void testCheckMoveOverWrite() throws InvalidMoveException {
+        String[] input1 = {"HORN", "H", "F", "8"};
+            p1.makeMove(input1);
+            newGame.placeTileOnBoard(p1.getMove());
+
+        String[] input2 = {"FARM", "V", "H", "6"};
+            p2.makeMove(input2);
+            assertTrue(newGame.checkMoveOverwrite(p2.getMove()));
+            newGame.placeTileOnBoard(p2.getMove());
+
+        String[] input3 = {"BUFF", "H", "H", "6"};
+        try {
+            p1.makeMove(input3);
+            Exception exception = assertThrows(InvalidMoveException.class, () -> {
+                newGame.checkMoveOverwrite(p1.getMove());
+            });
+        } catch (InvalidMoveException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testMoveInsideBoard() throws InvalidMoveException {
+        String[] input1 = {"COMPUTER", "H", "H", "8"};
+        p1.makeMove(input1);
+        assertTrue(newGame.checkMoveInsideBoard(p1.getMove()));
+        newGame.placeTileOnBoard(p1.getMove());
+
+        String[] input2 = {"PRESENTATION", "V", "K", "8"};
+        try {
+            p2.makeMove(input2);
+            Exception exception = assertThrows(InvalidMoveException.class, () -> {
+                newGame.checkMoveInsideBoard(p2.getMove());
+            });
+        } catch (InvalidMoveException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+//    @Test
+//    public void testUsingAvailableTiles() throws InvalidMoveException {
+//        p1.clearRack();
+//        p2.clearRack();
+//
+//        List<Character> tiles = new ArrayList<>();
+//        tiles.add('L');
+//        tiles.add('O');
+//        tiles.add('V');
+//        tiles.add('E');
+//        p1.addTilesToRack(tiles);
+//
+//        List<Character> tiles2 = new ArrayList<>();
+//        tiles2.add('H');
+//        tiles2.add('A');
+//        tiles2.add('T');
+//        tiles2.add('E');
+//        p2.addTilesToRack(tiles2);
+//
+//        String[] move1 = {"LOVE", "H", "H", "8"};
+//        p1.makeMove(move1);
+//        assertTrue(newGame.checkUsingAvailableTiles(p1.getMove()));
+//
+//        try {
+//            String[] move2 = {"PRESENTATION", "H", "H", "8"};
+//            p2.makeMove(move2);
+//            Exception exception = assertThrows(InvalidMoveException.class, () -> {
+//                newGame.checkUsingAvailableTiles(p2.getMove());
+//            });
+//        } catch (InvalidMoveException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+
+    @Test
+    public void testFirstMoveCenter() throws InvalidMoveException {
+        String[] p1Move = {"Scrabble", "V", "H", "8"};
+        p1.makeMove(p1Move);
+        assertTrue(newGame.checkFirstMoveCenter(p1.getMove()));
+
+        String[] p2Move = {"Scrabble", "V", "A", "1"};
+        try {
+            p2.makeMove(p2Move);
+            Exception exception = assertThrows(InvalidMoveException.class, () -> {
+                newGame.checkFirstMoveCenter(p2.getMove());
+            });
+        } catch (InvalidMoveException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testMoveTouchTile() throws InvalidMoveException {
+        String[] input1 = {"HORN", "H", "F", "8"};
+        p1.makeMove(input1);
+        newGame.placeTileOnBoard(p1.getMove());
+
+        String[] input2 = {"FARM", "V", "H", "6"};
+        p2.makeMove(input2);
+        assertTrue(newGame.checkMoveTouchTile(p2.getMove()));
+        newGame.placeTileOnBoard(p2.getMove());
+
+
+        String[] input3 = {"PASTE", "H", "A", "1"};
+        try {
+            p1.makeMove(input3);
+            Exception exception = assertThrows(InvalidMoveException.class, () -> {
+                newGame.checkMoveTouchTile(p1.getMove());
+            });
+        } catch (InvalidMoveException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetWinner() {
+        p1.addScore(100);
+        p2.addScore(50);
+        assertEquals(newGame.getWinner(), p1);
+    }
+
+    @Test
+    public void testReset() {
+        newGame.getTileBag().drawTiles(20);
+        assertEquals(newGame.getTileBag().getTilesLeft(), 66);
+        newGame.reset();
+        assertEquals(newGame.getTileBag().getTilesLeft(), 100);
+    }
+
 } // end of class

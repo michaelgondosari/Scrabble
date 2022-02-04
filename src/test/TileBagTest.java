@@ -22,14 +22,14 @@ public class TileBagTest {
     public void testGetLetterAmountLeft() {
         assertEquals(tilebag.getLetterAmountLeft('A'),9);
         assertEquals(tilebag.getLetterAmountLeft('E'),12);
-        assertEquals(tilebag.getLetterAmountLeft('?'),2);
+        assertEquals(tilebag.getLetterAmountLeft('-'),2);
     }
 
     @Test
     public void testGetLetterValue() {
         assertEquals(tilebag.getLetterValue('A'),1);
         assertEquals(tilebag.getLetterValue('Q'),10);
-        assertEquals(tilebag.getLetterValue('?'),0);
+        assertEquals(tilebag.getLetterValue('-'),0);
     }
 
     @Test

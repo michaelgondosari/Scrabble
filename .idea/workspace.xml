@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Deleted">
+    <list default="true" id="56e4732a-03a1-4058-aaff-255149f27d82" name="Changes" comment="Finalized gameOver()">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/tui/LocalTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/tui/LocalTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/client/ClientTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/client/ClientTUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/network/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network/server/ServerTUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/network/server/ServerTUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/BoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/TileBagTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/TileBagTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +57,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -71,80 +80,19 @@
       <recent name="exception" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Server">
-    <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.client.Client" />
+  <component name="RunManager" selected="JUnit.test in Scrabble">
+    <configuration name="BoardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Scrabble" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="network.client.*" />
+          <option name="PATTERN" value="game.Board" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PlayGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="controller.PlayGame" />
-      <module name="Scrabble" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-        <pattern>
-          <option name="PATTERN" value="game.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-        <pattern>
-          <option name="PATTERN" value="game.tui.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-        <pattern>
-          <option name="PATTERN" value="exception.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.server.Server" />
-      <module name="Scrabble" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="network.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServerTUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="aaron.ServerTUI" />
-      <module name="Scrabble" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="aaron.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="network.client.test" />
-      <module name="Scrabble" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="network.client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.BoardTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -152,10 +100,6 @@
     <configuration name="GameTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="Scrabble" />
       <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
         <pattern>
           <option name="PATTERN" value="game.Game" />
           <option name="ENABLED" value="true" />
@@ -169,21 +113,100 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GameTest.testGetWinner" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.GameTest" />
+      <option name="METHOD_NAME" value="testGetWinner" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameTest.testReset" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.GameTest" />
+      <option name="METHOD_NAME" value="testReset" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlayerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.Player" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.PlayerTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TileBagTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game.TileBag" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.TileBagTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test in Scrabble" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Scrabble" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="Application.PlayGame" />
-      <item itemvalue="Application.ServerTUI" />
-      <item itemvalue="Application.test" />
-      <item itemvalue="Application.Client" />
-      <item itemvalue="Application.Server" />
       <item itemvalue="JUnit.GameTest" />
+      <item itemvalue="JUnit.TileBagTest" />
+      <item itemvalue="JUnit.GameTest.testGetWinner" />
+      <item itemvalue="JUnit.GameTest.testReset" />
+      <item itemvalue="JUnit.BoardTest" />
+      <item itemvalue="JUnit.PlayerTest" />
+      <item itemvalue="JUnit.test in Scrabble" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Client" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.test" />
-        <item itemvalue="Application.ServerTUI" />
-        <item itemvalue="Application.PlayGame" />
+        <item itemvalue="JUnit.test in Scrabble" />
+        <item itemvalue="JUnit.PlayerTest" />
+        <item itemvalue="JUnit.BoardTest" />
+        <item itemvalue="JUnit.GameTest.testReset" />
+        <item itemvalue="JUnit.GameTest.testGetWinner" />
       </list>
     </recent_temporary>
   </component>
@@ -511,7 +534,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643943811748</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Finalized gameOver()">
+      <created>1643964951433</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1643964951433</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -527,7 +557,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated Monday Evening" />
     <MESSAGE value="updated Tuesday before lunch" />
     <MESSAGE value="updated Tuesday after lunch" />
     <MESSAGE value="updated Wednesday after lunch" />
@@ -552,7 +581,8 @@
     <MESSAGE value="Tidied up the codes, added JavaDoc" />
     <MESSAGE value="Finalized all codes" />
     <MESSAGE value="Deleted" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted" />
+    <MESSAGE value="Finalized gameOver()" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finalized gameOver()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -574,9 +604,20 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Scrabble$GameTest.ic" NAME="GameTest Coverage Results" MODIFIED="1643363996329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Scrabble$GameTest.ic" NAME="GameTest Coverage Results" MODIFIED="1644006227135" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>game.Game</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Scrabble$PlayerTest.ic" NAME="PlayerTest Coverage Results" MODIFIED="1644006262206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>game.Player</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Scrabble$BoardTest.ic" NAME="BoardTest Coverage Results" MODIFIED="1644006219752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>game.Board</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Scrabble$test_in_Scrabble.ic" NAME="test in Scrabble Coverage Results" MODIFIED="1644006428139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>test.*</FILTER>
-      <FILTER>model.Game</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Scrabble$TileBagTest.ic" NAME="TileBagTest Coverage Results" MODIFIED="1644006283704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>game.TileBag</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Scrabble$PlayGame.ic" NAME="PlayGame Coverage Results" MODIFIED="1643363946606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>controller.*</FILTER>

@@ -53,8 +53,9 @@ public class ServerTUI implements ServerView {
     @Override
     public boolean getBoolean(String question) {
         showMessage(question);
-        String answer = scanner.nextLine();
+        String answer;
         while (true) {
+            answer = scanner.nextLine();
             if (answer.equalsIgnoreCase("YES")) {
                 return true;
             } else if (answer.equalsIgnoreCase("NO")) {

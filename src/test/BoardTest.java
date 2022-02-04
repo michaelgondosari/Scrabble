@@ -23,6 +23,9 @@ public class BoardTest {
         assertEquals(board.getTileOnBoard(0,0),'D');
         assertEquals(board.getTileOnBoard(0,1),'O');
         assertEquals(board.getTileOnBoard(0,2),'G');
+
+        char testGet = board.getTileOnBoard('A', 1);
+        assertEquals(testGet, 'D');
     }
 
     @Test

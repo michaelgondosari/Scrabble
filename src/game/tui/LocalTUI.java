@@ -94,34 +94,7 @@ public class LocalTUI {
         sb.append("SKIP  : skip your turn" + System.lineSeparator());
         sb.append("QUIT  : quit the game" + System.lineSeparator());
         sb.append("CHAT  : send a message to other players" + System.lineSeparator());
-        sb.append("Your current rack: " + player.getCurrentTiles());
-        sb.append("Enter your input: " + player.getCurrentTiles());
-        return sb.toString();
-    }
-
-    public String askMove(Player player) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(String.format("Player %s, please enter your move in below format:" + System.lineSeparator(), player.getName()));
-        sb.append("word direction startingColumn startingRow" + System.lineSeparator());
-        sb.append("==================================================================" + System.lineSeparator());
-        sb.append("word          : Enter a valid English word" + System.lineSeparator());
-        sb.append("direction     : H for horizontal or V for vertical" + System.lineSeparator());
-        sb.append("staringColumn : choose one of A,B,C,D,E,F,G,H,I,J,K,L,M,N,O" + System.lineSeparator());
-        sb.append("startingRow   : choose one of 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" + System.lineSeparator());
-        sb.append("Enter your input: " + System.lineSeparator());
-        return sb.toString();
-    }
-
-    public String askSkip(Player player) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(String.format("Player %s skips a turn.", player.getName()));
-        return sb.toString();
-    }
-
-    public String askSwap(Player player) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(String.format("Player %s, please enter your tiles to be swapped (separated by space):"
-                + System.lineSeparator(), player.getName()));
+        sb.append("Your current rack: " + player.getCurrentTiles() + System.lineSeparator());
         sb.append("Enter your input: " + System.lineSeparator());
         return sb.toString();
     }

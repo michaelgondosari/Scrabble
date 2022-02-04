@@ -1,14 +1,11 @@
 package network.client;
 
 import exception.ExitProgram;
-import exception.InvalidMoveException;
 import exception.ProtocolException;
 import exception.ServerUnavailableException;
-import game.Board;
-import game.Move;
+import game.tui.TerminalColors;
 import network.protocol.ClientProtocol;
 import network.protocol.ProtocolMessages;
-import game.tui.TerminalColors;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -98,7 +95,7 @@ public class Client implements ClientProtocol, Runnable {
                 serverSock = new Socket(addr, port);
                 in = new BufferedReader(new InputStreamReader(serverSock.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(serverSock.getOutputStream()));
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 tui.showMessage(TerminalColors.RED_BOLD + "ERROR: could not create a socket on "
                         + host + " and port " + port + "." + TerminalColors.RESET);
 
@@ -160,46 +157,6 @@ public class Client implements ClientProtocol, Runnable {
         } catch (IOException e) {
             tui.showMessage(TerminalColors.RED_BOLD + e.getMessage() + TerminalColors.RESET);
         }
-    }
-
-    /**
-     * Translates move to coordinate used by network.protocol
-     * @param move move made by player
-     * @return translation of move into network.protocol coordinate
-     * @throws InvalidMoveException if move is invalid
-     */
-    public String translateMoveToCoordinate(String[] move) throws InvalidMoveException {
-        String coordinate = "";
-        try {
-            String word = move[0].toUpperCase();
-            char direction = move[1].toUpperCase().charAt(0);
-            char startCol = move[2].toUpperCase().charAt(0);
-            int startRow = Integer.parseInt(move[3]);
-            int index = ((startCol-65) * Board.BOARD_SIZE) + (startRow-1);
-
-            if (startCol < 65 || startCol > 79) {
-                throw new InvalidMoveException("That column does not exist!");
-            }
-            if (startRow < 0 || startRow > 14) {
-                throw new InvalidMoveException("That row does not exist!");
-            }
-            for (int i = 0; i < word.length(); i++) {
-                if (direction == Move.HORIZONTAL) {
-                    coordinate += String.format("%s%s ", word.charAt(i), (index + i));
-                } else if (direction == Move.VERTICAL) {
-                    coordinate += String.format("%s%s ", word.charAt(i), (index + (i * Board.BOARD_SIZE)));
-                } else {
-                    throw new InvalidMoveException("That direction does not exist!");
-                }
-            }
-
-        } catch (NumberFormatException e) {
-            tui.showMessage("Wrong row input!");
-        } catch (IndexOutOfBoundsException e) {
-            tui.showMessage("Wrong move command!");
-        }
-
-        return coordinate;
     }
 
     // --- Handle Commands -------------------------

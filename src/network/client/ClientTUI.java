@@ -86,7 +86,7 @@ public class ClientTUI implements ClientView {
                 client.doChat(message);
                 break;
             default:
-                showMessage("Unknown command!");
+                showMessage(TerminalColors.RED_BOLD + "Unknown command!" + TerminalColors.RESET);
                 break;
         }
     }
@@ -120,8 +120,9 @@ public class ClientTUI implements ClientView {
     @Override
     public boolean getBoolean(String question) {
         showMessage(question);
-        String answer = scanner.nextLine();
+        String answer;
         while (true) {
+            answer = scanner.nextLine();
             if (answer.equalsIgnoreCase("YES")) {
                 return true;
             } else if (answer.equalsIgnoreCase("NO")) {
